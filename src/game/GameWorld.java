@@ -24,6 +24,8 @@ public class GameWorld {
 
         for (PhysicsObject p: physicsObjects) {
             p.updatePos(deltaTime);
+
+            p.getCollider().updateSprite(mainCanvas);
         }
     }
 

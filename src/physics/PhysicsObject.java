@@ -9,6 +9,7 @@ public class PhysicsObject {
 
     private boolean isStatic = false;
     private double mass = 1;
+    private double massInverse = 1/mass;  // for calculations
     private Vector2 velocity = new Vector2(0, 0);
 
     private GameObject gameObjectRef;
@@ -19,7 +20,8 @@ public class PhysicsObject {
 
     public PhysicsObject(GameObject gameObject) {
         this.gameObjectRef = gameObject;
-        this.setCollider(new CircleCollider(gameObject.getTransform(), this, 100));
+        //this.setCollider(new CircleCollider(gameObject.getTransform(),new Vector2(0,0), this, 100));
+        this.setCollider(new RectCollider(gameObject.getTransform(), new Vector2(130,50),this, new Vector2(120, 350)));
     }
 
     public PhysicsObject(double mass, Vector2 velocity, Collider collider, GameObject gameObject) {
@@ -42,7 +44,7 @@ public class PhysicsObject {
 
     private void calcPhysics(double dt, GameWorld world) {
         this.force = new Vector2(0, 0);  // reset all forces
-        this.addDrag(dt);
+        //this.addDrag(dt);
         this.addGravity();
         this.calcCollisionForce(dt, world);
         //this.getForce().print();
@@ -60,19 +62,21 @@ public class PhysicsObject {
             if (p.collider == null) { continue; }
             if (this.collider == null) { continue; }
 
-            this.addForce(this.collider.calcForce(p, dt));
+            //this.addForce(this.collider.calcForce(p, dt));
+            this.collider.calcForce(p);
         }
 
     }
 
     private void addDrag(double dt) {
+        //Todo: wrong formula
         // F = v * -drag
         double v = this.velocity.getLength();
         Vector2 direction = this.velocity.getNormalized();
 
         direction.setY(0); // its only linear drag
 
-        double force = -Consts.linearDrag * v;
+        double force = -Consts.linearDrag * v/dt * mass;
 
         Vector2 vForce = direction.scalarMult(force);
         this.addForce(vForce);
@@ -82,19 +86,16 @@ public class PhysicsObject {
         this.velocity = velocity.add( this.force.scalarMult((1/this.mass)).scalarMult(dt) );
     }
 
-    public void addForce(Vector2 force) {
-        this.force = this.force.add(force);
-    }
-
-    public void setVelocityX (double x) { this.velocity.setX(x); }
-    public void setVelocityY (double y) { this.velocity.setY(y); }
-
     private void updateTransform(double dt) {
         Vector2 newV = this.velocity.scalarMult(dt);
         //TODO: this can't be the true solution for the ground glitch effect
         //newV.setX((int)newV.getX());
         //newV.setY((int)newV.getY());
         gameObjectRef.getTransform().addPosition( newV);
+    }
+
+    public void addForce(Vector2 force) {
+        this.force = this.force.add(force);
     }
 
     public Collider getCollider() { return this.collider; }
@@ -105,11 +106,31 @@ public class PhysicsObject {
         return mass;
     }
 
+    public double getMassInverse() {
+        return massInverse;
+    }
+
     public void setCollider(Collider c) {
         this.collider = c;
     }
 
     public void setStatic(boolean aStatic) {
         isStatic = aStatic;
+        mass = Double.POSITIVE_INFINITY;
+        massInverse = 0;
+    }
+
+    public void addVelocity(Vector2 v) {
+        this.velocity = this.velocity.add(v);
+    }
+
+    public void setVelocityX (double x) { this.velocity.setX(x); }
+    public void setVelocityY (double y) { this.velocity.setY(y); }
+
+
+
+    public void setMass(double mass) {
+        this.mass = mass;
+        this.massInverse = 1/mass;
     }
 }

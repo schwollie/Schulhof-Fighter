@@ -1,5 +1,7 @@
 package logic;
 
+import java.util.Vector;
+
 public class Vector2 {
 
     public static final Vector2 zero = new Vector2(0, 0);
@@ -46,6 +48,14 @@ public class Vector2 {
 
     public Vector2 scalarMult(double a) {
         return new Vector2(a*this.getX(), a*this.getY());
+    }
+
+    public double dotProduct(Vector2 other) {
+        return other.getX() * this.getX() + other.getY() * this.getY();
+    }
+
+    public static double dotProduct(Vector2 a, Vector2 b) {
+        return a.dotProduct(b);
     }
 
     public Vector2 rotateVec(double alpha) {

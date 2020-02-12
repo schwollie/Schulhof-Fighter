@@ -8,7 +8,6 @@ import input.PlayerKeyListener;
 import logic.PlayerTypes;
 import logic.Transform;
 import logic.Vector2;
-import physics.LineCollider;
 import physics.PhysicsObject;
 import player.HumanPlayer;
 import player.Player;
@@ -42,6 +41,8 @@ public class Game {
     public void initGame() {
         gameWorld.player1 = new HumanPlayer(Vector2.zero, PlayerTypes.Default);
         gameWorld.player2 = new HumanPlayer(new Vector2(400, 0), PlayerTypes.Default);
+        //gameWorld.player1.getPlayerPhysics().setMass(10);
+        //gameWorld.player2.getPlayerPhysics().setStatic(true);
 
         gameWorld.physicsObjects.add(gameWorld.player1.getPlayerPhysics());
         gameWorld.physicsObjects.add(gameWorld.player2.getPlayerPhysics());
@@ -52,8 +53,8 @@ public class Game {
         PhysicsObject groundCollider = new PhysicsObject(ground);
         groundCollider.setStatic(true);
 
-        groundCollider.setCollider(new LineCollider(groundTrans, groundCollider, 0));
-        gameWorld.physicsObjects.add(groundCollider);
+        //groundCollider.setCollider(new LineCollider(groundTrans, groundCollider, 0));
+        //aagameWorld.physicsObjects.add(groundCollider);
 
 
         inputManager.setListenerMapping1((PlayerKeyListener) gameWorld.player1);
