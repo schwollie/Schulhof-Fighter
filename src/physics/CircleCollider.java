@@ -19,7 +19,7 @@ public class CircleCollider extends Collider {
 
     @Override
     public void calcForce(PhysicsObject other) {
-        if (other.getCollider() instanceof RectCollider) {}
+        if (other.getCollider() instanceof RectCollider) { return; }//Collider.resolveCircleVsRect((RectCollider)other.getCollider(), this);}
         if (other.getCollider() instanceof CircleCollider) { Collider.resolveCircleVsCircle(this, (CircleCollider) other.getCollider()); }
     }
 

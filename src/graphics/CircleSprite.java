@@ -19,6 +19,6 @@ public class CircleSprite extends Sprite {
     @Override
     public void draw(Graphics g) {
         g.setColor(new Color(200, 20, 50));
-        g.fillOval((int)transform.getX()+(int)offset.getX(), (int)transform.getY()+(int)offset.getY(), (int)radius, (int) radius);
+        g.fillOval((int)transform.getX()+(int)offset.getX(), (int)transform.getY()+(int)offset.getY(), (int)radius*2, (int) radius*2);
     }
 }

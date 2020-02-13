@@ -20,7 +20,7 @@ public class PhysicsObject {
 
     public PhysicsObject(GameObject gameObject) {
         this.gameObjectRef = gameObject;
-        //this.setCollider(new CircleCollider(gameObject.getTransform(),new Vector2(0,0), this, 100));
+        //this.setCollider(new CircleCollider(gameObject.getTransform(),new Vector2(100,100), this, 100));
         this.setCollider(new RectCollider(gameObject.getTransform(), new Vector2(130,50),this, new Vector2(120, 350)));
     }
 
@@ -44,9 +44,9 @@ public class PhysicsObject {
 
     private void calcPhysics(double dt, GameWorld world) {
         this.force = new Vector2(0, 0);  // reset all forces
-        //this.addDrag(dt);
-        this.addGravity();
         this.calcCollisionForce(dt, world);
+        this.addGravity();
+        this.addDrag(dt);
         //this.getForce().print();
     }
 
@@ -76,7 +76,7 @@ public class PhysicsObject {
 
         direction.setY(0); // its only linear drag
 
-        double force = -Consts.linearDrag * v/dt * mass;
+        double force = -Consts.linearDrag * v * mass;
 
         Vector2 vForce = direction.scalarMult(force);
         this.addForce(vForce);

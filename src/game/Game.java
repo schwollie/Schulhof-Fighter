@@ -9,6 +9,7 @@ import logic.PlayerTypes;
 import logic.Transform;
 import logic.Vector2;
 import physics.PhysicsObject;
+import physics.RectCollider;
 import player.HumanPlayer;
 import player.Player;
 
@@ -39,7 +40,7 @@ public class Game {
     }
 
     public void initGame() {
-        gameWorld.player1 = new HumanPlayer(Vector2.zero, PlayerTypes.Default);
+        gameWorld.player1 = new HumanPlayer(new Vector2(0, 0), PlayerTypes.Default);
         gameWorld.player2 = new HumanPlayer(new Vector2(400, 0), PlayerTypes.Default);
         //gameWorld.player1.getPlayerPhysics().setMass(10);
         //gameWorld.player2.getPlayerPhysics().setStatic(true);
@@ -48,13 +49,13 @@ public class Game {
         gameWorld.physicsObjects.add(gameWorld.player2.getPlayerPhysics());
 
         // Todo ground as gameObject
-        Transform groundTrans = new Transform(0, Consts.windowHeight - 400);
+        Transform groundTrans = new Transform(0, Consts.windowHeight - 100);
         GameObject ground = new GameObject();
         PhysicsObject groundCollider = new PhysicsObject(ground);
         groundCollider.setStatic(true);
 
-        //groundCollider.setCollider(new LineCollider(groundTrans, groundCollider, 0));
-        //aagameWorld.physicsObjects.add(groundCollider);
+        groundCollider.setCollider(new RectCollider(groundTrans, new Vector2(100, -100), groundCollider, new Vector2(Consts.windowWidth, 200)));
+        gameWorld.physicsObjects.add(groundCollider);
 
 
         inputManager.setListenerMapping1((PlayerKeyListener) gameWorld.player1);

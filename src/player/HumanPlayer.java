@@ -12,17 +12,17 @@ public class HumanPlayer extends Player implements PlayerKeyListener {
 
     @Override
     public void keyRight() {
-        this.getPlayerPhysics().setVelocityX(300);
+        this.getPlayerPhysics().setVelocityX(200);
     }
 
     @Override
     public void keyLeft() {
-        this.getPlayerPhysics().setVelocityX(-300);
+        this.getPlayerPhysics().setVelocityX(-200);
     }
 
     // jumping
     @Override
     public void keyUp() {
-        this.getPlayerPhysics().setVelocityY(-500);
+        this.getPlayerPhysics().setVelocityY(-800);
     }
 }

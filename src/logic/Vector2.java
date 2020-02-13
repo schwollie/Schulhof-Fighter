@@ -40,6 +40,10 @@ public class Vector2 {
         return Math.sqrt(this.x*this.x + this.y*this.y);
     }
 
+    public double getLengthSquared() {
+        return (this.x*this.x + this.y*this.y);
+    }
+
     public Vector2 add(Vector2 v) {
         return new Vector2(this.x + v.getX(), this.y + v.getY());
     }
@@ -78,4 +82,12 @@ public class Vector2 {
         System.out.println("(" + this.getX() + " | " + this.getY() + ")" + "    Length: " + this.getLength());
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Vector2) {
+            Vector2 other = (Vector2)obj;
+            if (other.getX()==this.x && other.getY() == this.y) { return true; }
+            return false;
+        } else { return false; }
+    }
 }
