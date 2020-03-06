@@ -61,7 +61,7 @@ public class Game {
 
 
         inputManager.setListenerMapping1((PlayerKeyListener) gameWorld.player1);
-        //inputManager.setListenerMapping2((PlayerKeyListener) gameWorld.player2);
+        inputManager.setListenerMapping2((PlayerKeyListener) gameWorld.player2);
     }
 
     public void initVisuals() {

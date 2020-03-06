@@ -10,10 +10,15 @@ public class InputManager implements KeyListener {
 
     // region Key Flags:
 
-    boolean upPressed1 = false;
+    private boolean upPressed1 = false;
     boolean rightPressed1 = false;
     boolean leftPressed1 = false;
     boolean fightPressed1 = false;
+
+    boolean upPressed2 = false;
+    boolean rightPressed2 = false;
+    boolean leftPressed2 = false;
+    boolean fightPressed2 = false;
 
     //endregion
 
@@ -22,7 +27,6 @@ public class InputManager implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
 
     @Override
@@ -48,6 +52,25 @@ public class InputManager implements KeyListener {
 
         }
         //endregion
+
+        if (inputMapping2 != null) {
+
+            // D = right
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                rightPressed2 = false;
+            }
+
+            // A = left
+            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                leftPressed2 = false;
+            }
+
+            // W = Up
+            if (e.getKeyCode() == KeyEvent.VK_UP) {
+                upPressed2 = false;
+            }
+
+        }
     }
 
     @Override
@@ -55,7 +78,6 @@ public class InputManager implements KeyListener {
         //region Mapping 1:
 
         if (inputMapping1 != null) {
-
             // D = right
             if (e.getKeyCode() == KeyEvent.VK_D) {
                 rightPressed1 = true;
@@ -73,24 +95,45 @@ public class InputManager implements KeyListener {
 
         }
         //endregion
-    }
 
+        //region Mapping 2:
 
-    private void resetMapping1Flags() {
-        upPressed1 = false;
-        rightPressed1 = false;
-        leftPressed1 = false;
-        fightPressed1 = false;
+        if (inputMapping2 != null) {
+
+            // D = right
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                rightPressed2 = true;
+            }
+
+            // A = left
+            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                leftPressed2 = true;
+            }
+
+            // W = Up
+            if (e.getKeyCode() == KeyEvent.VK_UP) {
+                upPressed2 = true;
+            }
+
+        }
+        //endregion
     }
 
     public void sendKeyStates() {
         sendMapping1();
+        sendMapping2();
     }
 
     private void sendMapping1() {
         if (upPressed1) { inputMapping1.keyUp(); }
         if (leftPressed1) { inputMapping1.keyLeft(); }
         if (rightPressed1) { inputMapping1.keyRight(); }
+    }
+
+    private void sendMapping2() {
+        if (upPressed2) { inputMapping2.keyUp(); }
+        if (leftPressed2) { inputMapping2.keyLeft(); }
+        if (rightPressed2) { inputMapping2.keyRight(); }
     }
 
     public void setListenerMapping1(PlayerKeyListener p) { inputMapping1 = p; }
