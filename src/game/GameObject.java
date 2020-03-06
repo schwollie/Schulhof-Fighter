@@ -5,10 +5,13 @@ import physics.PhysicsObject;
 
 public class GameObject {
 
+    protected String tag;
     protected Transform transform;
     protected PhysicsObject physicsObject;
 
-    public GameObject() {}
+    public GameObject(String tag) {
+        this.tag = tag;
+    }
 
     public void setPhysicsObject(PhysicsObject physicsObject) {
         this.physicsObject = physicsObject;
@@ -24,5 +27,15 @@ public class GameObject {
 
     public Transform getTransform() {
         return transform;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public static GameObject getPlaceHolder(Transform trans) {
+        GameObject p = new GameObject("placeholder");
+        p.transform = trans;
+        return p;
     }
 }

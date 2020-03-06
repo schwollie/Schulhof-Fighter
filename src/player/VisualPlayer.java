@@ -1,6 +1,7 @@
 package player;
 
 import display.Canvas;
+import game.GameWorld;
 import graphics.AnimationManager;
 import logic.PlayerTypes;
 import logic.Transform;
@@ -14,9 +15,10 @@ public class VisualPlayer {
     public VisualPlayer(PlayerTypes type, Player player) {
         animManager = new AnimationManager(type, player);
         this.playerRef = player;
+        this.transform = player.getTransform();
     }
 
-    public void updatePlayer(Canvas c, double dt) {
-        animManager.runDefaultAnim(c, dt);
+    public void updatePlayer(GameWorld g, double dt) {
+        animManager.runDefaultAnim(g, dt);
     }
 }

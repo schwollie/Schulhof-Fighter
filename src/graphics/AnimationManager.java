@@ -1,6 +1,7 @@
 package graphics;
 
 import display.Canvas;
+import game.GameWorld;
 import logic.AnimationTypes;
 import logic.PlayerTypes;
 import logic.Transform;
@@ -26,8 +27,8 @@ public class AnimationManager {
         runAnim = AnimationLoader.loadAnimation(type, AnimationTypes.Run, player);
     }
 
-    public void runDefaultAnim(Canvas c, double dt) {
-        defaultAnim.playAnimation(c, dt);
+    public void runDefaultAnim(GameWorld g, double dt) {
+        defaultAnim.playAnimation(g, dt);
     }
 
 }

@@ -1,6 +1,8 @@
 package physics;
 
 import display.Canvas;
+import game.GameObject;
+import game.GameWorld;
 import graphics.Sprite;
 import logic.Transform;
 import logic.Vector2;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 
 public abstract class Collider {
 
-    protected Transform transform;  // only the position of transform is important
+    protected GameObject gameObjectRef;
     protected Vector2 offset;
     protected PhysicsObject physicsObject;
     protected boolean isStatic = false;
@@ -20,16 +22,16 @@ public abstract class Collider {
 
     protected Sprite debugSprite;
 
-    public Collider(Transform transform, Vector2 offset, PhysicsObject physicsObject) {
-        this.transform = transform;
+    public Collider(GameObject reference, Vector2 offset, PhysicsObject physicsObject) {
+        this.gameObjectRef = reference;
         this.offset = offset;
         this.physicsObject = physicsObject;
     }
 
-    public abstract void calcForce(PhysicsObject other);
+    public abstract void manageCollision(PhysicsObject other);
 
     public Vector2 getPosition() {
-        return this.transform.getPosition().add(offset);
+        return new Vector2(this.gameObjectRef.getTransform().getPosition()).add(offset);
     }
 
     public void setStatic(boolean aStatic) {
@@ -38,10 +40,14 @@ public abstract class Collider {
 
     public void setLayer(int l) { this.layer = l; }
 
-    public abstract void updateSprite(Canvas c);
+    public abstract void updateSprite(GameWorld g);
 
     public void setRestitution(double restitution) {
         this.restitution = restitution;
+    }
+
+    public GameObject getGameObject() {
+        return physicsObject.getGameObject();
     }
 
     public static boolean CircleVsCircle(CircleCollider a, CircleCollider b) {
@@ -209,7 +215,7 @@ public abstract class Collider {
     public static void resolveCircleVsCircle(CircleCollider a, CircleCollider b) {
 
         // Vector from a to b
-        Vector2 n = b.transform.getPosition().subtract(a.transform.getPosition());
+        Vector2 n = b.getPosition().subtract(a.getPosition());
 
         if (!CircleVsCircle(a, b)) { return; }  // they do not collide
         // if they do collide:
@@ -258,8 +264,8 @@ public abstract class Collider {
     public static void positionalCorrection(Collider a, Collider b, double penetration, Vector2 normal) {
         double percentage = 0.5; // 0.2  - 0.8
         Vector2 correction = normal.scalarMult( penetration / (a.physicsObject.getMassInverse() + b.physicsObject.getMassInverse()) * percentage);
-        a.transform.addPosition(correction.scalarMult(-a.physicsObject.getMassInverse()));
-        b.transform.addPosition(correction.scalarMult(b.physicsObject.getMassInverse()));
+        a.gameObjectRef.getPhysicsObject().addPosition( correction.scalarMult(-a.physicsObject.getMassInverse()));
+        b.gameObjectRef.getPhysicsObject().addPosition( correction.scalarMult(b.physicsObject.getMassInverse()));
     }
 
 }

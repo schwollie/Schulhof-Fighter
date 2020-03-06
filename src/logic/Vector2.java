@@ -1,11 +1,12 @@
 package logic;
 
-import java.util.Vector;
+
+import java.awt.*;
 
 public class Vector2 {
 
-    public static final Vector2 zero = new Vector2(0, 0);
-    public static final Vector2 ones = new Vector2(1, 1);
+    public static final Vector2 zero = new ImmutableVector2(0, 0);
+    public static final Vector2 ones = new ImmutableVector2(1, 1);
 
     private double x, y;
 
@@ -15,6 +16,11 @@ public class Vector2 {
     }
 
     public Vector2() {}
+
+    public Vector2(Vector2 v) {
+        this.x = v.x;
+        this.y = v.y;
+    }
 
     public void setValues(double x, double y) {
         this.x = x;
@@ -83,11 +89,41 @@ public class Vector2 {
     }
 
     @Override
+    public String toString() {
+        return "Vector2{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj instanceof Vector2) {
             Vector2 other = (Vector2)obj;
             if (other.getX()==this.x && other.getY() == this.y) { return true; }
             return false;
         } else { return false; }
+    }
+}
+
+class ImmutableVector2 extends Vector2 {
+
+    public ImmutableVector2(double x, double y) {
+        super(x, y);
+    }
+
+    @Override
+    public void normalize() {
+        throw new IllegalStateException("Read only");
+    }
+
+    @Override
+    public void setX(double x) {
+        throw new IllegalStateException("Read only");
+    }
+
+    @Override
+    public void setY(double y) {
+        throw new IllegalStateException("Read only");
     }
 }

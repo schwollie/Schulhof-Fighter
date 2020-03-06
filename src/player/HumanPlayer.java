@@ -6,23 +6,23 @@ import logic.Vector2;
 
 public class HumanPlayer extends Player implements PlayerKeyListener {
 
-    public HumanPlayer(Vector2 pos, PlayerTypes type) {
-        super(pos, type);
+    public HumanPlayer(Vector2 pos, PlayerTypes type, String tag) {
+        super(pos, type, tag);
     }
 
     @Override
     public void keyRight() {
-        this.getPlayerPhysics().setVelocityX(200);
+        this.walkRight();
     }
 
     @Override
     public void keyLeft() {
-        this.getPlayerPhysics().setVelocityX(-200);
+        this.walkLeft();
     }
 
     // jumping
     @Override
     public void keyUp() {
-        this.getPlayerPhysics().setVelocityY(-800);
+        this.Jump();
     }
 }

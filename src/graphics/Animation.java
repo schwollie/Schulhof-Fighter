@@ -1,6 +1,7 @@
 package graphics;
 
 import display.Canvas;
+import game.GameWorld;
 import logic.Transform;
 import player.Player;
 
@@ -22,23 +23,23 @@ public class Animation {
         this.playerRef = player;
     }
 
-    public void playAnimation(display.Canvas c, double deltaTime) {
+    public void playAnimation(GameWorld g, double deltaTime) {
         timeElapsed += deltaTime;
 
         if (timeElapsed > 1/speed || currentSprite == null) {
-            nextFrame(c);
+            nextFrame(g);
             timeElapsed = 0;
         }
     }
 
-    public void endAnimation(Canvas c) {
-        c.removeSprite(currentSprite);
+    public void endAnimation(GameWorld g) {
+        g.removeSprite(currentSprite);
         this.currentImage = 0;
         this.currentSprite = null;
         this.timeElapsed = 0;
     }
 
-    private void nextFrame(Canvas c) {
+    private void nextFrame(GameWorld g) {
         currentImage ++;
 
         if (currentImage >= images.length) {
@@ -47,20 +48,19 @@ public class Animation {
 
         if (images.length == 0) { return; }
 
-        c.removeSprite(currentSprite);
+        g.removeSprite(currentSprite);
         currentSprite = images[currentImage];
-        c.addSprite(currentSprite);
+        g.addSprite(currentSprite);
 
     }
 
     public static Animation loadAnim(String animSheetPath, int width, int height, int pictureCount, Player player) {
 
         ImageSprite[] animImages = new ImageSprite[pictureCount];
-        ImageSprite animSheet = new ImageSprite(new Dimension(width*pictureCount, height), animSheetPath);
+        ImageSprite animSheet = new ImageSprite(player, new Dimension(width*pictureCount, height), animSheetPath);
 
         for (int i = 0; i < pictureCount; i++) {
             animImages[i] = animSheet.getSlice(i*width, 0, width, height);
-            animImages[i].updateTransform(player.getTransform());
         }
 
         return new Animation(animImages, player);

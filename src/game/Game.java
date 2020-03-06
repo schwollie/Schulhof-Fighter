@@ -1,17 +1,18 @@
 package game;
 
+import display.Camera;
 import display.Canvas;
 import display.Window;
 import input.InputManager;
 import input.KeyEventListener;
 import input.PlayerKeyListener;
+import logic.FpsTracker;
 import logic.PlayerTypes;
 import logic.Transform;
 import logic.Vector2;
 import physics.PhysicsObject;
 import physics.RectCollider;
 import player.HumanPlayer;
-import player.Player;
 
 import java.awt.*;
 
@@ -19,7 +20,7 @@ public class Game {
 
     // Visuals
     public Window window;
-    public Canvas mainCanvas;
+    public Camera cam;
 
     // Input
     public InputManager inputManager;
@@ -30,31 +31,32 @@ public class Game {
     public void initGraphics() {
         // initialize the window & canvas as well as the KeyEventListener
         window = new Window(Consts.windowWidth, Consts.windowHeight);
-        mainCanvas = new Canvas();
 
         inputManager = new InputManager();
 
+        cam = new Camera();
+
         window.addKeyListener(inputManager);
-        window.add(mainCanvas);
+        window.add(cam.getCanvas());
         window.setVisible(true);
     }
 
     public void initGame() {
-        gameWorld.player1 = new HumanPlayer(new Vector2(0, 0), PlayerTypes.Default);
-        gameWorld.player2 = new HumanPlayer(new Vector2(400, 0), PlayerTypes.Default);
-        //gameWorld.player1.getPlayerPhysics().setMass(10);
-        //gameWorld.player2.getPlayerPhysics().setStatic(true);
+        gameWorld.player1 = new HumanPlayer(new Vector2(0, 0), PlayerTypes.Default, "Player1");
+        gameWorld.player2 = new HumanPlayer(new Vector2(2, 0), PlayerTypes.Default, "Player2");
 
         gameWorld.physicsObjects.add(gameWorld.player1.getPlayerPhysics());
         gameWorld.physicsObjects.add(gameWorld.player2.getPlayerPhysics());
 
         // Todo ground as gameObject
-        Transform groundTrans = new Transform(0, Consts.windowHeight - 100);
-        GameObject ground = new GameObject();
+        Transform groundTrans = new Transform(0,  5);
+        GameObject ground = new GameObject("Ground");
+        ground.setTransform(groundTrans);
         PhysicsObject groundCollider = new PhysicsObject(ground);
+        ground.setPhysicsObject(groundCollider);
         groundCollider.setStatic(true);
 
-        groundCollider.setCollider(new RectCollider(groundTrans, new Vector2(100, -100), groundCollider, new Vector2(Consts.windowWidth, 200)));
+        groundCollider.setCollider(new RectCollider(ground, new Vector2(0, -2), groundCollider, new Vector2(10, 1)));
         gameWorld.physicsObjects.add(groundCollider);
 
 
@@ -62,6 +64,9 @@ public class Game {
         //inputManager.setListenerMapping2((PlayerKeyListener) gameWorld.player2);
     }
 
+    public void initVisuals() {
+        cam.setVisibleSprites(gameWorld.getSprites());
+    }
 
     public void start() {
         //Thread paintThread = new Thread(this::startPaintLoop);
@@ -71,16 +76,15 @@ public class Game {
 
     public void startGameLoop() {
 
-        while (true) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
+        FpsTracker fpsTracker = new FpsTracker(120);
 
-            }
+        while (true) {
+            fpsTracker.stepForward();
+            fpsTracker.waitForTargetFPS();
 
             inputManager.sendKeyStates();
-            gameWorld.tick(0.01, mainCanvas);
-            EventQueue.invokeLater(mainCanvas::repaint);
+            gameWorld.tick(fpsTracker.getDeltaTime());
+            EventQueue.invokeLater(cam.getCanvas()::repaint);
         }
 
     }

@@ -17,19 +17,13 @@ public class PhysicsObject {
 
     private Vector2 force = Vector2.zero;
 
-
     public PhysicsObject(GameObject gameObject) {
         this.gameObjectRef = gameObject;
         //this.setCollider(new CircleCollider(gameObject.getTransform(),new Vector2(100,100), this, 100));
-        this.setCollider(new RectCollider(gameObject.getTransform(), new Vector2(130,50),this, new Vector2(120, 350)));
+        this.setCollider(new RectCollider(gameObject, new Vector2(0.3,0),this, new Vector2(0.4, 1)));
     }
 
-    public PhysicsObject(double mass, Vector2 velocity, Collider collider, GameObject gameObject) {
-        this.mass = mass;
-        this.velocity = velocity;
-        this.collider = collider;
-        this.gameObjectRef = gameObject;
-    }
+    //region Physics Calculations:
 
     public void calcForces(double dt, GameWorld world) {
         if (isStatic) { return; }
@@ -63,9 +57,8 @@ public class PhysicsObject {
             if (this.collider == null) { continue; }
 
             //this.addForce(this.collider.calcForce(p, dt));
-            this.collider.calcForce(p);
+            this.collider.manageCollision(p);
         }
-
     }
 
     private void addDrag(double dt) {
@@ -88,11 +81,13 @@ public class PhysicsObject {
 
     private void updateTransform(double dt) {
         Vector2 newV = this.velocity.scalarMult(dt);
-        //TODO: this can't be the true solution for the ground glitch effect
-        //newV.setX((int)newV.getX());
-        //newV.setY((int)newV.getY());
-        gameObjectRef.getTransform().addPosition( newV);
+        gameObjectRef.setTransform(gameObjectRef.getTransform().addPosition( newV));
+        //System.out.println(gameObjectRef.getTransform());
     }
+
+    //endregion
+
+    //region Getters + Setters:
 
     public void addForce(Vector2 force) {
         this.force = this.force.add(force);
@@ -104,6 +99,10 @@ public class PhysicsObject {
 
     public double getMass() {
         return mass;
+    }
+
+    public GameObject getGameObject() {
+        return this.gameObjectRef;
     }
 
     public double getMassInverse() {
@@ -120,6 +119,10 @@ public class PhysicsObject {
         massInverse = 0;
     }
 
+    public void addPosition(Vector2 pos) {
+        this.gameObjectRef.getTransform().setPosition( gameObjectRef.getTransform().addPosition(pos).getPosition() );
+    }
+
     public void addVelocity(Vector2 v) {
         this.velocity = this.velocity.add(v);
     }
@@ -127,10 +130,10 @@ public class PhysicsObject {
     public void setVelocityX (double x) { this.velocity.setX(x); }
     public void setVelocityY (double y) { this.velocity.setY(y); }
 
-
-
     public void setMass(double mass) {
         this.mass = mass;
         this.massInverse = 1/mass;
     }
+
+    //endregion
 }

@@ -7,8 +7,8 @@ public abstract class Consts {
     public static final int windowHeight = 1000;
 
     // physics
-    public static final double gravity = 2000;
-    public static final double linearDrag = 15;
+    public static final double gravity = 9.81;
+    public static final double linearDrag = 5;
 
     // image constants and file paths
     public static final String imageSrc = "images/";

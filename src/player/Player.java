@@ -3,6 +3,7 @@ package player;
 import display.Canvas;
 import game.Consts;
 import game.GameObject;
+import game.GameWorld;
 import logic.PlayerTypes;
 import logic.Transform;
 import logic.Vector2;
@@ -14,7 +15,9 @@ public abstract class Player extends GameObject {
     protected VisualPlayer visualPlayer;
     protected PlayerTypes type;
 
-    public Player(Vector2 pos, PlayerTypes type) {
+
+    public Player(Vector2 pos, PlayerTypes type, String tag) {
+        super(tag);
         this.transform = new Transform(pos);
         this.physicsObject = new PhysicsObject((GameObject)this);
 
@@ -22,8 +25,8 @@ public abstract class Player extends GameObject {
         this.visualPlayer = new VisualPlayer(type, this);
     }
 
-    public void tick(Canvas c, double deltaTime) {
-        visualPlayer.updatePlayer(c, deltaTime);
+    public void tick(GameWorld w, double deltaTime) {
+        visualPlayer.updatePlayer(w, deltaTime);
     }
 
     protected void setPlayerMaxPos() {
@@ -34,4 +37,18 @@ public abstract class Player extends GameObject {
     public PhysicsObject getPlayerPhysics() { return this.physicsObject; }
 
     public Transform getTransform() { return this.transform; }
+
+    protected void Jump() {
+        if (true) {
+            physicsObject.setVelocityY(-2);
+        }
+    }
+
+    protected void walkRight() {
+        physicsObject.setVelocityX(1);
+    }
+
+    protected void walkLeft() {
+        physicsObject.setVelocityX(-1);
+    }
 }

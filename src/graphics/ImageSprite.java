@@ -1,9 +1,13 @@
 package graphics;
 
+import display.Camera;
+import game.GameObject;
 import logic.Transform;
+import logic.Vector2;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +18,9 @@ public class ImageSprite extends Sprite {
     private BufferedImage img;
     private Dimension boundaries;  // array with length 2 [width, height]
 
-    public ImageSprite(Dimension boundaries, String filename) {
+    public ImageSprite(GameObject reference, Dimension boundaries, String filename) {
+        this.gameObjectRef = reference;
+
         try {
             img = ImageIO.read(new File(filename));
         } catch (IOException e) {
@@ -24,7 +30,8 @@ public class ImageSprite extends Sprite {
         this.boundaries = boundaries;
     }
 
-    public ImageSprite(Dimension boundaries, BufferedImage image) {
+    public ImageSprite(GameObject reference, Dimension boundaries, BufferedImage image) {
+        this.gameObjectRef = reference;
         img = image;
         this.boundaries = boundaries;
         img = rescaleImage(boundaries.width, boundaries.height);
@@ -41,13 +48,22 @@ public class ImageSprite extends Sprite {
 
     public ImageSprite getSlice(int x, int y, int width, int height) {
         BufferedImage slice = this.img.getSubimage(x, y, width, height);
-        return new ImageSprite(new Dimension(width, height),slice);
+        return new ImageSprite(this.gameObjectRef, new Dimension(width, height),slice);
     }
 
-    public void draw(Graphics g) {
-        if (visible == true)
-            g.drawImage(img, (int)transform.getPosition().getX(), (int)transform.getPosition().getY(),
-                    img.getWidth(), img.getHeight(), null);
+    public double getYScaleFactor() { // to preserve image ratio
+        return (double)img.getHeight() / img.getWidth();
+    }
+
+    public void draw(Graphics2D g, Camera cam) {
+        if (visible) {
+            Transform ownTrans = this.getTransform().addPosition(this.offset);
+            Transform screenCoord = cam.worldToScreen(ownTrans);
+
+            g.drawImage(img, (int)screenCoord.getX(), (int)screenCoord.getY(),
+                    (int)screenCoord.getXScale(), (int)(screenCoord.getYScale() * getYScaleFactor()), null);
+
+        }
     }
 
     public Dimension getBoundaries() {
@@ -60,10 +76,6 @@ public class ImageSprite extends Sprite {
         }
 
         this.boundaries = newBounds;
-    }
-
-    public void updateTransform(Transform t) {
-        this.transform = t;
     }
 
 }

@@ -1,6 +1,7 @@
 package game;
 
 import display.Canvas;
+import graphics.Sprite;
 import physics.PhysicsObject;
 import player.Player;
 
@@ -13,10 +14,24 @@ public class GameWorld {
 
     public ArrayList<PhysicsObject> physicsObjects = new ArrayList<>();
 
-    public void tick(double deltaTime, Canvas mainCanvas) {
+    // all sprites that can be rendered
+    private ArrayList<Sprite> sprites = new ArrayList<>();
 
-        player1.tick(mainCanvas, deltaTime);
-        player2.tick(mainCanvas, deltaTime);
+    public void addSprite(Sprite sprite) {
+        sprites.add(sprite);
+    }
+    public void removeSprite(Sprite sprite) {
+        sprites.remove(sprite);
+    }
+
+    public ArrayList<Sprite> getSprites() {
+        return sprites;
+    }
+
+    public void tick(double deltaTime) {
+
+        player1.tick(this, deltaTime);
+        player2.tick(this, deltaTime);
 
         for (PhysicsObject p: physicsObjects) {
             p.calcForces(deltaTime, this);
@@ -25,7 +40,7 @@ public class GameWorld {
         for (PhysicsObject p: physicsObjects) {
             p.updatePos(deltaTime);
 
-            p.getCollider().updateSprite(mainCanvas);
+            p.getCollider().updateSprite(this);
         }
     }
 
