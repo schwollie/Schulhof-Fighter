@@ -42,8 +42,8 @@ public class Game {
     }
 
     public void initGame() {
-        gameWorld.player1 = new HumanPlayer(new Vector2(0, 0), PlayerTypes.Default, "Player1");
-        gameWorld.player2 = new HumanPlayer(new Vector2(2, 0), PlayerTypes.Default, "Player2");
+        gameWorld.player1 = new HumanPlayer(new Vector2(0, 0), PlayerTypes.Hausperger, "Player1");
+        gameWorld.player2 = new HumanPlayer(new Vector2(2, 0), PlayerTypes.Hausperger, "Player2");
 
         gameWorld.physicsObjects.add(gameWorld.player1.getPlayerPhysics());
         gameWorld.physicsObjects.add(gameWorld.player2.getPlayerPhysics());

@@ -18,7 +18,7 @@ public class VisualPlayer {
         this.transform = player.getTransform();
     }
 
-    public void updatePlayer(GameWorld g, double dt) {
-        animManager.runDefaultAnim(g, dt);
+    public void updatePlayer(GameWorld g, double dt, PlayerState playerState) {
+        animManager.runAnimation(g, dt, playerState);
     }
 }

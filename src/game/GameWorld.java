@@ -20,6 +20,7 @@ public class GameWorld {
     public void addSprite(Sprite sprite) {
         sprites.add(sprite);
     }
+
     public void removeSprite(Sprite sprite) {
         sprites.remove(sprite);
     }
@@ -40,7 +41,7 @@ public class GameWorld {
         for (PhysicsObject p: physicsObjects) {
             p.updatePos(deltaTime);
 
-            p.getCollider().updateSprite(this);
+            //p.getCollider().updateSprite(this);
         }
     }
 

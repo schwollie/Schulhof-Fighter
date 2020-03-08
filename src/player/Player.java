@@ -14,6 +14,7 @@ public abstract class Player extends GameObject {
 
     protected VisualPlayer visualPlayer;
     protected PlayerTypes type;
+    protected PlayerState playerState = PlayerState.Default;
 
 
     public Player(Vector2 pos, PlayerTypes type, String tag) {
@@ -26,7 +27,8 @@ public abstract class Player extends GameObject {
     }
 
     public void tick(GameWorld w, double deltaTime) {
-        visualPlayer.updatePlayer(w, deltaTime);
+        this.setPlayerState();
+        visualPlayer.updatePlayer(w, deltaTime, playerState);
     }
 
     protected void setPlayerMaxPos() {
@@ -50,5 +52,19 @@ public abstract class Player extends GameObject {
 
     protected void walkLeft() {
         physicsObject.setVelocityX(-1);
+    }
+
+    protected void setPlayerState() {
+        if (Math.abs(this.physicsObject.getVelocity().getY()) > 0.2) {
+            this.playerState = PlayerState.Jump;
+            return;
+        }
+
+        if (Math.abs(this.physicsObject.getVelocity().getX()) > 0.2) {
+            this.playerState = PlayerState.WalkRight;
+            return;
+        }
+
+        this.playerState = PlayerState.Default;
     }
 }

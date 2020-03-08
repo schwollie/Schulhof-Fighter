@@ -55,7 +55,8 @@ public class ImageSprite extends Sprite {
         return (double)img.getHeight() / img.getWidth();
     }
 
-    public void draw(Graphics2D g, Camera cam) {
+    @Override
+    public synchronized void draw(Graphics2D g, Camera cam) {
         if (visible) {
             Transform ownTrans = this.getTransform().addPosition(this.offset);
             Transform screenCoord = cam.worldToScreen(ownTrans);

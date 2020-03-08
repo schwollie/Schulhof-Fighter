@@ -23,7 +23,7 @@ public class CircleSprite extends Sprite {
     }
 
     @Override
-    public void draw(Graphics2D g, Camera cam) {
+    public synchronized void draw(Graphics2D g, Camera cam) {
         if (!visible) { return; }
 
         Transform ownTrans = this.getTransform().addPosition(offset);
