@@ -27,7 +27,7 @@ public class CircleSprite extends Sprite {
         if (!visible) { return; }
 
         Transform ownTrans = this.getTransform().addPosition(offset);
-        ownTrans.setSize(new Vector2(radius, radius));
+        ownTrans.setScale(new Vector2(radius, radius));
         Transform screenCoord = cam.worldToScreen(ownTrans);
 
         g.setColor(this.color);

@@ -19,6 +19,7 @@ public abstract class Collider {
     protected boolean isStatic = false;
     protected double restitution = 0.2f;
     protected int layer = 1;
+    protected ArrayList<CollissionListener> collissionListeners = new ArrayList<>();
 
     protected Sprite debugSprite;
 
@@ -50,13 +51,19 @@ public abstract class Collider {
         return physicsObject.getGameObject();
     }
 
-    public static boolean CircleVsCircle(CircleCollider a, CircleCollider b) {
+    public void addListener(CollissionListener c) {
+        this.collissionListeners.add(c);
+    }
+
+    public void removeListener(CollissionListener c) { this.collissionListeners.remove(c); }
+
+    protected boolean CircleVsCircle(CircleCollider a, CircleCollider b) {
         double r = a.getRadius() + b.getRadius();
         double distance = a.getPosition().subtract(b.getPosition()).getLength();
         return distance < r;
     }
 
-    public static boolean CircleVsRect(CircleCollider c, RectCollider r) {
+    protected boolean CircleVsRect(CircleCollider c, RectCollider r) {
         double c_x = c.getPosition().getX(); double c_y = c.getPosition().getY();
         Vector2 dim = r.getDimensions();
         double r_x = r.getPosition().getX(); double r_y = r.getPosition().getY();
@@ -79,7 +86,7 @@ public abstract class Collider {
         return xCornerDistSq + yCornerDistSq <= maxCornerDistSq;
     }
 
-    public static void resolveCircleVsRect(RectCollider a, CircleCollider b) {
+    protected void resolveCircleVsRect(RectCollider a, CircleCollider b) {
         Vector2 normal;
         double penetration;
 
@@ -156,7 +163,7 @@ public abstract class Collider {
         resolveCollision(a, b, penetration, normal);
     }
 
-    public static void resolveRectVsRect(RectCollider a, RectCollider b) {
+    protected void resolveRectVsRect(RectCollider a, RectCollider b) {
         // Vector from A to B from midpoint to midpoint
         Vector2 aMid = a.getPosition().add(a.getDimensions().scalarMult(0.5));
         Vector2 bMid = b.getPosition().add(b.getDimensions().scalarMult(0.5));
@@ -196,7 +203,7 @@ public abstract class Collider {
                     else
                         normal = new Vector2( 0, 1 );
                     penetration = y_overlap;
-                    Collider.resolveCollision(a, b, penetration, normal);
+                    this.resolveCollision(a, b, penetration, normal);
                 }
                 else
                 {
@@ -206,13 +213,13 @@ public abstract class Collider {
                     else
                         normal = new Vector2( 1, 0 );
                     penetration = x_overlap;
-                    Collider.resolveCollision(a, b, penetration, normal);
+                    this.resolveCollision(a, b, penetration, normal);
                 }
             }
         }
     }
 
-    public static void resolveCircleVsCircle(CircleCollider a, CircleCollider b) {
+    protected void resolveCircleVsCircle(CircleCollider a, CircleCollider b) {
 
         // Vector from a to b
         Vector2 n = b.getPosition().subtract(a.getPosition());
@@ -236,7 +243,7 @@ public abstract class Collider {
 
     }
 
-    public static void resolveCollision(Collider a, Collider b, double penetration, Vector2 normal) {
+    protected void resolveCollision(Collider a, Collider b, double penetration, Vector2 normal) {
         //relative Velocity:
         Vector2 rv = b.physicsObject.getVelocity().subtract(a.physicsObject.getVelocity());
 
@@ -258,10 +265,14 @@ public abstract class Collider {
         a.physicsObject.addVelocity( impulse.scalarMult(a.physicsObject.getMassInverse() *-1) );
         b.physicsObject.addVelocity( impulse.scalarMult(b.physicsObject.getMassInverse()) );
 
-        Collider.positionalCorrection(a, b, penetration, normal);
+        this.positionalCorrection(a, b, penetration, normal);
+
+        for (CollissionListener c: collissionListeners) {
+            c.onCollision(a, b);
+        }
     }
 
-    public static void positionalCorrection(Collider a, Collider b, double penetration, Vector2 normal) {
+    protected void positionalCorrection(Collider a, Collider b, double penetration, Vector2 normal) {
         double percentage = 0.5; // 0.2  - 0.8
         Vector2 correction = normal.scalarMult( penetration / (a.physicsObject.getMassInverse() + b.physicsObject.getMassInverse()) * percentage);
         a.gameObjectRef.getPhysicsObject().addPosition( correction.scalarMult(-a.physicsObject.getMassInverse()));

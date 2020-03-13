@@ -3,54 +3,54 @@ package logic;
 public class Transform {
 
     private Vector2 position;
-    private Vector2 size;
+    private Vector2 scale;
     private double rotation;
 
     public Transform(double x, double y, double scaleX, double scaleY, double rotZ) {
         position = new Vector2(x, y);
-        size = new Vector2(scaleX, scaleY);
+        scale = new Vector2(scaleX, scaleY);
         rotation = rotZ;
     }
 
     public Transform(double x, double y) {
         position = new Vector2(x, y);
-        size = Vector2.ones;
+        scale = Vector2.ones;
         rotation = 1f;
     }
 
     public Transform() {
         this.position = Vector2.zero;
-        this.size = Vector2.ones;
+        this.scale = Vector2.ones;
         rotation = 0f;
     }
 
     public Transform(Vector2 pos) {
         this.position = pos;
-        size = Vector2.ones;
+        scale = Vector2.ones;
         rotation = 0f;
     }
 
-    public Transform(Vector2 pos, Vector2 size) {
+    public Transform(Vector2 pos, Vector2 scale) {
         this.position = new Vector2(pos);
-        this.size = new Vector2(size);
+        this.scale = new Vector2(scale);
         rotation = 0f;
     }
 
     public Transform(Transform transform) {
         this.position = new Vector2(transform.position);
-        this.size = new Vector2(transform.size);
+        this.scale = new Vector2(transform.scale);
         this.rotation = transform.rotation;
     }
 
     public double getX() { return this.position.getX(); }
     public double getY() { return this.position.getY(); }
 
-    public Vector2 getSize() {
-        return size;
+    public Vector2 getScale() {
+        return scale;
     }
 
-    public double getXScale() { return  this.size.getX(); }
-    public double getYScale() { return  this.size.getY(); }
+    public double getXScale() { return  this.scale.getX(); }
+    public double getYScale() { return  this.scale.getY(); }
 
     public Vector2 getPosition() { return this.position; }
 
@@ -68,8 +68,8 @@ public class Transform {
         this.rotation = rotation;
     }
 
-    public void setSize(Vector2 size) {
-        this.size = size;
+    public void setScale(Vector2 scale) {
+        this.scale = scale;
     }
 
     public void move(Vector2 offset) {
@@ -82,7 +82,7 @@ public class Transform {
     public String toString() {
         return "Transform{" +
                 "position=" + position +
-                ", size=" + size +
+                ", size=" + scale +
                 ", rotation=" + rotation +
                 '}';
     }

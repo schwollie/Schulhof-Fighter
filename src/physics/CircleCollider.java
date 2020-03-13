@@ -21,7 +21,7 @@ public class CircleCollider extends Collider {
     @Override
     public void manageCollision(PhysicsObject other) {
         if (other.getCollider() instanceof RectCollider) { return; }//Collider.resolveCircleVsRect((RectCollider)other.getCollider(), this);}
-        if (other.getCollider() instanceof CircleCollider) { Collider.resolveCircleVsCircle(this, (CircleCollider) other.getCollider()); }
+        if (other.getCollider() instanceof CircleCollider) { this.resolveCircleVsCircle(this, (CircleCollider) other.getCollider()); }
     }
 
     @Override

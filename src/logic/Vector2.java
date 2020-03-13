@@ -56,6 +56,10 @@ public class Vector2 {
 
     public Vector2 subtract(Vector2 v) { return new Vector2(this.x - v.getX(), this.y - v.getY()); }
 
+    public Vector2 rowWiseMultiplication(Vector2 other) {
+        return new Vector2(this.getX()*other.getX(),  this.getY()*other.getY());
+    }
+
     public Vector2 scalarMult(double a) {
         return new Vector2(a*this.getX(), a*this.getY());
     }

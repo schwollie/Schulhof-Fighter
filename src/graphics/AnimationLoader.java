@@ -25,7 +25,7 @@ public abstract class AnimationLoader {
             return Consts.Hausperger;
         }
 
-        return null;
+        throw new Error("NO SHEET FOUND: " + type);
     }
 
     private static String getAnimSheet(AnimationTypes type) {
@@ -35,12 +35,12 @@ public abstract class AnimationLoader {
         } else if(type==AnimationTypes.Run) {
             return Consts.runSheet;
         } else if(type==AnimationTypes.Fight) {
-            return Consts.runSheet; // Todo: add fight sheet
+            return Consts.fightSheet;
         } else if (type==AnimationTypes.SpecialAttack) {
-            return Consts.runSheet; // Todo: add sheet
+            return Consts.specialAttackSheet;
         }
 
-        return null;
+        throw new Error("NO SHEET FOUND: " + type);
     }
 
     private static int[] getAnimData(AnimationTypes animType, PlayerTypes type) {
@@ -53,17 +53,15 @@ public abstract class AnimationLoader {
     private static int getSheetLength(AnimationTypes type) {
         if (type==AnimationTypes.Default) {
             return Consts.defaultPicCount;
-
         } else if(type==AnimationTypes.Run) {
             return Consts.runPicCount;
-
         } else if(type==AnimationTypes.Fight) {
-            return Consts.runPicCount; // Todo: other sheet
+            return Consts.fightPicCount;
         } else if (type==AnimationTypes.SpecialAttack) {
-            return Consts.runPicCount; // Todo: other sheet
+            return Consts.specialAttackPicCount;
         }
 
-        return 0;
+        throw new Error("NO SHEET FOUND: " + type);
     }
 
     private static Dimension2D getAnimSpriteSize(PlayerTypes type) {
@@ -71,7 +69,7 @@ public abstract class AnimationLoader {
             return Consts.hauspergerCharacterSize;
         }
 
-        return Consts.defaultCharacterSize;
+        throw new Error("NO SHEET FOUND: " + type);
     }
 
 }

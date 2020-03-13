@@ -1,5 +1,7 @@
 package display;
 
+import game.Consts;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,7 +15,11 @@ public class Window extends JFrame{
         this.setFocusable(true);
         this.setFocusTraversalKeysEnabled(true);
         this.setVisible(false);
+        this.setUndecorated(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        if (Consts.Fullscreen)
+            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            this.setUndecorated(true);
     }
 
 }

@@ -27,7 +27,7 @@ public class RectSprite extends Sprite {
         if (!visible) { return; }
 
         Transform ownTrans = this.getTransform().addPosition(offset);
-        ownTrans.setSize(new Vector2(Size.getX(), Size.getY()));
+        ownTrans.setScale(new Vector2(Size.getX(), Size.getY()));
         Transform screenCoord = cam.worldToScreen(ownTrans);
 
         g.setColor(this.color);

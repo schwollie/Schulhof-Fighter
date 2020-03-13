@@ -19,8 +19,7 @@ public class PhysicsObject {
 
     public PhysicsObject(GameObject gameObject) {
         this.gameObjectRef = gameObject;
-        //this.setCollider(new CircleCollider(gameObject.getTransform(),new Vector2(100,100), this, 100));
-        this.setCollider(new RectCollider(gameObject, new Vector2(0.3,0),this, new Vector2(0.4, 1)));
+        //this.setCollider(new CircleCollider(gameObject.getTransform(),new Vector2(100,100), this, 100))
     }
 
     //region Physics Calculations:
