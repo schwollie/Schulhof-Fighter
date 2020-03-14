@@ -20,6 +20,7 @@ public abstract class Player extends GameObject implements CollissionListener {
     protected boolean isOnGround = false;
 
     protected double Health = 10.0;
+    protected AttackManager attackManager;
 
 
     public Player(Vector2 pos, PlayerTypes type, String tag) {
@@ -31,16 +32,12 @@ public abstract class Player extends GameObject implements CollissionListener {
 
         this.type = type;
         this.visualPlayer = new VisualPlayer(type, this);
+        this.attackManager = new AttackManager(this);
     }
 
     public void tick(GameWorld w, double deltaTime) {
         this.setPlayerState();
         visualPlayer.updatePlayer(w, deltaTime, playerState);
-    }
-
-    protected void setPlayerMaxPos() {
-        Vector2 pos = transform.getPosition();
-        this.transform.setPosition(new Vector2(pos.getX(), Math.min(pos.getY(), Consts.windowHeight-900)));
     }
 
     public PhysicsObject getPlayerPhysics() { return this.physicsObject; }
