@@ -1,6 +1,6 @@
 package input;
 
-import game.Consts;
+import logic.Vector2;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -24,7 +24,10 @@ public class InputManager implements KeyListener, MouseMotionListener {
     //endregion
 
     private PlayerKeyListener inputMapping1;
-    private  PlayerKeyListener inputMapping2;
+    private PlayerKeyListener inputMapping2;
+
+    //mouse location
+    private Vector2 mousePosition = new Vector2(0, 0);
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -156,16 +159,24 @@ public class InputManager implements KeyListener, MouseMotionListener {
         inputMapping2 = p;
     }
 
-
     //For the main menu
+    public Vector2 getMousePosition() {
+        return mousePosition;
+    }
+
+    public void setMousePosition(Vector2 mousePosition) {
+        this.mousePosition = mousePosition;
+    }
+
     @Override
     public void mouseDragged(MouseEvent e) {
-
+        mousePosition.setX(e.getX());
+        mousePosition.setY(e.getY());
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        Consts.mousePosition.setX(e.getX());
-        Consts.mousePosition.setY(e.getY());
+        mousePosition.setX(e.getX());
+        mousePosition.setY(e.getY());
     }
 }

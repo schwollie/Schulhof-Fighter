@@ -93,7 +93,7 @@ public class Game {
             inputManager.sendKeyStates();
             gameWorld.tick(fpsTracker.getDeltaTime());
 
-            mainmenu.tick(fpsTracker.getDeltaTime());
+            mainmenu.tick(fpsTracker.getDeltaTime(), inputManager.getMousePosition());
 
             EventQueue.invokeLater(cam.getCanvas()::repaint);
         }

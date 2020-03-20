@@ -82,7 +82,6 @@ public class Bubble {
 
             setPosition(posX, random.nextInt(Consts.windowWidth));
         }
-
         setVelocity(velocityX, velocityY);
     }
 
@@ -92,8 +91,8 @@ public class Bubble {
         }
     }
 
-    public boolean isBubbleInMouseDistance() {
-        double distance = Math.sqrt(Math.pow(position.getX() - Consts.mousePosition.getX(), 2) + Math.pow(position.getY() - Consts.mousePosition.getY(), 2));
+    public boolean isInMouseRadius(Vector2 mousePosition) {
+        double distance = Math.sqrt(Math.pow(position.getX() - mousePosition.getX(), 2) + Math.pow(position.getY() - mousePosition.getY(), 2));
         return distance <= Consts.bubblesConnectRadius;
     }
 }

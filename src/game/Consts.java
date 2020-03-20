@@ -2,7 +2,6 @@ package game;
 
 
 import logic.Dimension2D;
-import logic.Vector2;
 
 import java.awt.*;
 
@@ -14,10 +13,8 @@ public abstract class Consts {
     public static final boolean Fullscreen = true;
     public static final double ratio = (double) windowWidth / windowHeight;
 
-    //inputs - ich weiß jz spontan nichts besseres...
-    public static Vector2 mousePosition = new Vector2(0, 0);
     //mainmenu
-    public static int bubblesAmount = 50;
+    public static int bubblesAmount = 100;
     public static int bubblesConnectRadius = 150;
 
     // physics
@@ -39,7 +36,6 @@ public abstract class Consts {
 
     public static final String runSheet = "runSheet.png";
     public static final int runPicCount = 8;
-
 
     // default Character:
     public static final String defaultCharacter = "defaultCharacter/";

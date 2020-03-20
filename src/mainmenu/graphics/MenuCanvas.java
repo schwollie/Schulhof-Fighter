@@ -12,6 +12,7 @@ public class MenuCanvas extends JPanel {
     private ArrayList<Bubble> bubbles;
     private ArrayList<Bubble> bubblesInRadius = new ArrayList<>();
 
+
     public MenuCanvas() {
         bubbles = new ArrayList<>();
     }
@@ -24,25 +25,29 @@ public class MenuCanvas extends JPanel {
         }
     }
 
-    public void tick(double deltaTime) {
-        bubblesInRadius.clear();
-        for (Bubble bubble : bubbles) {
-            Vector2 currentVelocity = bubble.getVelocity().scalarMult(deltaTime);
-            bubble.addPosition(currentVelocity);
+    public void tick(double deltaTime, Vector2 mousePosition) {
+        synchronized (bubblesInRadius) {
+            synchronized (bubbles) {
+                bubblesInRadius.clear();
 
-            bubble.checkForOutOfSight();
+                for (Bubble bubble : bubbles) {
+                    Vector2 currentVelocity = bubble.getVelocity().scalarMult(deltaTime);
+                    bubble.addPosition(currentVelocity);
 
-            if (bubble.isBubbleInMouseDistance()) {
-                bubblesInRadius.add(bubble);
-                Vector2 velocityDirectionToMouse = new Vector2(Consts.mousePosition.getX() - bubble.getPosition().getX(), Consts.mousePosition.getY() - bubble.getPosition().getY());
-                velocityDirectionToMouse.normalize();
-                velocityDirectionToMouse = velocityDirectionToMouse.scalarMult(bubble.getSpeed() * 0.7);
-                Vector2 velocityToMouse = velocityDirectionToMouse.scalarMult(deltaTime);
-                bubble.addPosition(velocityToMouse);
+                    bubble.checkForOutOfSight();
+
+                    if (bubble.isInMouseRadius(mousePosition)) {
+                        bubblesInRadius.add(bubble);
+                        Vector2 velocityDirectionToMouse = new Vector2(mousePosition.getX() - bubble.getPosition().getX(), mousePosition.getY() - bubble.getPosition().getY());
+                        velocityDirectionToMouse.normalize();
+                        velocityDirectionToMouse = velocityDirectionToMouse.scalarMult(bubble.getSpeed() * 0.7);
+                        Vector2 velocityToMouse = velocityDirectionToMouse.scalarMult(deltaTime);
+                        bubble.addPosition(velocityToMouse);
+                    }
+
+                }
             }
-
         }
-
         repaint();
     }
 
@@ -52,24 +57,34 @@ public class MenuCanvas extends JPanel {
         Graphics2D graphics2D = (Graphics2D) g;
 
         //test colors : new Color(141, 228, 205) - rgb(52, 152, 219)
-        GradientPaint gradient = new GradientPaint(0, 0, new Color(41, 128, 185), Consts.windowWidth, Consts.windowHeight, new Color(121, 208, 185));
-        graphics2D.setPaint(gradient);
+        GradientPaint backgroundGradient = new GradientPaint(0, 0, new Color(41, 128, 185), Consts.windowWidth, Consts.windowHeight, new Color(121, 208, 185));
+        graphics2D.setPaint(backgroundGradient);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
         g.setColor(Color.WHITE);
 
-        for (Bubble bubble : bubblesInRadius) {
-            for (Bubble targetBubble : bubblesInRadius) {
-                g.drawLine((int) bubble.getPosition().getX(), (int) bubble.getPosition().getY(), (int) targetBubble.getPosition().getX(), (int) targetBubble.getPosition().getY());
+        synchronized (bubblesInRadius) {
+            for (int i = 0; i < bubblesInRadius.size(); i++) {
+                Bubble bubble = bubblesInRadius.get(i);
+                for (int j = i; j < bubblesInRadius.size(); j++) {
+                    Bubble targetBubble = bubblesInRadius.get(j);
+                    g.drawLine((int) bubble.getPosition().getX(), (int) bubble.getPosition().getY(), (int) targetBubble.getPosition().getX(), (int) targetBubble.getPosition().getY());
+                }
             }
         }
+        synchronized (bubbles) {
+            for (Bubble bubble : bubbles) {
+                int radius = bubble.getRadius();
+                int posX = (int) bubble.getPosition().getX();
+                int posY = (int) bubble.getPosition().getY();
+                graphics2D.translate(-radius / 2, -radius / 2);
+                //für schattierung
+                GradientPaint shadowGradient = new GradientPaint(posX, posY + radius / 3, new Color(220, 220, 220), posX + radius, posY + radius, new Color(255, 255, 255));
+                graphics2D.setPaint(shadowGradient);
+                g.fillOval(posX, posY, radius, radius);
 
-        for (Bubble bubble : bubbles) {
-            int radius = bubble.isBubbleInMouseDistance() ? bubble.getRadius() + 2 : bubble.getRadius();
-            graphics2D.translate(-radius / 2, -radius / 2);
-            g.fillOval((int) bubble.getPosition().getX(), (int) bubble.getPosition().getY(), radius, radius);
-            graphics2D.translate(radius / 2, radius / 2);
+                graphics2D.translate(radius / 2, radius / 2);
+            }
         }
-
 
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 150));
