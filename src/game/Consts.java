@@ -13,6 +13,7 @@ public abstract class Consts {
     public static final boolean Fullscreen = true;
     public static final double ratio = (double) windowWidth / windowHeight;
 
+
     //mainmenu
     public static int bubblesAmount = 100;
     public static int bubblesConnectRadius = 150;

@@ -49,6 +49,7 @@ public class MenuCanvas extends JPanel {
             }
         }
         EventQueue.invokeLater(this::repaint);
+
     }
 
     @Override

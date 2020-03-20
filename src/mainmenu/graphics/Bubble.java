@@ -60,6 +60,7 @@ public class Bubble {
         this.speed = speed;
     }
 
+
     public void randomize() {
         //randomize radius
         radius = random.nextInt(10) + 5;

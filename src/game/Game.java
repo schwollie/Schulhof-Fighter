@@ -97,6 +97,5 @@ public class Game {
 
             EventQueue.invokeLater(cam.getCanvas()::repaint);
         }
-
     }
 }
