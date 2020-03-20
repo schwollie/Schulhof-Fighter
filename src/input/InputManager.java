@@ -1,12 +1,13 @@
 package input;
 
-import player.Player;
+import game.Consts;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
-public class InputManager implements KeyListener {
+public class InputManager implements KeyListener, MouseMotionListener {
 
     // region Key Flags:
 
@@ -75,6 +76,11 @@ public class InputManager implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        //general
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            System.exit(0);
+        }
+
         //region Mapping 1:
 
         if (inputMapping1 != null) {
@@ -131,12 +137,35 @@ public class InputManager implements KeyListener {
     }
 
     private void sendMapping2() {
-        if (upPressed2) { inputMapping2.keyUp(); }
-        if (leftPressed2) { inputMapping2.keyLeft(); }
-        if (rightPressed2) { inputMapping2.keyRight(); }
+        if (upPressed2) {
+            inputMapping2.keyUp();
+        }
+        if (leftPressed2) {
+            inputMapping2.keyLeft();
+        }
+        if (rightPressed2) {
+            inputMapping2.keyRight();
+        }
     }
 
-    public void setListenerMapping1(PlayerKeyListener p) { inputMapping1 = p; }
-    public void setListenerMapping2(PlayerKeyListener p) { inputMapping2 = p; }
+    public void setListenerMapping1(PlayerKeyListener p) {
+        inputMapping1 = p;
+    }
 
+    public void setListenerMapping2(PlayerKeyListener p) {
+        inputMapping2 = p;
+    }
+
+
+    //For the main menu
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        Consts.mousePosition.setX(e.getX());
+        Consts.mousePosition.setY(e.getY());
+    }
 }

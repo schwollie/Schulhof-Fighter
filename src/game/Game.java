@@ -1,15 +1,14 @@
 package game;
 
 import display.Camera;
-import display.Canvas;
 import display.Window;
 import input.InputManager;
-import input.KeyEventListener;
 import input.PlayerKeyListener;
 import logic.FpsTracker;
 import logic.PlayerTypes;
 import logic.Transform;
 import logic.Vector2;
+import mainmenu.graphics.MenuCanvas;
 import physics.PhysicsObject;
 import physics.RectCollider;
 import player.HumanPlayer;
@@ -28,6 +27,9 @@ public class Game {
     // World
     public GameWorld gameWorld = new GameWorld();
 
+    //MAIN MENU
+    private MenuCanvas mainmenu;
+
     public void initGraphics() {
         // initialize the window & canvas as well as the KeyEventListener
         window = new Window(Consts.windowWidth, Consts.windowHeight);
@@ -36,9 +38,15 @@ public class Game {
 
         cam = new Camera();
 
+        mainmenu = new MenuCanvas();
+
+        window.addMouseMotionListener(inputManager);
         window.addKeyListener(inputManager);
-        window.add(cam.getCanvas());
+        //window.add(cam.getCanvas());
+        window.add(mainmenu);
         window.setVisible(true);
+
+        mainmenu.createStandardBubbles(Consts.bubblesAmount);
     }
 
     public void initGame() {
@@ -84,6 +92,9 @@ public class Game {
 
             inputManager.sendKeyStates();
             gameWorld.tick(fpsTracker.getDeltaTime());
+
+            mainmenu.tick(fpsTracker.getDeltaTime());
+
             EventQueue.invokeLater(cam.getCanvas()::repaint);
         }
 

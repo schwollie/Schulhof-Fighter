@@ -2,16 +2,23 @@ package game;
 
 
 import logic.Dimension2D;
+import logic.Vector2;
 
 import java.awt.*;
 
 public abstract class Consts {
 
     public static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public static final int windowWidth = (int)screenSize.getWidth();
-    public static final int windowHeight = (int)screenSize.getHeight();
+    public static final int windowWidth = (int) screenSize.getWidth();
+    public static final int windowHeight = (int) screenSize.getHeight();
     public static final boolean Fullscreen = true;
-    public static final double ratio = (double) windowWidth/windowHeight;
+    public static final double ratio = (double) windowWidth / windowHeight;
+
+    //inputs - ich weiß jz spontan nichts besseres...
+    public static Vector2 mousePosition = new Vector2(0, 0);
+    //mainmenu
+    public static int bubblesAmount = 50;
+    public static int bubblesConnectRadius = 150;
 
     // physics
     public static final double gravity = 9.81;
