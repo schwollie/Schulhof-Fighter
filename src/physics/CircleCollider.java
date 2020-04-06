@@ -13,15 +13,15 @@ public class CircleCollider extends Collider {
     private double radius = 1;
     private int layer = 1;
 
-    public CircleCollider(GameObject reference, Vector2 offset,  PhysicsObject physicsObject, double radius) {
-        super(reference, offset, physicsObject);
+    public CircleCollider(GameObject reference, Vector2 offset, double radius) {
+        super(reference, offset);
         this.radius = radius;
     }
 
     @Override
-    public void manageCollision(PhysicsObject other) {
+    public void manageCollision(PhysicsObject self, PhysicsObject other) {
         if (other.getCollider() instanceof RectCollider) { return; }//Collider.resolveCircleVsRect((RectCollider)other.getCollider(), this);}
-        if (other.getCollider() instanceof CircleCollider) { this.resolveCircleVsCircle(this, (CircleCollider) other.getCollider()); }
+        if (other.getCollider() instanceof CircleCollider) { this.resolveCircleVsCircle(this, (CircleCollider) other.getCollider(), self, other); }
     }
 
     @Override

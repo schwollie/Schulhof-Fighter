@@ -22,12 +22,15 @@ public class Canvas extends JPanel {
     public ArrayList<Sprite> getSprites() {
         return sprites;
     }
+
     public void setSprites(ArrayList<Sprite> sprites) {
         this.sprites = sprites;
     }
+
     public Camera getCam() {
         return cam;
     }
+
     public void setCam(Camera cam) {
         this.cam = cam;
     }
@@ -36,9 +39,11 @@ public class Canvas extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D graphics2D = (Graphics2D) g;
+        
         for (Sprite sprite : sprites) {
             sprite.draw(graphics2D, cam);
         }
+
     }
 
 }

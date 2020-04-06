@@ -10,7 +10,7 @@ public class Window extends JFrame{
     public Window(int width, int height) {
         super();
         this.setSize(new Dimension(width, height));
-        this.setTitle("Schulhof-Fighter");
+        this.setTitle("Schulhof Fighter");
         this.setFocusable(true);
         this.setFocusTraversalKeysEnabled(true);
         this.setVisible(false);

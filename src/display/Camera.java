@@ -10,9 +10,6 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Camera {
-
-    // Todo: make all sprites into one coodirnate system not linked to pixels
-
     private Canvas canvas;
     private Vector2 position = new Vector2(0, 0); // world coordinates
     private double ratio = Consts.ratio;

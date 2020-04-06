@@ -27,7 +27,7 @@ public abstract class Player extends GameObject implements CollissionListener {
         super(tag);
         this.transform = new Transform(pos);
         this.physicsObject = new PhysicsObject(this);
-        this.physicsObject.setCollider(new RectCollider(this, new Vector2(0.3,0.1),physicsObject, new Vector2(0.4, 0.9)));
+        this.physicsObject.setCollider(new RectCollider(this, new Vector2(0.3,0.1), new Vector2(0.4, 0.9)));
         this.physicsObject.getCollider().addListener(this);
 
         this.type = type;
@@ -35,7 +35,7 @@ public abstract class Player extends GameObject implements CollissionListener {
         this.attackManager = new AttackManager(this);
     }
 
-    public void tick(GameWorld w, double deltaTime) {
+    public void tick(GameWorld w, double deltaTime, GameWorld world) {
         this.setPlayerState();
         visualPlayer.updatePlayer(w, deltaTime, playerState);
     }

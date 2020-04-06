@@ -37,7 +37,7 @@ public class PhysicsObject {
 
     private void calcPhysics(double dt, GameWorld world) {
         this.force = new Vector2(0, 0);  // reset all forces
-        this.calcCollisionForce(dt, world);
+        this.calcCollisionForce(world);
         this.addGravity();
         this.addDrag(dt);
         //this.getForce().print();
@@ -48,15 +48,15 @@ public class PhysicsObject {
         addForce( new Vector2(0, Consts.gravity).scalarMult(mass));
     }
 
-    private void calcCollisionForce(double dt, GameWorld world) {
+    private void calcCollisionForce(GameWorld world) {
 
         for (PhysicsObject p: world.physicsObjects) {
             if (p == this) { continue; }
             if (p.collider == null) { continue; }
-            if (this.collider == null) { continue; }
+            if (this.collider == null) { return; }
 
             //this.addForce(this.collider.calcForce(p, dt));
-            this.collider.manageCollision(p);
+            this.collider.manageCollision(this, p);
         }
     }
 

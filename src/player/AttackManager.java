@@ -1,9 +1,10 @@
 package player;
 
 import game.GameObject;
-import physics.Collider;
+import logic.Vector2;
+import physics.*;
 
-public class AttackManager {
+public class AttackManager implements CollissionListener {
 
     private GameObject ref;
 
@@ -14,7 +15,9 @@ public class AttackManager {
         ref = g;
     }
 
-    public void lowAttack() {}
+    public void lowAttack() {
+
+    }
 
     public void dAttack() {}
 
@@ -22,4 +25,8 @@ public class AttackManager {
 
     public void lowBlock() {}
 
+    @Override
+    public void onCollision(Collider c1, Collider c2) {
+
+    }
 }

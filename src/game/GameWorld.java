@@ -2,6 +2,7 @@ package game;
 
 import display.Canvas;
 import graphics.Sprite;
+import physics.Collider;
 import physics.PhysicsObject;
 import player.Player;
 
@@ -31,8 +32,8 @@ public class GameWorld {
 
     public void tick(double deltaTime) {
 
-        player1.tick(this, deltaTime);
-        player2.tick(this, deltaTime);
+        player1.tick(this, deltaTime, this);
+        player2.tick(this, deltaTime, this);
 
         for (PhysicsObject p: physicsObjects) {
             p.calcForces(deltaTime, this);
@@ -40,8 +41,7 @@ public class GameWorld {
 
         for (PhysicsObject p: physicsObjects) {
             p.updatePos(deltaTime);
-
-            //p.getCollider().updateSprite(this);
+            p.getCollider().updateSprite(this);
         }
     }
 

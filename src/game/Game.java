@@ -42,11 +42,11 @@ public class Game {
 
         window.addMouseMotionListener(inputManager);
         window.addKeyListener(inputManager);
-        //window.add(cam.getCanvas());
-        window.add(mainmenu);
+        window.add(cam.getCanvas());
+        //window.add(mainmenu);
         window.setVisible(true);
 
-        mainmenu.createStandardBubbles(Consts.bubblesAmount);
+        //mainmenu.createStandardBubbles(Consts.bubblesAmount);
     }
 
     public void initGame() {
@@ -64,7 +64,7 @@ public class Game {
         ground.setPhysicsObject(groundCollider);
         groundCollider.setStatic(true);
 
-        groundCollider.setCollider(new RectCollider(ground, new Vector2(0, -2), groundCollider, new Vector2(10, 1)));
+        groundCollider.setCollider(new RectCollider(ground, new Vector2(0, -2), new Vector2(10, 1)));
         gameWorld.physicsObjects.add(groundCollider);
 
 

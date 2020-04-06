@@ -1,24 +1,22 @@
 package physics;
 
-import display.Canvas;
 import game.GameObject;
 import game.GameWorld;
 import graphics.RectSprite;
-import logic.Transform;
 import logic.Vector2;
 
 public class RectCollider extends Collider {
 
     Vector2 dimensions;
 
-    public RectCollider(GameObject reference, Vector2 offset, PhysicsObject physicsObject, Vector2 dimensions) {
-        super(reference, offset, physicsObject);
+    public RectCollider(GameObject reference, Vector2 offset, Vector2 dimensions) {
+        super(reference, offset);
         this.dimensions = dimensions;  // width, height
     }
 
     @Override
-    public void manageCollision(PhysicsObject other) {
-        if (other.getCollider() instanceof RectCollider) { this.resolveRectVsRect(this, (RectCollider) other.getCollider());}
+    public void manageCollision(PhysicsObject self, PhysicsObject other) {
+        if (other.getCollider() instanceof RectCollider) { this.resolveRectVsRect(this, (RectCollider) other.getCollider(), self, other);}
         if (other.getCollider() instanceof CircleCollider) { return; } //Collider.resolveCircleVsRect(this, (CircleCollider)other.getCollider()); }
     }
 
