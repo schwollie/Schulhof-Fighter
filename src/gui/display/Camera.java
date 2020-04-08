@@ -1,7 +1,6 @@
-package display;
+package gui.display;
 
 import game.Consts;
-import game.Scene;
 import graphics.Sprite;
 import logic.Dimension2D;
 import logic.Transform;
@@ -11,23 +10,19 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Camera {
-
-    private Canvas canvas;
+    private gui.display.Canvas canvas;
     private Vector2 position = new Vector2(0, 0); // world coordinates
     private double ratio = Consts.ratio;
     private double scale = 6;
     private Dimension2D ScreenSize = new Dimension2D(Consts.windowWidth, Consts.windowHeight);
 
-    private Scene scene;
-
-    public Camera(Scene scene) {
-        canvas = new Canvas();
+    public Camera() {
+        canvas = new gui.display.Canvas();
         canvas.setCam(this);
-        this.scene = scene;
     }
 
-    public void Render(Graphics2D g) {
-        scene.Render(g, this);
+    public void setVisibleSprites(ArrayList<Sprite> sprites) {
+        this.canvas.setSprites(sprites);
     }
 
     public Canvas getCanvas() {

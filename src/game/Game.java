@@ -1,12 +1,16 @@
 package game;
 
-import display.Camera;
-import display.Window;
+import gui.components.TestClass;
+import gui.display.Camera;
+import gui.display.Window;
+import gui.mainmenu.graphics.MenuCanvas;
 import input.InputManager;
 import input.PlayerKeyListener;
-import logic.*;
-import mainmenu.graphics.MenuCanvas;
-import physics.PhysicsComponent;
+import logic.Dimension2D;
+import logic.PlayerTypes;
+import logic.Transform;
+import logic.Vector2;
+import physics.PhysicsObject;
 import physics.RectCollider;
 import player.HumanPlayer;
 import time.FpsTracker;
@@ -23,7 +27,7 @@ public class Game {
     public InputManager inputManager;
 
     // World
-    public Scene scene = new Scene();
+    public GameWorld gameWorld = new GameWorld();
 
     //MAIN MENU
     private MenuCanvas mainmenu;
@@ -34,40 +38,45 @@ public class Game {
 
         inputManager = new InputManager();
 
-        cam = new Camera(scene);
-
+        cam = new Camera();
         mainmenu = new MenuCanvas();
 
         window.addMouseMotionListener(inputManager);
         window.addKeyListener(inputManager);
-        window.add(cam.getCanvas());
-        //window.add(mainmenu);
+        //window.add(cam.getCanvas());
+        window.add(mainmenu);
+        mainmenu.addGuiListener(new TestClass());
         window.setVisible(true);
 
-        //mainmenu.createStandardBubbles(Consts.bubblesAmount);
+        mainmenu.createStandardBubbles(Consts.bubblesAmount);
     }
 
     public void initGame() {
-        HumanPlayer a = new HumanPlayer(scene, new Vector2(0, 0), PlayerTypes.Hausperger, "Player1");
-        HumanPlayer b = new HumanPlayer(scene, new Vector2(2, 0), PlayerTypes.Hausperger, "Player2");
+        gameWorld.player1 = new HumanPlayer(gameWorld, new Vector2(0, 0), PlayerTypes.Hausperger, "Player1");
+        gameWorld.player2 = new HumanPlayer(gameWorld, new Vector2(2, 0), PlayerTypes.Hausperger, "Player2");
 
-        inputManager.setListenerMapping1((PlayerKeyListener) a);
-        inputManager.setListenerMapping2((PlayerKeyListener) b);
-
-        scene.addGameObject(a);
-        scene.addGameObject(b);
+        gameWorld.physicsObjects.add(gameWorld.player1.getPlayerPhysics());
+        gameWorld.physicsObjects.add(gameWorld.player2.getPlayerPhysics());
 
         // Todo ground as gameObject
-        Transform groundTrans = new Transform(0,  5);
-        GameObject ground = new GameObject("Ground", scene);
+        Transform groundTrans = new Transform(0, 5);
+        GameObject ground = new GameObject("Ground", gameWorld);
         ground.setTransform(groundTrans);
-        PhysicsComponent groundCollider = new PhysicsComponent(ground);
-        ground.setPhysicsComponent(groundCollider);
+        PhysicsObject groundCollider = new PhysicsObject(ground);
+        ground.setPhysicsObject(groundCollider);
         groundCollider.setStatic(true);
 
-        groundCollider.setCollider(new RectCollider(ground, new Vector2(0, -2), new Dimension2D(10, 1)));
 
-        scene.gameObjects.add(ground);
+        groundCollider.setCollider(new RectCollider(ground, new Vector2(0, -2), new Dimension2D(10, 1)));
+        gameWorld.physicsObjects.add(groundCollider);
+
+
+        inputManager.setListenerMapping1((PlayerKeyListener) gameWorld.player1);
+        inputManager.setListenerMapping2((PlayerKeyListener) gameWorld.player2);
+    }
+
+    public void initVisuals() {
+        cam.setVisibleSprites(gameWorld.getSprites());
     }
 
     public void start() {
@@ -85,12 +94,11 @@ public class Game {
             fpsTracker.waitForTargetFPS();
 
             inputManager.sendKeyStates();
-
-            scene.tick(fpsTracker.getDeltaTime());
+            gameWorld.tick(fpsTracker.getDeltaTime());
 
             //System.out.println(fpsTracker.getCurrentFPS());
 
-            //mainmenu.tick(fpsTracker.getDeltaTime(), inputManager.getMousePosition());
+            mainmenu.tick(fpsTracker.getDeltaTime(), inputManager.getMousePosition());
 
             EventQueue.invokeLater(cam.getCanvas()::repaint);
         }

@@ -2,11 +2,14 @@ package physics;
 
 import display.Camera;
 import game.GameObject;
-import game.Scene;
 import graphics.CircleSprite;
 import logic.Vector2;
 
 import java.awt.*;
+
+<<<<<<<Updated upstream
+        =======
+        >>>>>>>Stashed changes
 
 public class CircleCollider extends Collider {
 

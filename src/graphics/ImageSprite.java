@@ -1,13 +1,11 @@
 package graphics;
 
-import display.Camera;
 import game.GameObject;
+import gui.display.Camera;
 import logic.Transform;
-import logic.Vector2;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
