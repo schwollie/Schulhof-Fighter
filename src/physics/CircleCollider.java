@@ -34,10 +34,10 @@ public class CircleCollider extends Collider {
     @Override
     public void updateSprite(GameWorld g) {
         if (debugSprite==null) {
-            debugSprite = new CircleSprite(GameObject.getPlaceHolder(this.gameObjectRef.getTransform()), this.offset, this.radius);
+            debugSprite = new CircleSprite(GameObject.getPlaceHolder(this.gameObjectRef.getTransform(), g), this.offset, this.radius);
             g.addSprite(debugSprite);
         } else {
-            debugSprite.setGameObjectRef(GameObject.getPlaceHolder(this.gameObjectRef.getTransform()));
+            debugSprite.setGameObjectRef(GameObject.getPlaceHolder(this.gameObjectRef.getTransform(), g));
         }
     }
 

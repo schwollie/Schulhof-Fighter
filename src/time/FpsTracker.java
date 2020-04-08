@@ -1,4 +1,4 @@
-package logic;
+package time;
 
 public class FpsTracker {
 

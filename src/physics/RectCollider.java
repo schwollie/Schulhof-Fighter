@@ -31,10 +31,10 @@ public class RectCollider extends Collider {
     @Override
     public void updateSprite(GameWorld g) {
         if (debugSprite==null) {
-            debugSprite = new RectSprite(GameObject.getPlaceHolder(this.gameObjectRef.getTransform()), this.offset, this.dimensions.asVector());
+            debugSprite = new RectSprite(GameObject.getPlaceHolder(this.gameObjectRef.getTransform(), g), this.offset, this.dimensions.asVector());
             g.addSprite(debugSprite);
         } else {
-            debugSprite.setGameObjectRef(GameObject.getPlaceHolder(this.gameObjectRef.getTransform()));
+            debugSprite.setGameObjectRef(GameObject.getPlaceHolder(this.gameObjectRef.getTransform(), g));
         }
     }
 

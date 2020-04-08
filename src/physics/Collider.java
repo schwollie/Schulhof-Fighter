@@ -280,26 +280,25 @@ public abstract class Collider {
         b.gameObjectRef.getPhysicsObject().addPosition( correction.scalarMult(pb.getMassInverse()));
     }
 
-    public static Collider[] doesCollide(Vector2 point, ArrayList<PhysicsObject> physicsObjects) {
-
+    public static Collider[] doesCollide(Collider collider, ArrayList<PhysicsObject> physicsObjects) {
         ArrayList<Collider> allCollisions = new ArrayList<>();
-
-        // use a circle collider with extremely small radius for point
-        CircleCollider pointCollider = new CircleCollider(GameObject.getPlaceHolder(Transform.getEmpty()), point, 0.01);
 
         for (PhysicsObject p : physicsObjects) {
             Collider c = p.getCollider();
             if (c == null) { continue; }
 
             // point collision logic
-            if (c.doesCollide(pointCollider)) {
+            if (c.doesCollide(collider)) {
                 allCollisions.add(c);
             }
         }
 
         Collider[] collisions = new Collider[allCollisions.size()];
         return allCollisions.toArray(collisions);
+    }
 
+    public static Collider getPointCollider(Vector2 point) {
+        return new CircleCollider(GameObject.getPlaceHolder(Transform.getEmpty(), null), point, 0.01);
     }
 
 }

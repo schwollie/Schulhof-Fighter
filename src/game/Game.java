@@ -9,6 +9,7 @@ import mainmenu.graphics.MenuCanvas;
 import physics.PhysicsObject;
 import physics.RectCollider;
 import player.HumanPlayer;
+import time.FpsTracker;
 
 import java.awt.*;
 
@@ -47,15 +48,15 @@ public class Game {
     }
 
     public void initGame() {
-        gameWorld.player1 = new HumanPlayer(new Vector2(0, 0), PlayerTypes.Hausperger, "Player1");
-        gameWorld.player2 = new HumanPlayer(new Vector2(2, 0), PlayerTypes.Hausperger, "Player2");
+        gameWorld.player1 = new HumanPlayer(gameWorld, new Vector2(0, 0), PlayerTypes.Hausperger, "Player1");
+        gameWorld.player2 = new HumanPlayer(gameWorld, new Vector2(2, 0), PlayerTypes.Hausperger, "Player2");
 
         gameWorld.physicsObjects.add(gameWorld.player1.getPlayerPhysics());
         gameWorld.physicsObjects.add(gameWorld.player2.getPlayerPhysics());
 
         // Todo ground as gameObject
         Transform groundTrans = new Transform(0,  5);
-        GameObject ground = new GameObject("Ground");
+        GameObject ground = new GameObject("Ground", gameWorld);
         ground.setTransform(groundTrans);
         PhysicsObject groundCollider = new PhysicsObject(ground);
         ground.setPhysicsObject(groundCollider);
@@ -90,6 +91,8 @@ public class Game {
 
             inputManager.sendKeyStates();
             gameWorld.tick(fpsTracker.getDeltaTime());
+
+            //System.out.println(fpsTracker.getCurrentFPS());
 
             mainmenu.tick(fpsTracker.getDeltaTime(), inputManager.getMousePosition());
 
