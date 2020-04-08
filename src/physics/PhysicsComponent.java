@@ -1,34 +1,32 @@
 package physics;
 
-import game.Consts;
-import game.GameObject;
-import game.GameWorld;
+import game.*;
 import logic.Vector2;
 
-public class PhysicsObject {
+public class PhysicsComponent extends Component {
 
     private boolean isStatic = false;
     private double mass = 1;
     private double massInverse = 1/mass;  // for calculations
     private Vector2 velocity = new Vector2(0, 0);
 
-    private GameObject gameObjectRef;
     private Collider collider = null;
 
     private Vector2 force = Vector2.zero;
 
-    public PhysicsObject(GameObject gameObject) {
-        this.gameObjectRef = gameObject;
-        //this.setCollider(new CircleCollider(gameObject.getTransform(),new Vector2(100,100), this, 100))
+    public PhysicsComponent(GameObject gameObject) {
+        super(gameObject, ComponentType.PhysicsComponent);
     }
 
     //region Physics Calculations:
 
-    public void calcForces(double dt, GameWorld world) {
+    public void tick(double deltaTime) {
         if (isStatic) { return; }
-        this.calcPhysics(dt, world);
-        this.applyForce(dt);
+        this.calcPhysics(deltaTime, reference.getScene());
+        this.applyForce(deltaTime);
         this.force = new Vector2(0, 0);  // reset all forces
+
+        updatePos(deltaTime);
     }
 
     public void updatePos(double dt) {
@@ -36,8 +34,8 @@ public class PhysicsObject {
         updateTransform(dt);
     }
 
-    private void calcPhysics(double dt, GameWorld world) {
-        this.calcCollisionForce(world);
+    private void calcPhysics(double dt, Scene scene) {
+        this.calcCollisionForce(scene);
         this.addGravity();
         this.addDrag(dt);
         //this.getForce().print();
@@ -48,14 +46,13 @@ public class PhysicsObject {
         addForce( new Vector2(0, Consts.gravity).scalarMult(mass));
     }
 
-    private void calcCollisionForce(GameWorld world) {
+    private void calcCollisionForce(Scene scene) {
 
-        for (PhysicsObject p: world.physicsObjects) {
+        for (PhysicsComponent p: scene.getPhysicsComponents()) {
             if (p == this) { continue; }
             if (p.collider == null) { continue; }
             if (this.collider == null) { return; }
 
-            //this.addForce(this.collider.calcForce(p, dt));
             this.collider.manageCollision(this, p);
         }
     }
@@ -80,8 +77,7 @@ public class PhysicsObject {
 
     private void updateTransform(double dt) {
         Vector2 newV = this.velocity.scalarMult(dt);
-        gameObjectRef.setTransform(gameObjectRef.getTransform().addPosition( newV));
-        //System.out.println(gameObjectRef.getTransform());
+        reference.setTransform(reference.getTransform().addPosition( newV));
     }
 
     //endregion
@@ -100,10 +96,6 @@ public class PhysicsObject {
         return mass;
     }
 
-    public GameObject getGameObject() {
-        return this.gameObjectRef;
-    }
-
     public double getMassInverse() {
         return massInverse;
     }
@@ -119,7 +111,7 @@ public class PhysicsObject {
     }
 
     public void addPosition(Vector2 pos) {
-        this.gameObjectRef.getTransform().setPosition( gameObjectRef.getTransform().addPosition(pos).getPosition() );
+        this.reference.getTransform().setPosition( reference.getTransform().addPosition(pos).getPosition() );
     }
 
     public void addVelocity(Vector2 v) {

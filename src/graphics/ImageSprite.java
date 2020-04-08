@@ -19,7 +19,7 @@ public class ImageSprite extends Sprite {
     private Dimension boundaries;  // array with length 2 [width, height]
 
     public ImageSprite(GameObject reference, Dimension boundaries, String filename) {
-        this.gameObjectRef = reference;
+        super(reference);
 
         try {
             img = ImageIO.read(new File(filename));
@@ -31,7 +31,7 @@ public class ImageSprite extends Sprite {
     }
 
     public ImageSprite(GameObject reference, Dimension boundaries, BufferedImage image) {
-        this.gameObjectRef = reference;
+        super(reference);
         img = image;
         this.boundaries = boundaries;
         img = rescaleImage(boundaries.width, boundaries.height);
@@ -48,7 +48,7 @@ public class ImageSprite extends Sprite {
 
     public ImageSprite getSlice(int x, int y, int width, int height) {
         BufferedImage slice = this.img.getSubimage(x, y, width, height);
-        return new ImageSprite(this.gameObjectRef, new Dimension(width, height),slice);
+        return new ImageSprite(this.reference, new Dimension(width, height),slice);
     }
 
     public double getYScaleFactor() { // to preserve image ratio
@@ -56,7 +56,7 @@ public class ImageSprite extends Sprite {
     }
 
     @Override
-    public synchronized void draw(Graphics2D g, Camera cam) {
+    public synchronized void Render(Graphics2D g, Camera cam) {
         if (visible) {
             Transform ownTrans = this.getTransform().addPosition(this.offset);
             Transform screenCoord = cam.worldToScreen(ownTrans);

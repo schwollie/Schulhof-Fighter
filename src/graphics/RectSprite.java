@@ -13,7 +13,7 @@ public class RectSprite extends Sprite {
     private Color color = new Color(0, 0, 0);
 
     public RectSprite(GameObject reference, Vector2 offset, Vector2 dimensions) {
-        this.gameObjectRef = reference;
+        super(reference);
         this.Size = dimensions;
         this.offset = offset;
     }
@@ -23,7 +23,7 @@ public class RectSprite extends Sprite {
     }
 
     @Override
-    public synchronized void draw(Graphics2D g, Camera cam) {
+    public synchronized void Render(Graphics2D g, Camera cam) {
         if (!visible) { return; }
 
         Transform ownTrans = this.getTransform().addPosition(offset);

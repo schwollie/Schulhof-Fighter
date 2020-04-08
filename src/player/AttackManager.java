@@ -1,14 +1,14 @@
 package player;
 
+import game.Component;
+import game.ComponentType;
 import game.GameObject;
-import game.GameWorld;
+import game.Scene;
 import logic.Vector2;
 import physics.*;
 import time.TimeEventListener;
 
-public class AttackManager implements CollissionListener, TimeEventListener {
-
-    private GameObject ref;
+public class AttackManager extends Component implements CollissionListener, TimeEventListener {
 
     private Collider atBoxNormal;
     private Collider atBoxLow;
@@ -20,13 +20,13 @@ public class AttackManager implements CollissionListener, TimeEventListener {
 
 
     public AttackManager(GameObject g) {
-        ref = g;
+        super(g, ComponentType.Logic);
     }
 
     public void doKick() {
-        double directionFactor = ref.getTransform().getXScale();
-        Vector2 pos = ref.getTransform().getPosition().add( new Vector2(1*directionFactor*0.3,0.2) );
-        Collider[] cs = Collider.doesCollide(Collider.getPointCollider(pos), ref.getGameWorld().physicsObjects);
+        double directionFactor = reference.getTransform().getXScale();
+        Vector2 pos = reference.getTransform().getPosition().add( new Vector2(1*directionFactor*0.3,0.2) );
+        Collider[] cs = Collider.doesCollide(Collider.getPointCollider(pos), reference.getScene().getPhysicsComponents());
 
         for (Collider c: cs) {
             if (c.getGameObject() instanceof Player) {
@@ -36,7 +36,12 @@ public class AttackManager implements CollissionListener, TimeEventListener {
         }
     }
 
-    public void tick(GameWorld g, double deltaTime) {
+    public void doPunch() {
+        //Todo:
+    }
+
+    @Override
+    public void tick(double deltaTime) {
 
     }
 

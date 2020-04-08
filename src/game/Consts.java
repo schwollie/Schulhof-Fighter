@@ -8,9 +8,9 @@ import java.awt.*;
 public abstract class Consts {
 
     public static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public static final int windowWidth = (int) screenSize.getWidth()/1;
-    public static final int windowHeight = (int) screenSize.getHeight()/1;
-    public static final boolean Fullscreen = true;
+    public static final int windowWidth = (int) screenSize.getWidth()/2;
+    public static final int windowHeight = (int) screenSize.getHeight()/2;
+    public static final boolean Fullscreen = false;
     public static final double ratio = (double) windowWidth / windowHeight;
 
 
@@ -27,16 +27,16 @@ public abstract class Consts {
 
     // animation sheet paths:
     public static final String defaultSheet = "defaultSheet.png";
-    public static final int defaultPicCount = 2;
-    public static final float defaultAnimSpeed = 7f; // in fps
+    public static final int defaultPicCount = 1;
+    public static final float defaultAnimSpeed = 1f; // in fps
 
     public static final String kickSheet = "kickSheet.png";
     public static final int kickSheetPicCount = 5;
     public static final float kickAnimSpeed = 15f; // in fps
 
     public static final String punchSheet = "punchSheet.png";
-    public static final int punchSheetPicCount = 2;
-    public static final float punchAnimSpeed = 15f; // in fps
+    public static final int punchSheetPicCount = 4;
+    public static final float punchAnimSpeed = 12f; // in fps
 
     public static final String blockSheet = "blockSheet.png";
     public static final int blockSheetPicCount = 2;

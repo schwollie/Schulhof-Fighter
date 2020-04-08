@@ -13,7 +13,7 @@ public class CircleSprite extends Sprite {
     private Color color = new Color(0, 255, 0);
 
     public CircleSprite(GameObject reference, Vector2 offset, double radius) {
-        this.gameObjectRef = reference;
+        super(reference);
         this.offset = offset;
         this.radius = radius;
     }
@@ -23,7 +23,7 @@ public class CircleSprite extends Sprite {
     }
 
     @Override
-    public synchronized void draw(Graphics2D g, Camera cam) {
+    public synchronized void Render(Graphics2D g, Camera cam) {
         if (!visible) { return; }
 
         Transform ownTrans = this.getTransform().addPosition(offset);

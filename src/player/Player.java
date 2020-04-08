@@ -1,15 +1,18 @@
 package player;
 
+import display.Camera;
 import game.GameObject;
-import game.GameWorld;
+import game.Scene;
 import logic.Dimension2D;
 import logic.PlayerTypes;
 import logic.Transform;
 import logic.Vector2;
 import physics.Collider;
 import physics.CollissionListener;
-import physics.PhysicsObject;
+import physics.PhysicsComponent;
 import physics.RectCollider;
+
+import java.awt.*;
 
 
 public abstract class Player extends GameObject implements CollissionListener {
@@ -26,12 +29,12 @@ public abstract class Player extends GameObject implements CollissionListener {
     protected AttackManager attackManager;
 
 
-    public Player(GameWorld world, Vector2 pos, PlayerTypes type, String tag) {
+    public Player(Scene world, Vector2 pos, PlayerTypes type, String tag) {
         super(tag, world);
         this.transform = new Transform(pos);
-        this.physicsObject = new PhysicsObject(this);
-        this.physicsObject.setCollider(new RectCollider(this, new Vector2(-0.2,-0.4), new Dimension2D(0.4, 0.9)));
-        this.physicsObject.getCollider().addListener(this);
+        this.physicsComponent = new PhysicsComponent(this);
+        this.physicsComponent.setCollider(new RectCollider(this, new Vector2(-0.2,-0.4), new Dimension2D(0.4, 0.9)));
+        this.physicsComponent.getCollider().addListener(this);
 
         this.type = type;
         this.visualPlayer = new VisualPlayer(type, this);
@@ -39,28 +42,39 @@ public abstract class Player extends GameObject implements CollissionListener {
         this.healthManager = new HealthManager(this, maxHealth);
     }
 
-    public void tick(GameWorld w, double deltaTime) {
+    @Override
+    public void tick(double deltaTime) {
+        super.tick(deltaTime);
+
         this.setPlayerState();
-        visualPlayer.updatePlayer(w, deltaTime);
-        attackManager.tick(w, deltaTime);
+        visualPlayer.tick(deltaTime);
+        attackManager.tick(deltaTime);
         healthManager.tick(deltaTime);
     }
 
+    @Override
+    public void Render(Graphics2D g, Camera cam) {
+        super.Render(g, cam);
+
+        this.visualPlayer.Render(g, cam);
+    }
+
+    // region action Handling:
     public void takeDamage(double damage, Vector2 force) {
         this.healthManager.takeDamage(damage);
-        this.physicsObject.addForce(force);
+        this.physicsComponent.addForce(force);
     }
 
     protected void Jump() {
         if (isOnGround) {
-            physicsObject.setVelocityY(-3);
+            physicsComponent.setVelocityY(-3);
             isOnGround = false;
         }
     }
 
     // -1 = left, 1 = right
     protected void walk(int dir) {
-        physicsObject.addForce(new Vector2(dir*10, 0));
+        physicsComponent.addForce(new Vector2(dir*10, 0));
         setDir(dir);
         setState2Walk();
     }
@@ -69,10 +83,14 @@ public abstract class Player extends GameObject implements CollissionListener {
         this.playerState = PlayerState.Kick;
         visualPlayer.setState(playerState);
         attackManager.doKick();
-        System.out.println(this.healthManager.getHealth());
+        //System.out.println(this.healthManager.getHealth());
     }
 
-    protected void punch() {}
+    protected void punch() {
+        this.playerState = PlayerState.Punch;
+        visualPlayer.setState(playerState);
+        attackManager.doPunch();
+    }
 
     protected void block() {}
 
@@ -88,7 +106,7 @@ public abstract class Player extends GameObject implements CollissionListener {
     }
 
     protected void setState2Walk() {
-        if (isOnGround && this.physicsObject.getVelocity().getLengthSquared() > 0.2) {
+        if (isOnGround && this.physicsComponent.getVelocity().getLengthSquared() > 0.2) {
             this.playerState = PlayerState.Walk;
             visualPlayer.setState(playerState);
         }
@@ -107,7 +125,9 @@ public abstract class Player extends GameObject implements CollissionListener {
 
     }
 
-    public PhysicsObject getPlayerPhysics() { return this.physicsObject; }
+    // endregion
+
+    public PhysicsComponent getPlayerPhysics() { return this.physicsComponent; }
 
     public Transform getTransform() { return this.transform; }
 }

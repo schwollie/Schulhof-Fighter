@@ -1,12 +1,12 @@
 package physics;
 
-import display.Canvas;
-import game.Consts;
+import display.Camera;
 import game.GameObject;
-import game.GameWorld;
+import game.Scene;
 import graphics.CircleSprite;
-import logic.Transform;
 import logic.Vector2;
+
+import java.awt.*;
 
 public class CircleCollider extends Collider {
 
@@ -19,7 +19,7 @@ public class CircleCollider extends Collider {
     }
 
     @Override
-    public void manageCollision(PhysicsObject self, PhysicsObject other) {
+    public void manageCollision(PhysicsComponent self, PhysicsComponent other) {
         if (other.getCollider() instanceof RectCollider) { return; }//Collider.resolveCircleVsRect((RectCollider)other.getCollider(), this);}
         if (other.getCollider() instanceof CircleCollider) { this.resolveCircleVsCircle(this, (CircleCollider) other.getCollider(), self, other); }
     }
@@ -32,13 +32,14 @@ public class CircleCollider extends Collider {
     }
 
     @Override
-    public void updateSprite(GameWorld g) {
+    public void Render(Graphics2D g, Camera cam) {
         if (debugSprite==null) {
-            debugSprite = new CircleSprite(GameObject.getPlaceHolder(this.gameObjectRef.getTransform(), g), this.offset, this.radius);
-            g.addSprite(debugSprite);
+            debugSprite = new CircleSprite(GameObject.getPlaceHolder(this.reference.getTransform(), reference.getScene()), this.offset, this.radius);
         } else {
-            debugSprite.setGameObjectRef(GameObject.getPlaceHolder(this.gameObjectRef.getTransform(), g));
+            debugSprite.setGameObjectRef(GameObject.getPlaceHolder(this.reference.getTransform(), reference.getScene()));
         }
+
+        debugSprite.Render(g, cam);
     }
 
     public double getRadius() {

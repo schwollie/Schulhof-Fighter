@@ -9,23 +9,6 @@ import java.util.ArrayList;
 public class Canvas extends JPanel {
 
     private Camera cam;
-    private ArrayList<Sprite> sprites = new ArrayList<>();
-
-    public void addSprite(Sprite sprite) {
-        sprites.add(sprite);
-    }
-
-    public void removeSprite(Sprite sprite) {
-        sprites.remove(sprite);
-    }
-
-    public ArrayList<Sprite> getSprites() {
-        return sprites;
-    }
-
-    public void setSprites(ArrayList<Sprite> sprites) {
-        this.sprites = sprites;
-    }
 
     public Camera getCam() {
         return cam;
@@ -40,10 +23,7 @@ public class Canvas extends JPanel {
         super.paintComponent(g);
         Graphics2D graphics2D = (Graphics2D) g;
         
-        for (Sprite sprite : sprites) {
-            sprite.draw(graphics2D, cam);
-        }
-
+        cam.Render(graphics2D);
     }
 
 }

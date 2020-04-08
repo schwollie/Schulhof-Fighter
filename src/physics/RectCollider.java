@@ -1,10 +1,13 @@
 package physics;
 
+import display.Camera;
 import game.GameObject;
-import game.GameWorld;
+import game.Scene;
 import graphics.RectSprite;
 import logic.Dimension2D;
 import logic.Vector2;
+
+import java.awt.*;
 
 public class RectCollider extends Collider {
 
@@ -16,7 +19,7 @@ public class RectCollider extends Collider {
     }
 
     @Override
-    public void manageCollision(PhysicsObject self, PhysicsObject other) {
+    public void manageCollision(PhysicsComponent self, PhysicsComponent other) {
         if (other.getCollider() instanceof RectCollider) { this.resolveRectVsRect(this, (RectCollider) other.getCollider(), self, other);}
         if (other.getCollider() instanceof CircleCollider) { return; } //Collider.resolveCircleVsRect(this, (CircleCollider)other.getCollider()); }
     }
@@ -29,13 +32,14 @@ public class RectCollider extends Collider {
     }
 
     @Override
-    public void updateSprite(GameWorld g) {
+    public void Render(Graphics2D g, Camera cam) {
         if (debugSprite==null) {
-            debugSprite = new RectSprite(GameObject.getPlaceHolder(this.gameObjectRef.getTransform(), g), this.offset, this.dimensions.asVector());
-            g.addSprite(debugSprite);
+            debugSprite = new RectSprite(GameObject.getPlaceHolder(this.reference.getTransform(), reference.getScene()), this.offset, this.dimensions.asVector());
         } else {
-            debugSprite.setGameObjectRef(GameObject.getPlaceHolder(this.gameObjectRef.getTransform(), g));
+            debugSprite.setGameObjectRef(GameObject.getPlaceHolder(this.reference.getTransform(), reference.getScene()));
         }
+
+        debugSprite.Render(g, cam);
     }
 
     public Dimension2D getDimensions() {

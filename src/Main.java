@@ -6,7 +6,6 @@ public class Main {
         Game game = new Game();
         game.initGraphics();
         game.initGame();
-        game.initVisuals();
         game.start();
     }
 

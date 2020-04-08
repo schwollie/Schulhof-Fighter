@@ -1,7 +1,8 @@
 package graphics;
 
 import game.Consts;
-import logic.AnimationTypes;
+import game.GameObject;
+import logic.AnimationType;
 import logic.Dimension2D;
 import logic.PlayerTypes;
 import player.Player;
@@ -10,14 +11,14 @@ import java.io.File;
 
 public abstract class AnimationLoader {
 
-    public static Animation loadAnimation(PlayerTypes type, AnimationTypes animType, Player player, boolean loopAnim, int priority) {
+    public static Animation loadAnimation(PlayerTypes type, AnimationType animType, GameObject ref, boolean loopAnim, int priority) {
         AnimSpecs animSpec = getAnimSpecs(animType, type);
         String path = AnimationLoader.getPath(type, animSpec);
 
         File f = new File(path);
         if (!f.exists()) {
             System.out.println("File does not exist : " + path + " -> using default path instead");
-            animSpec = getAnimSpecs(AnimationTypes.Default, type);
+            animSpec = getAnimSpecs(AnimationType.Default, type);
             path = AnimationLoader.getPath(type, animSpec);
         }
 
@@ -25,7 +26,7 @@ public abstract class AnimationLoader {
         animSpec.loopAnim = loopAnim;
         animSpec.priority = priority;
 
-        return Animation.loadAnim(path, animSpec, player);
+        return Animation.loadAnim(path, animSpec, ref);
     }
 
     private static String getPath(PlayerTypes type, AnimSpecs a) {
@@ -40,26 +41,26 @@ public abstract class AnimationLoader {
         throw new Error("NO SHEET FOUND: " + type);
     }
 
-    private static AnimSpecs getAnimSpecs(AnimationTypes type, PlayerTypes pType) {
-        if (type==AnimationTypes.Default) {
+    private static AnimSpecs getAnimSpecs(AnimationType type, PlayerTypes pType) {
+        if (type== AnimationType.Default) {
             return new AnimSpecs(Consts.defaultSheet, Consts.defaultPicCount, Consts.defaultAnimSpeed, getSpriteSize(pType));
         }
-        else if(type==AnimationTypes.Run) {
+        else if(type== AnimationType.Run) {
             return new AnimSpecs(Consts.runSheet, Consts.runPicCount, Consts.runAnimSpeed, getSpriteSize(pType));
         }
-        else if(type==AnimationTypes.Jump) {
+        else if(type== AnimationType.Jump) {
             return new AnimSpecs(Consts.jumpSheet, Consts.jumpSheetPicCount, Consts.jumpAnimSpeed, getSpriteSize(pType));
         }
-        else if(type==AnimationTypes.Kick) {
+        else if(type== AnimationType.Kick) {
             return new AnimSpecs(Consts.kickSheet, Consts.kickSheetPicCount, Consts.kickAnimSpeed, getSpriteSize(pType));
         }
-        else if(type==AnimationTypes.Punch) {
+        else if(type== AnimationType.Punch) {
             return new AnimSpecs(Consts.punchSheet, Consts.punchSheetPicCount, Consts.punchAnimSpeed, getSpriteSize(pType));
         }
-        else if(type==AnimationTypes.Block) {
+        else if(type== AnimationType.Block) {
             return new AnimSpecs(Consts.blockSheet, Consts.blockSheetPicCount, Consts.blockAnimSpeed, getSpriteSize(pType));
         }
-        else if (type==AnimationTypes.SpecialAttack) {
+        else if (type== AnimationType.SpecialAttack) {
             return new AnimSpecs(Consts.specialAttackSheet, Consts.specialAttackPicCount, Consts.specialAttackAnimSpeed, getSpriteSize(pType));
         }
         throw new Error("NO SHEET FOUND: " + type);
@@ -83,7 +84,7 @@ class AnimSpecs{
 
     public boolean loopAnim = false;
     public int priority = 0;
-    public AnimationTypes animType = AnimationTypes.Default;
+    public AnimationType animType = AnimationType.Default;
 
     public AnimSpecs(String animSheet, int animPicCount, float animSpeed, Dimension2D dim) {
         this.animPicCount = animPicCount;

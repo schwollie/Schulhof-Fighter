@@ -1,13 +1,13 @@
 package player;
 
-import game.GameWorld;
+import game.Scene;
 import input.PlayerKeyListener;
 import logic.PlayerTypes;
 import logic.Vector2;
 
 public class HumanPlayer extends Player implements PlayerKeyListener {
 
-    public HumanPlayer(GameWorld world, Vector2 pos, PlayerTypes type, String tag) {
+    public HumanPlayer(Scene world, Vector2 pos, PlayerTypes type, String tag) {
         super(world, pos, type, tag);
     }
 
@@ -35,6 +35,7 @@ public class HumanPlayer extends Player implements PlayerKeyListener {
 
     @Override
     public void keyPunch() {
+        this.punch();
         System.out.println("punch");
     }
 
