@@ -3,6 +3,7 @@ package physics;
 import game.GameObject;
 import game.GameWorld;
 import graphics.Sprite;
+import logic.Transform;
 import logic.Vector2;
 
 import java.util.ArrayList;
@@ -26,6 +27,10 @@ public abstract class Collider {
 
     public abstract void manageCollision(PhysicsObject self, PhysicsObject other);
 
+    public abstract boolean doesCollide(Collider c);
+
+    public abstract void updateSprite(GameWorld g);
+
     public Vector2 getPosition() {
         return new Vector2(this.gameObjectRef.getTransform().getPosition()).add(offset);
     }
@@ -33,8 +38,6 @@ public abstract class Collider {
     public void setStatic(boolean aStatic) {
         isStatic = aStatic;
     }
-
-    public abstract void updateSprite(GameWorld g);
 
     public void setRestitution(double restitution) {
         this.restitution = restitution;
@@ -58,7 +61,7 @@ public abstract class Collider {
 
     protected boolean CircleVsRect(CircleCollider c, RectCollider r) {
         double c_x = c.getPosition().getX(); double c_y = c.getPosition().getY();
-        Vector2 dim = r.getDimensions();
+        Vector2 dim = new Vector2(r.getDimensions().getWidth(), r.getDimensions().getHeight() );
         double r_x = r.getPosition().getX(); double r_y = r.getPosition().getY();
 
         double cx = Math.abs(c_x - r_x - dim.getX() * 0.5);
@@ -77,6 +80,11 @@ public abstract class Collider {
         double yCornerDistSq = yCornerDist * yCornerDist;
         double maxCornerDistSq = c.getRadius() * c.getRadius();
         return xCornerDistSq + yCornerDistSq <= maxCornerDistSq;
+    }
+
+    protected boolean RectVsRect(RectCollider a, RectCollider b) {
+        return !(a.getX() + a.getWidth() < b.getX() || a.getY() + a.getHeight() < b.getY() ||
+                a.getX() > b.getX() + b.getWidth() || a.getY() > b.getY() + b.getHeight());
     }
 
     protected void resolveCircleVsRect(RectCollider a, CircleCollider b, PhysicsObject pa, PhysicsObject pb) {
@@ -158,8 +166,8 @@ public abstract class Collider {
 
     protected void resolveRectVsRect(RectCollider a, RectCollider b,  PhysicsObject pa, PhysicsObject pb) {
         // Vector from A to B from midpoint to midpoint
-        Vector2 aMid = a.getPosition().add(a.getDimensions().scalarMult(0.5));
-        Vector2 bMid = b.getPosition().add(b.getDimensions().scalarMult(0.5));
+        Vector2 aMid = a.getPosition().add(a.getDimensions().asVector().scalarMult(0.5));
+        Vector2 bMid = b.getPosition().add(b.getDimensions().asVector().scalarMult(0.5));
         Vector2 n = bMid.subtract(aMid);
 
         //TOdo: some kind of error
@@ -270,6 +278,28 @@ public abstract class Collider {
         Vector2 correction = normal.scalarMult( penetration / (pa.getMassInverse() + pb.getMassInverse()) * percentage);
         a.gameObjectRef.getPhysicsObject().addPosition( correction.scalarMult(-pa.getMassInverse()));
         b.gameObjectRef.getPhysicsObject().addPosition( correction.scalarMult(pb.getMassInverse()));
+    }
+
+    public static Collider[] doesCollide(Vector2 point, ArrayList<PhysicsObject> physicsObjects) {
+
+        ArrayList<Collider> allCollisions = new ArrayList<>();
+
+        // use a circle collider with extremely small radius for point
+        CircleCollider pointCollider = new CircleCollider(GameObject.getPlaceHolder(Transform.getEmpty()), point, 0.01);
+
+        for (PhysicsObject p : physicsObjects) {
+            Collider c = p.getCollider();
+            if (c == null) { continue; }
+
+            // point collision logic
+            if (c.doesCollide(pointCollider)) {
+                allCollisions.add(c);
+            }
+        }
+
+        Collider[] collisions = new Collider[allCollisions.size()];
+        return allCollisions.toArray(collisions);
+
     }
 
 }

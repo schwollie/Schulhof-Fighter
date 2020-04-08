@@ -25,6 +25,13 @@ public class CircleCollider extends Collider {
     }
 
     @Override
+    public boolean doesCollide(Collider c) {
+        if (c instanceof RectCollider) { return CircleVsRect(this, (RectCollider) c); }
+        if (c instanceof CircleCollider) { return CircleVsCircle(this, (CircleCollider)c); }
+        throw new Error("Type of collider is unknown");
+    }
+
+    @Override
     public void updateSprite(GameWorld g) {
         if (debugSprite==null) {
             debugSprite = new CircleSprite(GameObject.getPlaceHolder(this.gameObjectRef.getTransform()), this.offset, this.radius);

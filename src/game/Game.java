@@ -4,10 +4,7 @@ import display.Camera;
 import display.Window;
 import input.InputManager;
 import input.PlayerKeyListener;
-import logic.FpsTracker;
-import logic.PlayerTypes;
-import logic.Transform;
-import logic.Vector2;
+import logic.*;
 import mainmenu.graphics.MenuCanvas;
 import physics.PhysicsObject;
 import physics.RectCollider;
@@ -64,7 +61,8 @@ public class Game {
         ground.setPhysicsObject(groundCollider);
         groundCollider.setStatic(true);
 
-        groundCollider.setCollider(new RectCollider(ground, new Vector2(0, -2), new Vector2(10, 1)));
+
+        groundCollider.setCollider(new RectCollider(ground, new Vector2(0, -2), new Dimension2D(10, 1)));
         gameWorld.physicsObjects.add(groundCollider);
 
 

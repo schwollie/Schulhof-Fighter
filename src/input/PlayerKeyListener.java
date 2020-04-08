@@ -8,4 +8,10 @@ public interface PlayerKeyListener {
 
     void keyUp();
 
+    void keyKick();
+
+    void keyPunch();
+
+    void keyBlock();
+
 }

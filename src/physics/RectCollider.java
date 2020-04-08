@@ -3,13 +3,14 @@ package physics;
 import game.GameObject;
 import game.GameWorld;
 import graphics.RectSprite;
+import logic.Dimension2D;
 import logic.Vector2;
 
 public class RectCollider extends Collider {
 
-    Vector2 dimensions;
+    Dimension2D dimensions;
 
-    public RectCollider(GameObject reference, Vector2 offset, Vector2 dimensions) {
+    public RectCollider(GameObject reference, Vector2 offset, Dimension2D dimensions) {
         super(reference, offset);
         this.dimensions = dimensions;  // width, height
     }
@@ -21,17 +22,40 @@ public class RectCollider extends Collider {
     }
 
     @Override
+    public boolean doesCollide(Collider c) {
+        if (c instanceof RectCollider) { return RectVsRect(this, (RectCollider) c); }
+        if (c instanceof CircleCollider) { return CircleVsRect((CircleCollider)c, this); }
+        throw new Error("Type of collider is unknown");
+    }
+
+    @Override
     public void updateSprite(GameWorld g) {
         if (debugSprite==null) {
-            debugSprite = new RectSprite(GameObject.getPlaceHolder(this.gameObjectRef.getTransform()), this.offset, this.dimensions);
+            debugSprite = new RectSprite(GameObject.getPlaceHolder(this.gameObjectRef.getTransform()), this.offset, this.dimensions.asVector());
             g.addSprite(debugSprite);
         } else {
             debugSprite.setGameObjectRef(GameObject.getPlaceHolder(this.gameObjectRef.getTransform()));
         }
     }
 
-    public Vector2 getDimensions() {
+    public Dimension2D getDimensions() {
         return dimensions;
+    }
+
+    public double getX() {
+        return this.offset.getX();
+    }
+
+    public double getY() {
+        return this.offset.getY();
+    }
+
+    public double getWidth() {
+        return this.dimensions.getWidth();
+    }
+
+    public double getHeight() {
+        return this.dimensions.getHeight();
     }
 }
 

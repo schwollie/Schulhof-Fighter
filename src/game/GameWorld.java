@@ -32,8 +32,8 @@ public class GameWorld {
 
     public void tick(double deltaTime) {
 
-        player1.tick(this, deltaTime, this);
-        player2.tick(this, deltaTime, this);
+        player1.tick(this, deltaTime);
+        player2.tick(this, deltaTime);
 
         for (PhysicsObject p: physicsObjects) {
             p.calcForces(deltaTime, this);
@@ -41,7 +41,7 @@ public class GameWorld {
 
         for (PhysicsObject p: physicsObjects) {
             p.updatePos(deltaTime);
-            p.getCollider().updateSprite(this);
+            //p.getCollider().updateSprite(this);
         }
     }
 

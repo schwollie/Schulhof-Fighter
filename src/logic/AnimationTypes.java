@@ -1,5 +1,5 @@
 package logic;
 
 public enum AnimationTypes {
-    Default, Fight, SpecialAttack, Run
+    Default, Kick, Block, Punch ,SpecialAttack, Run, Jump, NotSpecified
 }

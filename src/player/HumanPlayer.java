@@ -25,4 +25,20 @@ public class HumanPlayer extends Player implements PlayerKeyListener {
     public void keyUp() {
         this.Jump();
     }
+
+    @Override
+    public void keyKick() {
+        this.kick();
+        System.out.println("kick");
+    }
+
+    @Override
+    public void keyPunch() {
+        System.out.println("punch");
+    }
+
+    @Override
+    public void keyBlock() {
+        System.out.println("block");
+    }
 }

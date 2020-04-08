@@ -11,15 +11,19 @@ public class InputManager implements KeyListener, MouseMotionListener {
 
     // region Key Flags:
 
-    private boolean upPressed1 = false;
-    boolean rightPressed1 = false;
-    boolean leftPressed1 = false;
-    boolean fightPressed1 = false;
+    private boolean upPressed1 = false; // W
+    boolean rightPressed1 = false; // D
+    boolean leftPressed1 = false; // A
+    boolean kickPressed1 = false; // Q
+    boolean punchPressed1 = false; // E
+    boolean blockPressed1 = false; // Left Shift
 
-    boolean upPressed2 = false;
-    boolean rightPressed2 = false;
-    boolean leftPressed2 = false;
-    boolean fightPressed2 = false;
+    boolean upPressed2 = false; // up arrow key
+    boolean rightPressed2 = false; // right arrow key
+    boolean leftPressed2 = false; // left arrow key
+    boolean kickPressed2 = false; // comma
+    boolean punchPressed2 = false; //  period
+    boolean blockPressed2 = false; // right shift
 
     //endregion
 
@@ -54,6 +58,21 @@ public class InputManager implements KeyListener, MouseMotionListener {
                 upPressed1 = false;
             }
 
+            // Shift = block
+            if (e.getKeyCode() == KeyEvent.VK_SHIFT && e.getKeyLocation() == KeyEvent.KEY_LOCATION_LEFT) {
+                blockPressed1 = false;
+            }
+
+            // E = punch
+            if (e.getKeyCode() == KeyEvent.VK_E) {
+                punchPressed1 = false;
+            }
+
+            // Q = kick
+            if (e.getKeyCode() == KeyEvent.VK_Q) {
+                kickPressed1 = false;
+            }
+
         }
         //endregion
 
@@ -72,6 +91,21 @@ public class InputManager implements KeyListener, MouseMotionListener {
             // W = Up
             if (e.getKeyCode() == KeyEvent.VK_UP) {
                 upPressed2 = false;
+            }
+
+            // Period = Punch
+            if (e.getKeyCode() == KeyEvent.VK_PERIOD) {
+                punchPressed2 = false;
+            }
+
+            // Comma = Kick
+            if (e.getKeyCode() == KeyEvent.VK_COMMA) {
+                kickPressed2 = false;
+            }
+
+            // right alt = Block
+            if (e.getKeyCode() == KeyEvent.VK_ALT && e.getKeyLocation() == KeyEvent.KEY_LOCATION_RIGHT) {
+                blockPressed1 = false;
             }
 
         }
@@ -102,6 +136,21 @@ public class InputManager implements KeyListener, MouseMotionListener {
                 upPressed1 = true;
             }
 
+            // Shift = block
+            if (e.getKeyCode() == KeyEvent.VK_SHIFT && e.getKeyLocation() == KeyEvent.KEY_LOCATION_LEFT) {
+                blockPressed1 = true;
+            }
+
+            // E = punch
+            if (e.getKeyCode() == KeyEvent.VK_E) {
+                punchPressed1 = true;
+            }
+
+            // Q = kick
+            if (e.getKeyCode() == KeyEvent.VK_Q) {
+                kickPressed1 = true;
+            }
+
         }
         //endregion
 
@@ -124,6 +173,21 @@ public class InputManager implements KeyListener, MouseMotionListener {
                 upPressed2 = true;
             }
 
+            // Period = Punch
+            if (e.getKeyCode() == KeyEvent.VK_PERIOD) {
+                punchPressed2 = true;
+            }
+
+            // Comma = Kick
+            if (e.getKeyCode() == KeyEvent.VK_COMMA) {
+                kickPressed2 = true;
+            }
+
+            // right alt = Block
+            if (e.getKeyCode() == KeyEvent.VK_ALT && e.getKeyLocation() == KeyEvent.KEY_LOCATION_RIGHT) {
+                blockPressed1 = true;
+            }
+
         }
         //endregion
     }
@@ -137,18 +201,18 @@ public class InputManager implements KeyListener, MouseMotionListener {
         if (upPressed1) { inputMapping1.keyUp(); }
         if (leftPressed1) { inputMapping1.keyLeft(); }
         if (rightPressed1) { inputMapping1.keyRight(); }
+        if (kickPressed1) { inputMapping1.keyKick(); }
+        if (punchPressed1) { inputMapping1.keyPunch(); }
+        if (blockPressed1) { inputMapping1.keyBlock(); }
     }
 
     private void sendMapping2() {
-        if (upPressed2) {
-            inputMapping2.keyUp();
-        }
-        if (leftPressed2) {
-            inputMapping2.keyLeft();
-        }
-        if (rightPressed2) {
-            inputMapping2.keyRight();
-        }
+        if (upPressed2) { inputMapping2.keyUp(); }
+        if (leftPressed2) { inputMapping2.keyLeft(); }
+        if (rightPressed2) { inputMapping2.keyRight(); }
+        if (kickPressed2) { inputMapping2.keyKick(); }
+        if (punchPressed2) { inputMapping2.keyPunch(); }
+        if (blockPressed2) { inputMapping2.keyBlock(); }
     }
 
     public void setListenerMapping1(PlayerKeyListener p) {

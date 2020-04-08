@@ -1,8 +1,8 @@
 package player;
 
-import game.Consts;
 import game.GameObject;
 import game.GameWorld;
+import logic.Dimension2D;
 import logic.PlayerTypes;
 import logic.Transform;
 import logic.Vector2;
@@ -27,7 +27,7 @@ public abstract class Player extends GameObject implements CollissionListener {
         super(tag);
         this.transform = new Transform(pos);
         this.physicsObject = new PhysicsObject(this);
-        this.physicsObject.setCollider(new RectCollider(this, new Vector2(0.3,0.1), new Vector2(0.4, 0.9)));
+        this.physicsObject.setCollider(new RectCollider(this, new Vector2(-0.2,-0.4), new Dimension2D(0.4, 0.9)));
         this.physicsObject.getCollider().addListener(this);
 
         this.type = type;
@@ -35,9 +35,9 @@ public abstract class Player extends GameObject implements CollissionListener {
         this.attackManager = new AttackManager(this);
     }
 
-    public void tick(GameWorld w, double deltaTime, GameWorld world) {
+    public void tick(GameWorld w, double deltaTime) {
         this.setPlayerState();
-        visualPlayer.updatePlayer(w, deltaTime, playerState);
+        visualPlayer.updatePlayer(w, deltaTime);
     }
 
     public PhysicsObject getPlayerPhysics() { return this.physicsObject; }
@@ -51,26 +51,43 @@ public abstract class Player extends GameObject implements CollissionListener {
         }
     }
 
+    public void setLeftRotation() {
+        this.transform.setScale(new Vector2(Math.abs(transform.getXScale())*-1, transform.getYScale()));
+    }
+
+    public void setRightRotation() {
+        this.transform.setScale(new Vector2(Math.abs(transform.getXScale()), transform.getYScale()));
+    }
+
     protected void walkRight() {
-        physicsObject.setVelocityX(1);
+        physicsObject.addForce(new Vector2(10, 0));
+        setRightRotation();
+        setState2Walk();
     }
 
     protected void walkLeft() {
-        physicsObject.setVelocityX(-1);
+        physicsObject.addForce(new Vector2(-10, 0));
+        setLeftRotation();
+        setState2Walk();
+    }
+
+    protected void kick() {
+        this.playerState = PlayerState.Kick;
+        visualPlayer.setState(playerState);
+    }
+
+    protected void setState2Walk() {
+        if (isOnGround && this.physicsObject.getVelocity().getLengthSquared() > 0.2) {
+            this.playerState = PlayerState.Walk;
+            visualPlayer.setState(playerState);
+        }
     }
 
     protected void setPlayerState() {
         if (!isOnGround) {
             this.playerState = PlayerState.Jump;
-            return;
+            visualPlayer.setState(playerState);
         }
-
-        if (Math.abs(this.physicsObject.getVelocity().getX()) > 0.2) {
-            this.playerState = PlayerState.WalkRight;
-            return;
-        }
-
-        this.playerState = PlayerState.Default;
     }
 
     @Override

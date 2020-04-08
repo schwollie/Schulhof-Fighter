@@ -61,8 +61,13 @@ public class ImageSprite extends Sprite {
             Transform ownTrans = this.getTransform().addPosition(this.offset);
             Transform screenCoord = cam.worldToScreen(ownTrans);
 
-            g.drawImage(img, (int)screenCoord.getX(), (int)screenCoord.getY(),
-                    (int)screenCoord.getXScale(), (int)(screenCoord.getYScale() * getYScaleFactor()), null);
+            int x = (int)screenCoord.getX();
+            int y = (int)screenCoord.getY();
+            int width = (int)screenCoord.getXScale();
+            int height = (int)(screenCoord.getYScale() * getYScaleFactor());
+
+            // center of image is on x, y
+            g.drawImage(img, x-width/2, y-height/2, width, height, null);
 
         }
     }

@@ -31,6 +31,18 @@ public class Dimension2D {
         return height;
     }
 
+    public double getX() {
+        return this.width;
+    }
+
+    public double getY() {
+        return this.height;
+    }
+
+    public Vector2 asVector() {
+        return new Vector2(width, height);
+    }
+
     public void setHeight(double height) {
         this.height = height;
     }

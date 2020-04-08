@@ -1,60 +1,91 @@
 package graphics;
 
-import display.Canvas;
 import game.GameWorld;
 import logic.AnimationTypes;
 import logic.PlayerTypes;
+import logic.Queue;
 import player.Player;
 import player.PlayerState;
 
 public class AnimationManager {
 
     private Player playerRef;
-    private PlayerState lastPlayerState = PlayerState.Default;
 
-    private Animation fightAnim;
+    private Animation kickAnim;
+    private Animation punchAnim;
     private Animation defaultAnim;
     private Animation specialAttackAnim;
     private Animation runAnim;
+    private Animation jumpAnim;
+    private Animation blockAnim;
 
     private Animation currentAnim;
+    private Animation lastAnim;
 
     public AnimationManager(PlayerTypes type, Player player) {
         this.playerRef = player;
 
-        defaultAnim = AnimationLoader.loadAnimation(type, AnimationTypes.Default, player);
-        fightAnim = AnimationLoader.loadAnimation(type, AnimationTypes.Fight, player);
-        specialAttackAnim = AnimationLoader.loadAnimation(type, AnimationTypes.SpecialAttack, player);
-        runAnim = AnimationLoader.loadAnimation(type, AnimationTypes.Run, player);
+        defaultAnim = AnimationLoader.loadAnimation(type, AnimationTypes.Default, player, true, 1);
+        //  when no certain Animation is set this will be played
+
+        kickAnim = AnimationLoader.loadAnimation(type, AnimationTypes.Kick, player, false, 4);
+        punchAnim = AnimationLoader.loadAnimation(type, AnimationTypes.Punch, player, false, 4);
+        specialAttackAnim = AnimationLoader.loadAnimation(type, AnimationTypes.SpecialAttack, player, false, 5);
+        blockAnim = AnimationLoader.loadAnimation(type, AnimationTypes.Block, player, true, 4);
+        runAnim = AnimationLoader.loadAnimation(type, AnimationTypes.Run, player, true, 2);
+        jumpAnim = AnimationLoader.loadAnimation(type, AnimationTypes.Jump, player, true, 2);
+
+        currentAnim = defaultAnim;
+        lastAnim = defaultAnim;
     }
 
-    public void runAnimation(GameWorld g, double dt, PlayerState playerState) {
+    public void setState(PlayerState playerState) {
 
-        if (playerState!=lastPlayerState) {
+        Animation newAnim = getAnim(playerState);
+
+        if (currentAnim==null || currentAnim.getPriority() < newAnim.getPriority()) {
+            currentAnim = newAnim;
+        }
+    }
+
+    public void runAnimation(GameWorld g, double dt) {
+        manageAnimations(g, dt);
+    }
+
+    private void manageAnimations(GameWorld g, double dt) {
+        if (lastAnim!=currentAnim) {
             endAllAnimations(g);
-            changeAnim(playerState);
-            lastPlayerState = playerState;
         }
 
         if (currentAnim==null) {
-            currentAnim = defaultAnim;
+            currentAnim = getAnim(PlayerState.Default);
         }
 
         currentAnim.playAnimation(g, dt);
+
+        lastAnim = currentAnim;
+
+        if (currentAnim.isLoopAnim() || currentAnim.hasFinished()) {
+            currentAnim = null;
+        }
     }
 
-    private void changeAnim(PlayerState playerState) {
-        if (playerState==PlayerState.Default) { currentAnim = defaultAnim; }
-        else if (playerState==PlayerState.WalkRight) { currentAnim = runAnim; }
-        else if (playerState==PlayerState.Jump) { currentAnim = defaultAnim; }
-        //Todo more types of animation
+    private Animation getAnim(PlayerState playerState) {
+        if (playerState==PlayerState.Default) { return defaultAnim; }
+        else if (playerState==PlayerState.Walk) { return runAnim; }
+        else if (playerState==PlayerState.Jump) { return jumpAnim; }
+        else if (playerState==PlayerState.Kick) { return kickAnim; }
+        throw new Error("No matching Animation found");
     }
 
     private void endAllAnimations(GameWorld g) {
         defaultAnim.endAnimation(g);
-        fightAnim.endAnimation(g);
+        kickAnim.endAnimation(g);
+        punchAnim.endAnimation(g);
+        blockAnim.endAnimation(g);
         specialAttackAnim.endAnimation(g);
         runAnim.endAnimation(g);
+        jumpAnim.endAnimation(g);
     }
 
 }

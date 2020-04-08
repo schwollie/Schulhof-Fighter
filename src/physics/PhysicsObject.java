@@ -28,6 +28,7 @@ public class PhysicsObject {
         if (isStatic) { return; }
         this.calcPhysics(dt, world);
         this.applyForce(dt);
+        this.force = new Vector2(0, 0);  // reset all forces
     }
 
     public void updatePos(double dt) {
@@ -36,7 +37,6 @@ public class PhysicsObject {
     }
 
     private void calcPhysics(double dt, GameWorld world) {
-        this.force = new Vector2(0, 0);  // reset all forces
         this.calcCollisionForce(world);
         this.addGravity();
         this.addDrag(dt);

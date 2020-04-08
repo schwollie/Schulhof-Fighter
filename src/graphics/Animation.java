@@ -2,16 +2,24 @@ package graphics;
 
 import display.Canvas;
 import game.GameWorld;
+import logic.AnimationTypes;
+import logic.Dimension2D;
 import logic.Transform;
+import logic.Vector2;
 import player.Player;
 
 import java.awt.*;
+import java.util.Arrays;
 
 public class Animation {
 
     private Player playerRef;
     private ImageSprite[] images;
     private float speed = 7f;  // pictures per second
+    private boolean loopAnim;
+    private boolean hasFinished = false; // only for non looped animations
+    private AnimationTypes animType = AnimationTypes.NotSpecified;
+    private int priority = 0;
 
     // for animation
     private int currentImage = 0;
@@ -21,6 +29,11 @@ public class Animation {
     public Animation(ImageSprite[] imgs, Player player) {
         this.images = imgs;
         this.playerRef = player;
+        //this.loopAnim = loopAnim;
+
+        this.currentSprite = imgs[0];
+        //this.animType = type;
+        //this.priority = priority;
     }
 
     public void playAnimation(GameWorld g, double deltaTime) {
@@ -37,13 +50,17 @@ public class Animation {
         this.currentImage = 0;
         this.currentSprite = null;
         this.timeElapsed = 0;
+        hasFinished = false;
     }
 
     private void nextFrame(GameWorld g) {
-        currentImage ++;
-
         if (currentImage >= images.length) {
             currentImage = 0;
+
+            if (!loopAnim) {
+                hasFinished = true;
+            }
+
         }
 
         if (images.length == 0) { return; }
@@ -52,18 +69,73 @@ public class Animation {
         currentSprite = images[currentImage];
         g.addSprite(currentSprite);
 
+        currentImage ++;
     }
 
-    public static Animation loadAnim(String animSheetPath, int width, int height, int pictureCount, Player player) {
+    public boolean hasFinished() {
+        return this.hasFinished;
+    }
 
+    public boolean isLoopAnim() {
+        return loopAnim;
+    }
+
+    public AnimationTypes getAnimType() {
+        return animType;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setAnimType(AnimationTypes animType) {
+        this.animType = animType;
+    }
+
+    public void setLoopAnim(boolean loopAnim) {
+        this.loopAnim = loopAnim;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    @Override
+    public String toString() {
+        return "Animation{" +
+                "animType=" + animType +
+                '}';
+    }
+
+    public static Animation loadAnim(String animSheetPath, AnimSpecs specs, Player player) {
+
+        int pictureCount = specs.getAnimPicCount();
+        int priority = specs.priority;
+        boolean loopAnim = specs.loopAnim;
+
+        AnimationTypes type = specs.animType;
+        Dimension2D bounds = specs.getImgDimensions();
+
+        // create sprites from spritesheet
         ImageSprite[] animImages = new ImageSprite[pictureCount];
-        ImageSprite animSheet = new ImageSprite(player, new Dimension(width*pictureCount, height), animSheetPath);
+        ImageSprite animSheet = new ImageSprite(player, new Dimension((int)(bounds.getWidth()*pictureCount), (int)bounds.getHeight()), animSheetPath);
 
         for (int i = 0; i < pictureCount; i++) {
-            animImages[i] = animSheet.getSlice(i*width, 0, width, height);
+            animImages[i] = animSheet.getSlice((int)(i*bounds.getWidth()), 0, (int)bounds.getWidth(), (int)bounds.getHeight());
         }
 
-        return new Animation(animImages, player);
+        // setup Animation
+        Animation anim = new Animation(animImages, player);
+        anim.setSpeed(specs.getAnimSpeed());
+        anim.setAnimType(specs.animType);
+        anim.setPriority(specs.priority);
+        anim.setLoopAnim(specs.loopAnim);
+
+        return anim;
     }
 
 }
