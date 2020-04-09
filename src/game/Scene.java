@@ -1,7 +1,9 @@
 package game;
 
 import display.Camera;
+import graphics.Sprite;
 import physics.PhysicsComponent;
+import player.Player;
 
 import java.awt.*;
 import java.util.ArrayList;

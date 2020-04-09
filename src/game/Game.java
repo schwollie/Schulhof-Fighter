@@ -78,7 +78,7 @@ public class Game {
 
     public void startGameLoop() {
 
-        FpsTracker fpsTracker = new FpsTracker(1000);
+        FpsTracker fpsTracker = new FpsTracker(120);
 
         while (true) {
             fpsTracker.stepForward();
@@ -88,7 +88,7 @@ public class Game {
 
             scene.tick(fpsTracker.getDeltaTime());
 
-            System.out.println(fpsTracker.getCurrentFPS());
+            //System.out.println(fpsTracker.getCurrentFPS());
 
             //mainmenu.tick(fpsTracker.getDeltaTime(), inputManager.getMousePosition());
 
