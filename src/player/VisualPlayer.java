@@ -1,7 +1,7 @@
 package player;
 
 import display.Camera;
-import game.Component;
+import game.GameComponent;
 import game.ComponentType;
 import game.GameObject;
 import graphics.AnimationManager;
@@ -10,7 +10,7 @@ import logic.PlayerTypes;
 import java.awt.*;
 
 
-public class VisualPlayer extends Component {
+public class VisualPlayer extends GameComponent {
 
     private AnimationManager animManager;
 

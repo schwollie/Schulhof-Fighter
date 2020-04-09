@@ -2,7 +2,6 @@ package physics;
 
 import display.Camera;
 import game.GameObject;
-import game.Scene;
 import graphics.RectSprite;
 import logic.Dimension2D;
 import logic.Vector2;
@@ -19,7 +18,7 @@ public class RectCollider extends Collider {
     }
 
     @Override
-    public void manageCollision(PhysicsComponent self, PhysicsComponent other) {
+    public void manageCollision(PhysicsGameComponent self, PhysicsGameComponent other) {
         if (other.getCollider() instanceof RectCollider) { this.resolveRectVsRect(this, (RectCollider) other.getCollider(), self, other);}
         if (other.getCollider() instanceof CircleCollider) { return; } //Collider.resolveCircleVsRect(this, (CircleCollider)other.getCollider()); }
     }

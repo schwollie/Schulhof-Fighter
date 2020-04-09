@@ -1,9 +1,7 @@
 package game;
 
 import display.Camera;
-import graphics.Sprite;
-import physics.PhysicsComponent;
-import player.Player;
+import physics.PhysicsGameComponent;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -12,7 +10,7 @@ public class Scene {
 
     public ArrayList<GameObject> gameObjects = new ArrayList<>();
 
-    private ArrayList<PhysicsComponent> physicsComponents = new ArrayList<>();
+    private ArrayList<PhysicsGameComponent> physicsComponents = new ArrayList<>();
 
     public void addGameObject(GameObject gameObject) {
         gameObjects.add(gameObject);
@@ -26,7 +24,7 @@ public class Scene {
         return gameObjects;
     }
 
-    public ArrayList<PhysicsComponent> getPhysicsComponents() {
+    public ArrayList<PhysicsGameComponent> getPhysicsComponents() {
         physicsComponents.clear();
 
         for (GameObject g: gameObjects) {

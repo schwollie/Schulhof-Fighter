@@ -3,7 +3,7 @@ package physics;
 import game.*;
 import logic.Vector2;
 
-public class PhysicsComponent extends Component {
+public class PhysicsGameComponent extends GameComponent {
 
     private boolean isStatic = false;
     private double mass = 1;
@@ -14,7 +14,7 @@ public class PhysicsComponent extends Component {
 
     private Vector2 force = Vector2.zero;
 
-    public PhysicsComponent(GameObject gameObject) {
+    public PhysicsGameComponent(GameObject gameObject) {
         super(gameObject, ComponentType.PhysicsComponent);
     }
 
@@ -48,7 +48,7 @@ public class PhysicsComponent extends Component {
 
     private void calcCollisionForce(Scene scene) {
 
-        for (PhysicsComponent p: scene.getPhysicsComponents()) {
+        for (PhysicsGameComponent p: scene.getPhysicsComponents()) {
             if (p == this) { continue; }
             if (p.collider == null) { continue; }
             if (this.collider == null) { return; }

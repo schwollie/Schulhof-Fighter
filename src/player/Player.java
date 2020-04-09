@@ -9,7 +9,7 @@ import logic.Transform;
 import logic.Vector2;
 import physics.Collider;
 import physics.CollissionListener;
-import physics.PhysicsComponent;
+import physics.PhysicsGameComponent;
 import physics.RectCollider;
 
 import java.awt.*;
@@ -32,7 +32,7 @@ public abstract class Player extends GameObject implements CollissionListener {
     public Player(Scene world, Vector2 pos, PlayerTypes type, String tag) {
         super(tag, world);
         this.transform = new Transform(pos);
-        this.physicsComponent = new PhysicsComponent(this);
+        this.physicsComponent = new PhysicsGameComponent(this);
         this.physicsComponent.setCollider(new RectCollider(this, new Vector2(-0.2,-0.4), new Dimension2D(0.4, 0.9)));
         this.physicsComponent.getCollider().addListener(this);
 
@@ -127,7 +127,7 @@ public abstract class Player extends GameObject implements CollissionListener {
 
     // endregion
 
-    public PhysicsComponent getPlayerPhysics() { return this.physicsComponent; }
+    public PhysicsGameComponent getPlayerPhysics() { return this.physicsComponent; }
 
     public Transform getTransform() { return this.transform; }
 }

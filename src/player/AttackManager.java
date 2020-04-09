@@ -1,14 +1,13 @@
 package player;
 
-import game.Component;
+import game.GameComponent;
 import game.ComponentType;
 import game.GameObject;
-import game.Scene;
 import logic.Vector2;
 import physics.*;
 import time.TimeEventListener;
 
-public class AttackManager extends Component implements CollissionListener, TimeEventListener {
+public class AttackManager extends GameComponent implements CollissionListener, TimeEventListener {
 
     private Collider atBoxNormal;
     private Collider atBoxLow;

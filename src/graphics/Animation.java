@@ -1,17 +1,15 @@
 package graphics;
 
 import display.Camera;
-import game.Component;
+import game.GameComponent;
 import game.ComponentType;
 import game.GameObject;
-import game.Scene;
 import logic.AnimationType;
 import logic.Dimension2D;
-import player.Player;
 
 import java.awt.*;
 
-public class Animation extends Component {
+public class Animation extends GameComponent {
 
     private GameObject ref;
     private ImageSprite[] images;

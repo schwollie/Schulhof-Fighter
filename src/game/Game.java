@@ -6,7 +6,7 @@ import input.InputManager;
 import input.PlayerKeyListener;
 import logic.*;
 import mainmenu.graphics.MenuCanvas;
-import physics.PhysicsComponent;
+import physics.PhysicsGameComponent;
 import physics.RectCollider;
 import player.HumanPlayer;
 import time.FpsTracker;
@@ -61,7 +61,7 @@ public class Game {
         Transform groundTrans = new Transform(0,  5);
         GameObject ground = new GameObject("Ground", scene);
         ground.setTransform(groundTrans);
-        PhysicsComponent groundCollider = new PhysicsComponent(ground);
+        PhysicsGameComponent groundCollider = new PhysicsGameComponent(ground);
         ground.setPhysicsComponent(groundCollider);
         groundCollider.setStatic(true);
 

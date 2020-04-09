@@ -2,7 +2,7 @@ package game;
 
 import display.Camera;
 import logic.Transform;
-import physics.PhysicsComponent;
+import physics.PhysicsGameComponent;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -13,9 +13,9 @@ public class GameObject {
 
     protected String tag;
     protected Transform transform;
-    protected PhysicsComponent physicsComponent;
+    protected PhysicsGameComponent physicsComponent;
 
-    protected ArrayList<Component> components = new ArrayList<>();
+    protected ArrayList<GameComponent> gameComponents = new ArrayList<>();
 
     public GameObject(String tag, Scene world) {
         this.tag = tag;
@@ -23,7 +23,7 @@ public class GameObject {
     }
 
     public void Render(Graphics2D g, Camera cam) {
-        for (Component c : components) {
+        for (GameComponent c : gameComponents) {
             c.Render(g, cam);
         }
     }
@@ -33,22 +33,22 @@ public class GameObject {
             physicsComponent.tick(deltaTime);
         }
 
-        for (Component c : components) {
+        for (GameComponent c : gameComponents) {
             c.tick(deltaTime);
         }
     }
 
-    public void addComponent(Component c) {
-        components.add(c);
+    public void addComponent(GameComponent c) {
+        gameComponents.add(c);
     }
 
-    public void removeComponent(Component c) {
-        components.remove(c);
+    public void removeComponent(GameComponent c) {
+        gameComponents.remove(c);
     }
 
     // region getters and setters:
 
-    public void setPhysicsComponent(PhysicsComponent physicsComponent) {
+    public void setPhysicsComponent(PhysicsGameComponent physicsComponent) {
         this.physicsComponent = physicsComponent;
     }
 
@@ -56,7 +56,7 @@ public class GameObject {
         this.transform = transform;
     }
 
-    public PhysicsComponent getPhysicsComponent() {
+    public PhysicsGameComponent getPhysicsComponent() {
         return physicsComponent;
     }
 

@@ -1,10 +1,9 @@
 package physics;
 
 import display.Camera;
-import game.Component;
+import game.GameComponent;
 import game.ComponentType;
 import game.GameObject;
-import game.Scene;
 import graphics.Sprite;
 import logic.Transform;
 import logic.Vector2;
@@ -13,7 +12,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 
-public abstract class Collider extends Component {
+public abstract class Collider extends GameComponent {
 
     protected Vector2 offset;
     //protected PhysicsObject physicsObject;
@@ -28,7 +27,7 @@ public abstract class Collider extends Component {
         this.offset = offset;
     }
 
-    public abstract void manageCollision(PhysicsComponent self, PhysicsComponent other);
+    public abstract void manageCollision(PhysicsGameComponent self, PhysicsGameComponent other);
 
     public abstract boolean doesCollide(Collider c);
 
@@ -90,7 +89,7 @@ public abstract class Collider extends Component {
                 a.getX() > b.getX() + b.getWidth() || a.getY() > b.getY() + b.getHeight());
     }
 
-    protected void resolveCircleVsRect(RectCollider a, CircleCollider b, PhysicsComponent pa, PhysicsComponent pb) {
+    protected void resolveCircleVsRect(RectCollider a, CircleCollider b, PhysicsGameComponent pa, PhysicsGameComponent pb) {
         Vector2 normal;
         double penetration;
 
@@ -167,7 +166,7 @@ public abstract class Collider extends Component {
         resolveCollision(a, b, penetration, normal, pa, pb);
     }
 
-    protected void resolveRectVsRect(RectCollider a, RectCollider b, PhysicsComponent pa, PhysicsComponent pb) {
+    protected void resolveRectVsRect(RectCollider a, RectCollider b, PhysicsGameComponent pa, PhysicsGameComponent pb) {
         // Vector from A to B from midpoint to midpoint
         Vector2 aMid = a.getPosition().add(a.getDimensions().asVector().scalarMult(0.5));
         Vector2 bMid = b.getPosition().add(b.getDimensions().asVector().scalarMult(0.5));
@@ -223,7 +222,7 @@ public abstract class Collider extends Component {
         }
     }
 
-    protected void resolveCircleVsCircle(CircleCollider a, CircleCollider b, PhysicsComponent pa, PhysicsComponent pb) {
+    protected void resolveCircleVsCircle(CircleCollider a, CircleCollider b, PhysicsGameComponent pa, PhysicsGameComponent pb) {
 
         // Vector from a to b
         Vector2 n = b.getPosition().subtract(a.getPosition());
@@ -247,7 +246,7 @@ public abstract class Collider extends Component {
 
     }
 
-    protected void resolveCollision(Collider a, Collider b, double penetration, Vector2 normal, PhysicsComponent pa, PhysicsComponent pb) {
+    protected void resolveCollision(Collider a, Collider b, double penetration, Vector2 normal, PhysicsGameComponent pa, PhysicsGameComponent pb) {
         //relative Velocity:
         Vector2 rv = pb.getVelocity().subtract(pa.getVelocity());
 
@@ -276,17 +275,17 @@ public abstract class Collider extends Component {
         }
     }
 
-    protected void positionalCorrection(Collider a, Collider b, double penetration, Vector2 normal, PhysicsComponent pa, PhysicsComponent pb) {
+    protected void positionalCorrection(Collider a, Collider b, double penetration, Vector2 normal, PhysicsGameComponent pa, PhysicsGameComponent pb) {
         double percentage = 0.5; // 0.2  - 0.8
         Vector2 correction = normal.scalarMult( penetration / (pa.getMassInverse() + pb.getMassInverse()) * percentage);
         a.reference.getPhysicsComponent().addPosition( correction.scalarMult(-pa.getMassInverse()));
         b.reference.getPhysicsComponent().addPosition( correction.scalarMult(pb.getMassInverse()));
     }
 
-    public static Collider[] doesCollide(Collider collider, ArrayList<PhysicsComponent> physicsComponents) {
+    public static Collider[] doesCollide(Collider collider, ArrayList<PhysicsGameComponent> physicsComponents) {
         ArrayList<Collider> allCollisions = new ArrayList<>();
 
-        for (PhysicsComponent p : physicsComponents) {
+        for (PhysicsGameComponent p : physicsComponents) {
             Collider c = p.getCollider();
             if (c == null) { continue; }
 

@@ -1,17 +1,16 @@
 package graphics;
 
 import display.Camera;
-import game.Component;
+import game.GameComponent;
 import game.ComponentType;
 import game.GameObject;
-import game.Scene;
 import logic.AnimationType;
 import logic.PlayerTypes;
 import player.PlayerState;
 
 import java.awt.*;
 
-public class AnimationManager extends Component {
+public class AnimationManager extends GameComponent {
 
     private Animation kickAnim;
     private Animation punchAnim;

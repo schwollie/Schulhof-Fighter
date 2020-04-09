@@ -1,7 +1,7 @@
 package graphics;
 
 import display.Camera;
-import game.Component;
+import game.GameComponent;
 import game.ComponentType;
 import game.GameObject;
 import logic.Transform;
@@ -9,7 +9,7 @@ import logic.Vector2;
 
 import java.awt.*;
 
-public abstract class Sprite extends Component {
+public abstract class Sprite extends GameComponent {
 
     protected boolean visible = true;
     protected Vector2 offset = new Vector2(0, 0);
