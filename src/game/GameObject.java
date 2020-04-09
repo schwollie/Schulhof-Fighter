@@ -1,6 +1,6 @@
 package game;
 
-import gui.display.Camera;
+import display.Camera;
 import logic.Transform;
 import physics.PhysicsComponent;
 

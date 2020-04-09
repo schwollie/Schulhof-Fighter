@@ -1,27 +1,32 @@
 package player;
 
-import game.GameWorld;
+import display.Camera;
+import game.Component;
+import game.ComponentType;
+import game.GameObject;
 import graphics.AnimationManager;
 import logic.PlayerTypes;
-import logic.Transform;
-import logic.Vector2;
 
-public class VisualPlayer {
+import java.awt.*;
 
-    private Player playerRef;
+
+public class VisualPlayer extends Component {
+
     private AnimationManager animManager;
-    private Transform transform;
-    private Vector2 spriteOffset;
 
-    public VisualPlayer(PlayerTypes type, Player player) {
-        animManager = new AnimationManager(type, player);
-        this.playerRef = player;
-        this.transform = player.getTransform();
-        this.spriteOffset = new Vector2(-1, -1); // pivot point is on center
+    public VisualPlayer(PlayerTypes type, GameObject ref) {
+        super(ref, ComponentType.VisualElement);
+        animManager = new AnimationManager(type, ref);
     }
 
-    public void updatePlayer(GameWorld g, double dt) {
-        animManager.runAnimation(g, dt);
+    @Override
+    public void tick(double dt) {
+        animManager.runAnimation(dt);
+    }
+
+    @Override
+    public void Render(Graphics2D g, Camera cam) {
+        animManager.Render(g, cam);
     }
 
     public void setState(PlayerState state) {

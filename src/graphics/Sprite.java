@@ -1,25 +1,25 @@
 package graphics;
 
+import display.Camera;
+import game.Component;
+import game.ComponentType;
 import game.GameObject;
-import gui.display.Camera;
 import logic.Transform;
 import logic.Vector2;
 
 import java.awt.*;
 
-public abstract class Sprite {
+public abstract class Sprite extends Component {
 
     protected boolean visible = true;
-    protected GameObject gameObjectRef;
     protected Vector2 offset = new Vector2(0, 0);
 
-    /*public void paintComponent(Graohics2Dg) {
-        if (this.visible) {
-            draw(g);
-        }
-    }*/
+    public Sprite(GameObject ref) {
+        super(ref, ComponentType.Sprite);
+    }
 
-    public abstract void draw(Graphics2D g, Camera cam);
+    @Override
+    public abstract void Render(Graphics2D g, Camera cam);
 
     public void setVisibility(boolean visibility) {
         this.visible = visibility;
@@ -30,10 +30,10 @@ public abstract class Sprite {
     }
 
     public Transform getTransform() {
-        return gameObjectRef.getTransform();
+        return reference.getTransform();
     }
 
     public void setGameObjectRef(GameObject gameObjectRef) {
-        this.gameObjectRef = gameObjectRef;
+        this.reference = gameObjectRef;
     }
 }

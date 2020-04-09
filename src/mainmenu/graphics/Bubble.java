@@ -1,4 +1,4 @@
-package gui.mainmenu.graphics;
+package mainmenu.graphics;
 
 import game.Consts;
 import logic.Vector2;

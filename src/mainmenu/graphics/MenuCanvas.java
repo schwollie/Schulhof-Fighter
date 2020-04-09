@@ -1,14 +1,13 @@
-package gui.mainmenu.graphics;
+package mainmenu.graphics;
 
 import game.Consts;
-import gui.components.Button;
-import gui.components.Component;
 import logic.Vector2;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class MenuCanvas extends gui.components.Panel {
+public class MenuCanvas extends JPanel {
 
     private ArrayList<Bubble> bubbles;
     private ArrayList<Bubble> bubblesInRadius = new ArrayList<>();
@@ -16,9 +15,6 @@ public class MenuCanvas extends gui.components.Panel {
 
     public MenuCanvas() {
         bubbles = new ArrayList<>();
-        Button testBtn = new Button("test button", 10, 10, 100, 100);
-        testBtn.setTextAlign(Component.TextAlign.CENTER);
-        addGuiComponent(testBtn);
     }
 
     public void createStandardBubbles(int amount) {
