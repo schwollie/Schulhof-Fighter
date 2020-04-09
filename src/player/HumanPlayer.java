@@ -36,7 +36,6 @@ public class HumanPlayer extends Player implements PlayerKeyListener {
     @Override
     public void keyPunch() {
         this.punch();
-        System.out.println("punch");
     }
 
     @Override

@@ -47,6 +47,25 @@ public class Timer {
         }
     }
 
+    public void resetTimer(){
+        elapsedTime = 0;
+        time = startTime;
+        hasStopped = false;
+    }
+
+    private void sendEvent() {
+        for (TimeEventListener t : listeners) {
+            t.onTimerStops(this.name);
+        }
+    }
+    public void addListener(TimeEventListener l) {
+        this.listeners.add(l);
+    }
+
+    public void removeListener(TimeEventListener l ) {
+        this.listeners.remove(l);
+    }
+
     public double getElapsedTime() {
         return elapsedTime;
     }
@@ -55,20 +74,6 @@ public class Timer {
 
     public boolean isFinished() {
         return time <= 0;
-    }
-
-    private void sendEvent() {
-        for (TimeEventListener t : listeners) {
-            t.onTimerStops(this.name);
-        }
-    }
-
-    public void addListener(TimeEventListener l) {
-        this.listeners.add(l);
-    }
-
-    public void removeListener(TimeEventListener l ) {
-        this.listeners.remove(l);
     }
 
     @Override

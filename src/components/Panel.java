@@ -30,6 +30,7 @@ public abstract class Panel extends JPanel implements MouseListener, MouseMotion
     }
 
     public void addGuiComponent(GuiComponent component) {
+        component.setParentPanel(this);
         components.add(component);
     }
 
@@ -41,16 +42,8 @@ public abstract class Panel extends JPanel implements MouseListener, MouseMotion
         return components;
     }
 
-    public void setGuiComponents(ArrayList<GuiComponent> guiComponents) {
-        this.components = guiComponents;
-    }
-
     public ArrayList<GuiListener> getListeners() {
         return listeners;
-    }
-
-    public void setListeners(ArrayList<GuiListener> listeners) {
-        this.listeners = listeners;
     }
 
     public void addGuiListener(GuiListener listener) {

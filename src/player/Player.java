@@ -64,12 +64,12 @@ public abstract class Player extends GameObject implements CollissionListener {
     }
 
     protected void Jump() {
-        if (!hasComponent(Shaker.class))
-            scene.getCam().addComponent(new Shaker(scene.getCam(), new Vector2(0.02, 0.02), new Vector2(1, 1), 1));
 
         if (isOnGround) {
             physicsComponent.setVelocityY(-3);
             isOnGround = false;
+            if (!hasComponent(Shaker.class))
+                scene.getCam().addComponent(new Shaker(scene.getCam(), new Vector2(0.02, 0.02), new Vector2(1, 1), 1));
         }
     }
 

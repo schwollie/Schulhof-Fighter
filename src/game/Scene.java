@@ -2,6 +2,7 @@ package game;
 
 import display.Camera;
 import physics.PhysicsGameComponent;
+import player.Player;
 import time.TimeManager;
 
 import java.awt.*;
@@ -41,6 +42,18 @@ public class Scene {
 
         for (GameObject g: gameObjects) {
             if (g.physicsComponent != null) {
+                physicsComponents.add(g.physicsComponent);
+            }
+        }
+
+        return physicsComponents;
+    }
+
+    public ArrayList<PhysicsGameComponent> getPhysicsComponentsTypePlayer() {
+        physicsComponents.clear();
+
+        for (GameObject g: gameObjects) {
+            if (g.physicsComponent != null && g instanceof Player) {
                 physicsComponents.add(g.physicsComponent);
             }
         }
