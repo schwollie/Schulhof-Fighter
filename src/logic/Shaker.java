@@ -53,8 +53,8 @@ public class Shaker extends GameComponent implements TimeEventListener {
         double p = timer.getElapsedTimePercentage();
         double strength = 1-p; // linear
 
-        double newX = Math.sin(timer.getEl                               apsedTime()*speed.getX()) * maxDeviation.getX() * strength;
-        double newY = Math.cos(timer.getElapsedTime()*speed.getY()) * maxDeviation.getY() * strength;
+        double newX = Math.sin(timer.getElapsedTime() * speed.getX()) * maxDeviation.getX() * strength;
+        double newY = Math.cos(timer.getElapsedTime() * speed.getY()) * maxDeviation.getY() * strength;
         return new Vector2(newX, newY);
     }
 
