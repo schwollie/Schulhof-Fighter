@@ -5,7 +5,7 @@ import java.awt.Component;
 
 public class Button extends Component {
 
-    public Button(String text, int x, int y, int width, int height) {
+    /*public Button(String text, int x, int y, int width, int height) {
         super(x, y, width, height);
         this.text = text;
     }
@@ -62,6 +62,6 @@ public class Button extends Component {
     @Override
     public void onHover() {
 
-    }
+    }*/
 
 }
