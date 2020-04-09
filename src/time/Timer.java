@@ -6,6 +6,7 @@ public class Timer {
 
     private String name;
 
+    private double startTime;
     private double time;
     private double elapsedTime = 0;
 
@@ -16,18 +17,21 @@ public class Timer {
     public Timer(String name, double time) {
         this.name = name;
         this.time = time;
+        this.startTime = time;
     }
 
     public Timer(String name, double time, TimeEventListener l) {
         this.name = name;
         this.time = time;
         this.listeners.add(l);
+        this.startTime = time;
     }
 
     public Timer(String name, double time, ArrayList<TimeEventListener> l) {
         this.name = name;
         this.time = time;
         this.listeners = l;
+        this.startTime = time;
     }
 
     public void tick(double dt) {
@@ -47,6 +51,8 @@ public class Timer {
         return elapsedTime;
     }
 
+    public double getElapsedTimePercentage() { return elapsedTime/startTime; }
+
     public boolean isFinished() {
         return time <= 0;
     }
@@ -63,5 +69,14 @@ public class Timer {
 
     public void removeListener(TimeEventListener l ) {
         this.listeners.remove(l);
+    }
+
+    @Override
+    public String toString() {
+        return "Timer{" +
+                "time=" + time +
+                ", elapsedTime=" + elapsedTime +
+                ", hasStopped=" + hasStopped +
+                '}';
     }
 }

@@ -20,8 +20,8 @@ public class VisualPlayer extends GameComponent {
     }
 
     @Override
-    public void tick(double dt) {
-        animManager.runAnimation(dt);
+    public void tick() {
+        animManager.tick();
     }
 
     @Override

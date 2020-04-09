@@ -1,12 +1,10 @@
 package player;
 
 import display.Camera;
+import game.GameComponent;
 import game.GameObject;
 import game.Scene;
-import logic.Dimension2D;
-import logic.PlayerTypes;
-import logic.Transform;
-import logic.Vector2;
+import logic.*;
 import physics.Collider;
 import physics.CollissionListener;
 import physics.PhysicsGameComponent;
@@ -43,13 +41,13 @@ public abstract class Player extends GameObject implements CollissionListener {
     }
 
     @Override
-    public void tick(double deltaTime) {
-        super.tick(deltaTime);
+    public void tick() {
+        super.tick();
 
         this.setPlayerState();
-        visualPlayer.tick(deltaTime);
-        attackManager.tick(deltaTime);
-        healthManager.tick(deltaTime);
+        visualPlayer.tick();
+        attackManager.tick();
+        healthManager.tick();
     }
 
     @Override
@@ -66,6 +64,9 @@ public abstract class Player extends GameObject implements CollissionListener {
     }
 
     protected void Jump() {
+        if (!hasComponent(Shaker.class))
+            scene.getCam().addComponent(new Shaker(scene.getCam(), new Vector2(0.02, 0.02), new Vector2(1, 1), 1));
+
         if (isOnGround) {
             physicsComponent.setVelocityY(-3);
             isOnGround = false;

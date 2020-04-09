@@ -3,6 +3,7 @@ package game;
 import display.Camera;
 import logic.Transform;
 import physics.PhysicsGameComponent;
+import time.TimeManager;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -12,10 +13,13 @@ public class GameObject {
     protected Scene scene;
 
     protected String tag;
-    protected Transform transform;
+    protected Transform transform = new Transform();
     protected PhysicsGameComponent physicsComponent;
 
     protected ArrayList<GameComponent> gameComponents = new ArrayList<>();
+
+    private ArrayList<GameComponent> components2Add = new ArrayList<>();
+    private ArrayList<GameComponent> components2Remove = new ArrayList<>();
 
     public GameObject(String tag, Scene world) {
         this.tag = tag;
@@ -28,22 +32,36 @@ public class GameObject {
         }
     }
 
-    public void tick(double deltaTime) {
+    public void tick() {
         if (physicsComponent != null) {
-            physicsComponent.tick(deltaTime);
+            physicsComponent.tick();
         }
 
         for (GameComponent c : gameComponents) {
-            c.tick(deltaTime);
+            c.tick();
         }
+
+        manageComponentChanges();
+    }
+
+    private void manageComponentChanges() {
+        gameComponents.addAll(components2Add);
+        components2Add.clear();
+
+        gameComponents.removeAll(components2Remove);
+        components2Remove.clear();
     }
 
     public void addComponent(GameComponent c) {
-        gameComponents.add(c);
+        // concurrentModificationError could occur if we call this inside tick:
+        //gameComponents.add(c);
+        components2Add.add(c);
     }
 
     public void removeComponent(GameComponent c) {
-        gameComponents.remove(c);
+        // concurrentModificationError could occur if we call this inside tick:
+        // gameComponents.remove(c);
+        components2Remove.add(c);
     }
 
     // region getters and setters:
@@ -76,6 +94,29 @@ public class GameObject {
         GameObject p = new GameObject("placeholder", g);
         p.transform = trans;
         return p;
+    }
+
+    public TimeManager getTime() { return this.scene.timeManager; }
+
+    public boolean hasComponent(Class<? extends GameComponent> component) {
+        // return gameComponents.stream().anyMatch(c -> c.getClass()==component);
+        for (GameComponent c: gameComponents) {
+            if (c.getClass()==component) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public GameComponent getComponent(Class<GameComponent> component) {
+        for (GameComponent c: gameComponents) {
+            if (c.getClass()==component) {
+                return c;
+            }
+        }
+
+        throw new Error("GameObject has no Component : " + component + " -> Check this with hasComponent()!");
     }
 
     //endregion

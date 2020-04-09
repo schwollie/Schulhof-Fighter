@@ -1,10 +1,10 @@
 package player;
 
+import game.ComponentType;
+import game.GameComponent;
 import game.GameObject;
 
-public class HealthManager {
-
-    private GameObject ref;
+public class HealthManager extends GameComponent {
 
     private double regBonus = 0.1; // health per second
 
@@ -16,7 +16,7 @@ public class HealthManager {
     private double currentStamina;
 
     public HealthManager(GameObject ref, double maxHealth) {
-        this.ref = ref;
+        super(ref, ComponentType.Logic);
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
     }
@@ -25,8 +25,9 @@ public class HealthManager {
         currentHealth -= damage;
     }
 
-    public void tick(double dt) {
-        regenerate(dt);
+    public void tick() {
+        double deltaTime = reference.getTime().getDeltaTime();
+        regenerate(deltaTime);
     }
 
     private void regenerate(double dt) {

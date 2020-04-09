@@ -20,7 +20,8 @@ public class PhysicsGameComponent extends GameComponent {
 
     //region Physics Calculations:
 
-    public void tick(double deltaTime) {
+    public void tick() {
+        double deltaTime = reference.getTime().getDeltaTime();
         if (isStatic) { return; }
         this.calcPhysics(deltaTime, reference.getScene());
         this.applyForce(deltaTime);

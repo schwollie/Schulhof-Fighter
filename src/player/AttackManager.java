@@ -40,7 +40,7 @@ public class AttackManager extends GameComponent implements CollissionListener, 
     }
 
     @Override
-    public void tick(double deltaTime) {
+    public void tick() {
 
     }
 

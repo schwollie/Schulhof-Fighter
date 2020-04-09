@@ -49,7 +49,9 @@ public class AnimationManager extends GameComponent {
         }
     }
 
-    public void runAnimation(double dt) {
+    @Override
+    public void tick() {
+        double dt = reference.getTime().getDeltaTime();
         manageAnimations(dt);
     }
 

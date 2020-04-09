@@ -22,8 +22,7 @@ public class Canvas extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D graphics2D = (Graphics2D) g;
-        
-        cam.Render(graphics2D);
+        cam.RenderScene(graphics2D);
     }
 
 }

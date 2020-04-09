@@ -2,6 +2,7 @@ package graphics;
 
 import display.Camera;
 import game.GameObject;
+import logic.Dimension2D;
 import logic.Transform;
 import logic.Vector2;
 
@@ -9,10 +10,10 @@ import java.awt.*;
 
 public class RectSprite extends Sprite {
 
-    private Vector2 Size;
+    private Dimension2D Size;
     private Color color = new Color(0, 0, 0);
 
-    public RectSprite(GameObject reference, Vector2 offset, Vector2 dimensions) {
+    public RectSprite(GameObject reference, Vector2 offset, Dimension2D dimensions) {
         super(reference);
         this.Size = dimensions;
         this.offset = offset;
@@ -27,7 +28,7 @@ public class RectSprite extends Sprite {
         if (!visible) { return; }
 
         Transform ownTrans = this.getTransform().addPosition(offset);
-        ownTrans.setScale(new Vector2(Size.getX(), Size.getY()));
+        ownTrans.setScale(new Vector2(Size.getWidth(), Size.getHeight()));
         Transform screenCoord = cam.worldToScreen(ownTrans);
 
         g.setColor(this.color);

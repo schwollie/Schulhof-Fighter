@@ -33,7 +33,7 @@ public class RectCollider extends Collider {
     @Override
     public void Render(Graphics2D g, Camera cam) {
         if (debugSprite==null) {
-            debugSprite = new RectSprite(GameObject.getPlaceHolder(this.reference.getTransform(), reference.getScene()), this.offset, this.dimensions.asVector());
+            debugSprite = new RectSprite(GameObject.getPlaceHolder(this.reference.getTransform(), reference.getScene()), this.offset, this.dimensions);
         } else {
             debugSprite.setGameObjectRef(GameObject.getPlaceHolder(this.reference.getTransform(), reference.getScene()));
         }

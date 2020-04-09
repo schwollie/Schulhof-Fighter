@@ -14,7 +14,7 @@ public abstract class GameComponent {
         this.type = type;
     }
 
-    public void tick(double deltaTime) {
+    public void tick() {
 
     }
 

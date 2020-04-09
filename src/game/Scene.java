@@ -2,11 +2,14 @@ package game;
 
 import display.Camera;
 import physics.PhysicsGameComponent;
+import time.TimeManager;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Scene {
+
+    public TimeManager timeManager;
 
     public ArrayList<GameObject> gameObjects = new ArrayList<>();
 
@@ -24,6 +27,15 @@ public class Scene {
         return gameObjects;
     }
 
+    public GameObject getCam() {
+        for (GameObject g: gameObjects) {
+            if (g.tag.equals("Camera")) {
+                return g;
+            }
+        }
+        throw new Error("No Camera Found!");
+    }
+
     public ArrayList<PhysicsGameComponent> getPhysicsComponents() {
         physicsComponents.clear();
 
@@ -36,10 +48,10 @@ public class Scene {
         return physicsComponents;
     }
 
-    public void tick(double deltaTime) {
+    public void tick() {
 
         for (GameObject g: gameObjects) {
-            g.tick(deltaTime);
+            g.tick();
         }
 
     }

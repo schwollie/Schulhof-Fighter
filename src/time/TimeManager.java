@@ -1,6 +1,6 @@
 package time;
 
-public class FpsTracker {
+public class TimeManager {
 
     private int targetFPS;
 
@@ -9,7 +9,7 @@ public class FpsTracker {
     private double deltaTime = 0;
     private double currentFPS = 0;
 
-    public FpsTracker(int targetFPS) {
+    public TimeManager(int targetFPS) {
         this.targetFPS = targetFPS;
         stepForward();
     }

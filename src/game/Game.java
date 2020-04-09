@@ -2,6 +2,7 @@ package game;
 
 import display.Camera;
 import display.Window;
+import graphics.RectSprite;
 import input.InputManager;
 import input.PlayerKeyListener;
 import logic.*;
@@ -9,7 +10,7 @@ import mainmenu.graphics.MenuCanvas;
 import physics.PhysicsGameComponent;
 import physics.RectCollider;
 import player.HumanPlayer;
-import time.FpsTracker;
+import time.TimeManager;
 
 import java.awt.*;
 
@@ -35,6 +36,7 @@ public class Game {
         inputManager = new InputManager();
 
         cam = new Camera(scene);
+        scene.addGameObject(cam);
 
         mainmenu = new MenuCanvas();
 
@@ -67,6 +69,8 @@ public class Game {
 
         groundCollider.setCollider(new RectCollider(ground, new Vector2(0, -2), new Dimension2D(10, 1)));
 
+        ground.addComponent(new RectSprite(ground, new Vector2(0, -2), new Dimension2D(10, 1)));
+
         scene.gameObjects.add(ground);
     }
 
@@ -78,15 +82,16 @@ public class Game {
 
     public void startGameLoop() {
 
-        FpsTracker fpsTracker = new FpsTracker(120);
+        TimeManager timeManager = new TimeManager(120);
+        scene.timeManager = timeManager;
 
         while (true) {
-            fpsTracker.stepForward();
-            fpsTracker.waitForTargetFPS();
+            timeManager.stepForward();
+            timeManager.waitForTargetFPS();
 
             inputManager.sendKeyStates();
 
-            scene.tick(fpsTracker.getDeltaTime());
+            scene.tick();
 
             //System.out.println(fpsTracker.getCurrentFPS());
 
