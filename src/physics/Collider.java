@@ -311,7 +311,7 @@ public abstract class Collider extends GameComponent {
     }
 
     public static Collider getPointCollider(Vector2 point) {
-        return new CircleCollider(GameObject.getPlaceHolder(Transform.getEmpty(), null), point, 0.01);
+        return new CircleCollider(GameObject.getPlaceHolder(Transform.getIdentity(), null), point, 0.01);
     }
 
 }

@@ -25,14 +25,6 @@ public abstract class Sprite extends GameComponent {
         this.visible = visibility;
     }
 
-    public void setOffset(Vector2 offset) {
-        this.offset = offset;
-    }
-
-    public Transform getTransform() {
-        return reference.getTransform();
-    }
-
     public void setGameObjectRef(GameObject gameObjectRef) {
         this.reference = gameObjectRef;
     }

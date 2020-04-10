@@ -126,7 +126,7 @@ public class Animation extends GameComponent {
 
         // create sprites from spritesheet
         ImageSprite[] animImages = new ImageSprite[pictureCount];
-        ImageSprite animSheet = new ImageSprite(ref, new Dimension((int) (bounds.getWidth() * pictureCount), (int) bounds.getHeight()), animSheetPath);
+        ImageSprite animSheet = new ImageSprite(ref, new Dimension2D((int) (bounds.getWidth() * pictureCount), (int) bounds.getHeight()), animSheetPath);
 
         for (int i = 0; i < pictureCount; i++) {
             animImages[i] = animSheet.getSlice((int) (i * bounds.getWidth()), 0, (int) bounds.getWidth(), (int) bounds.getHeight());

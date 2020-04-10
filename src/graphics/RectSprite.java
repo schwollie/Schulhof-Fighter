@@ -29,7 +29,7 @@ public class RectSprite extends Sprite {
             return;
         }
 
-        Transform ownTrans = this.getTransform().addPosition(this.offset);
+        Transform ownTrans = this.getAbsoluteTransform();
         ownTrans.setScale(new Vector2(Size.getWidth(), Size.getHeight()));
         Transform screenCoord = cam.worldToScreen(ownTrans);
 

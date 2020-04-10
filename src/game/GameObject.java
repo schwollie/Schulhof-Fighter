@@ -101,7 +101,7 @@ public class GameObject {
 
     public static GameObject getPlaceHolderEmpty(Scene g) {
         GameObject p = new GameObject("placeholder", g);
-        p.transform = Transform.getEmpty();
+        p.transform = Transform.getIdentity();
         return p;
     }
 

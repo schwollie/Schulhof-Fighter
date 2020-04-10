@@ -14,7 +14,7 @@ public class Transform {
 
     public Transform(double x, double y) {
         position = new Vector2(x, y);
-        scale = Vector2.ones;
+        scale = new Vector2(1,1);
         rotation = 1f;
     }
 
@@ -76,6 +76,14 @@ public class Transform {
         return newTrans;
     }
 
+    public Transform add(Transform other) {
+        Transform newTrans = Transform.getIdentity();
+        newTrans.setPosition(other.position.add(this.position));
+        newTrans.setScale(other.scale.rowWiseMultiplication(this.scale));
+        newTrans.setRotation(other.rotation + this.rotation);
+        return newTrans;
+    }
+
     public void setRotation(double rotation) {
         this.rotation = rotation;
     }
@@ -88,7 +96,7 @@ public class Transform {
         this.position.add(offset);
     }
 
-    public static Transform getEmpty() {
+    public static Transform getIdentity() {
         return new Transform(0, 0);
     }
 

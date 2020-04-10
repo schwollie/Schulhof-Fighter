@@ -1,10 +1,14 @@
 package logic;
 
 
+import java.util.Random;
+
 public class Vector2 {
 
     public static final Vector2 zero = new ImmutableVector2(0, 0);
     public static final Vector2 ones = new ImmutableVector2(1, 1);
+
+    private static final Random rnd = new Random();
 
     private double x, y;
 
@@ -103,6 +107,12 @@ public class Vector2 {
 
     public void print() {
         System.out.println("(" + this.getX() + " | " + this.getY() + ")" + "    Length: " + this.getLength());
+    }
+
+    public static Vector2 randomVec(double minVal, double maxVal) {
+        double span = maxVal-minVal;
+        double span_d2 = span/2;
+        return new Vector2(rnd.nextDouble() * span - span_d2, rnd.nextDouble() * span - span_d2);
     }
 
     @Override

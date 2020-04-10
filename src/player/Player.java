@@ -4,6 +4,8 @@ import display.Camera;
 import game.GameObject;
 import game.Scene;
 import logic.*;
+import particle.ParticleSystem;
+import particle.ParticleType;
 import physics.Collider;
 import physics.CollissionListener;
 import physics.PhysicsGameComponent;
@@ -37,6 +39,8 @@ public abstract class Player extends GameObject implements CollissionListener {
         this.visualPlayer = new VisualPlayer(type, this);
         this.attackManager = new AttackManager(this);
         this.healthManager = new HealthManager(this, maxHealth);
+
+        this.addComponent(new ParticleSystem(this, 10, 10, ParticleType.PUNCH));
     }
 
     @Override
