@@ -50,7 +50,7 @@ public abstract class AnimationLoader {
     }
 
     private static String getPath(PlayerTypes type, AnimSpecs a) {
-        return Consts.imageSrc + type.name() + a.getAnimSheet();
+        return Consts.imageSrc + type.name() + "/" + a.getAnimSheet();
     }
 
 
