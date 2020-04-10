@@ -16,6 +16,7 @@ public class Particle extends GameComponent {
     //private Animation animation;
 
     private final ParticleSystem parentSystem;
+    private Vector2 force = new Vector2(0,0);
 
     public Particle(ParticleSystem parentSystem, Animation animation, Vector2 pos, double livingTime) {
         super(parentSystem.getReference(), ComponentType.Particle);
@@ -25,12 +26,13 @@ public class Particle extends GameComponent {
         this.transform.setPosition(pos);
     }
 
-    public Particle(ParticleSystem parentSystem, ParticleType type, Vector2 pos) {
+    public Particle(ParticleSystem parentSystem, ParticleType type, Vector2 pos, Vector2 force) {
         super(parentSystem.getReference(), ComponentType.Particle);
         this.parentSystem = parentSystem;
         //loadStandardParticle(type);
         this.transform.setPosition(pos);
         this.transform.setScale(new Vector2(0.1, 0.1));
+        this.force = force;
     }
 
     /*private void loadStandardParticle(ParticleType type) {
@@ -50,7 +52,7 @@ public class Particle extends GameComponent {
     public void tick() {
         double dt = reference.getTime().getDeltaTime();
 
-        this.transform = this.transform.addPosition(Vector2.randomVec(0, dt*10));
+        this.transform = this.transform.addPosition(force.scalarMult(dt));
     }
 
     @Override

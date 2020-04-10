@@ -6,6 +6,7 @@ import game.GameObject;
 import logic.Dimension2D;
 import logic.Shaker;
 import logic.Vector2;
+import particle.ParticleSystem;
 import physics.Collider;
 import physics.CollissionListener;
 import physics.PhysicsGameComponent;
@@ -59,6 +60,9 @@ public class AttackManager extends GameComponent implements CollissionListener, 
                 other.takeDamage(damage, new Vector2(getDirection() * force.getX(), force.getY()));
             }
         }
+
+        reference.addComponent(new ParticleSystem(reference,
+                0.01, .2, range.scalarMult(0.5).rowWiseMultiplication(new Vector2(getDirection(), 1))));
     }
 
     private Collider[] getCollidersInRange(Vector2 range, Vector2 _offset) {

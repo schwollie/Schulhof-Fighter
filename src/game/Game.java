@@ -93,7 +93,7 @@ public class Game {
 
             scene.tick();
 
-            System.out.println(timeManager.getCurrentFPS());
+            //System.out.println(timeManager.getCurrentFPS());
 
             //mainmenu.tick(fpsTracker.getDeltaTime(), inputManager.getMousePosition());
 
