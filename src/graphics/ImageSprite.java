@@ -3,11 +3,9 @@ package graphics;
 import display.Camera;
 import game.GameObject;
 import logic.Transform;
-import logic.Vector2;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -48,11 +46,11 @@ public class ImageSprite extends Sprite {
 
     public ImageSprite getSlice(int x, int y, int width, int height) {
         BufferedImage slice = this.img.getSubimage(x, y, width, height);
-        return new ImageSprite(this.reference, new Dimension(width, height),slice);
+        return new ImageSprite(this.reference, new Dimension(width, height), slice);
     }
 
     public double getYScaleFactor() { // to preserve image ratio
-        return (double)img.getHeight() / img.getWidth();
+        return (double) img.getHeight() / img.getWidth();
     }
 
     @Override
@@ -61,13 +59,13 @@ public class ImageSprite extends Sprite {
             Transform ownTrans = this.getTransform().addPosition(this.offset);
             Transform screenCoord = cam.worldToScreen(ownTrans);
 
-            int x = (int)screenCoord.getX();
-            int y = (int)screenCoord.getY();
-            int width = (int)screenCoord.getXScale();
-            int height = (int)(screenCoord.getYScale() * getYScaleFactor());
+            int x = (int) screenCoord.getX();
+            int y = (int) screenCoord.getY();
+            int width = (int) screenCoord.getXScale();
+            int height = (int) (screenCoord.getYScale() * getYScaleFactor());
 
             // center of image is on x, y
-            g.drawImage(img, x-width/2, y-height/2, width, height, null);
+            g.drawImage(img, x - width / 2, y - height / 2, width, height, null);
 
         }
     }
@@ -78,7 +76,7 @@ public class ImageSprite extends Sprite {
 
     public void updateBoundaries(Dimension newBounds) {
         if (newBounds.getWidth() != this.boundaries.getWidth() || boundaries.getHeight() != this.boundaries.getHeight()) {
-            rescaleImage((int)newBounds.getWidth(), (int)newBounds.getHeight());
+            rescaleImage((int) newBounds.getWidth(), (int) newBounds.getHeight());
         }
 
         this.boundaries = newBounds;

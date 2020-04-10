@@ -42,17 +42,29 @@ public class Transform {
         this.rotation = transform.rotation;
     }
 
-    public double getX() { return this.position.getX(); }
-    public double getY() { return this.position.getY(); }
+    public double getX() {
+        return this.position.getX();
+    }
+
+    public double getY() {
+        return this.position.getY();
+    }
 
     public Vector2 getScale() {
         return scale;
     }
 
-    public double getXScale() { return  this.scale.getX(); }
-    public double getYScale() { return  this.scale.getY(); }
+    public double getXScale() {
+        return this.scale.getX();
+    }
 
-    public Vector2 getPosition() { return this.position; }
+    public double getYScale() {
+        return this.scale.getY();
+    }
+
+    public Vector2 getPosition() {
+        return this.position;
+    }
 
     public void setPosition(Vector2 pos) {
         this.position = pos;
@@ -76,7 +88,9 @@ public class Transform {
         this.position.add(offset);
     }
 
-    public static Transform getEmpty() { return new Transform(0, 0); }
+    public static Transform getEmpty() {
+        return new Transform(0, 0);
+    }
 
     @Override
     public String toString() {

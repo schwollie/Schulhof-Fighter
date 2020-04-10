@@ -1,21 +1,23 @@
 package components;
 
 import java.awt.*;
-import java.awt.Component;
 
 public class Button extends GuiComponent {
-    private static Font buttonFont = loadFont("FjallaOne");
+    private static final Font buttonFont = loadFont("FjallaOne");
 
-    private Color hoverTextColor, hoverColor, pressedColor, pressedTextColor;
-    private boolean pressActivated;
+    private final Color hoverTextColor;
+    private final Color hoverColor;
+    private Color pressedColor;
+    private Color pressedTextColor;
+    private final boolean pressActivated;
 
     public Button(String text, int width, int height) {
         super(width, height);
         this.text = text;
         color = transparentColor;
-        textColor = new Color(255,255,255, 180);
+        textColor = new Color(255, 255, 255, 180);
         hoverColor = transparentColor;
-        hoverTextColor = new Color(255,255,255);
+        hoverTextColor = new Color(255, 255, 255);
         textSize = 25;
         pressActivated = false;
     }
@@ -23,7 +25,7 @@ public class Button extends GuiComponent {
     @Override
     public void paint(Graphics g) {
         int x = getX(), y = getY(), width = getWidth(), height = getHeight();
-        g.setFont(buttonFont.deriveFont(pressed?textSize-2:textSize).deriveFont(Font.BOLD));
+        g.setFont(buttonFont.deriveFont(pressed ? textSize - 2 : textSize).deriveFont(Font.BOLD));
         if (pressActivated && pressed) {
             g.setColor(Color.WHITE);
             g.fillRect(x, y, width, height);
@@ -49,7 +51,6 @@ public class Button extends GuiComponent {
             g.drawString(testStringLength(text, g.getFontMetrics()), posX, y + height / 2);
         }
     }
-
 
 
     @Override

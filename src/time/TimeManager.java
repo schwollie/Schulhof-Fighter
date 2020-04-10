@@ -2,7 +2,7 @@ package time;
 
 public class TimeManager {
 
-    private int targetFPS;
+    private final int targetFPS;
 
     private double currentTime = 0;
     private double lastTime = 0;
@@ -19,14 +19,16 @@ public class TimeManager {
         deltaTime = currentTime - lastTime;
         lastTime = currentTime;
 
-        currentFPS = 1000/deltaTime;
+        currentFPS = 1000 / deltaTime;
     }
 
     public void waitForTargetFPS() {
-        if (currentFPS < targetFPS) { return; }
+        if (currentFPS < targetFPS) {
+            return;
+        }
 
         // FPS: 90 target: 60
-        double waitTime = Math.max(1, 1000/targetFPS - deltaTime);
+        double waitTime = Math.max(1, 1000 / targetFPS - deltaTime);
 
         try {
             Thread.sleep((long) waitTime);
@@ -49,7 +51,7 @@ public class TimeManager {
     }
 
     public double getDeltaTime() {
-        return deltaTime/1000;
+        return deltaTime / 1000;
     }
 
     @Override

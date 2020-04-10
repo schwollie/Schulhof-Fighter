@@ -1,7 +1,6 @@
 package player;
 
 import display.Camera;
-import game.GameComponent;
 import game.GameObject;
 import game.Scene;
 import logic.*;
@@ -31,7 +30,7 @@ public abstract class Player extends GameObject implements CollissionListener {
         super(tag, world);
         this.transform = new Transform(pos);
         this.physicsComponent = new PhysicsGameComponent(this);
-        this.physicsComponent.setCollider(new RectCollider(this, new Vector2(-0.2,-0.4), new Dimension2D(0.4, 0.9)));
+        this.physicsComponent.setCollider(new RectCollider(this, new Vector2(-0.2, -0.4), new Dimension2D(0.4, 0.9)));
         this.physicsComponent.getCollider().addListener(this);
 
         this.type = type;
@@ -75,7 +74,7 @@ public abstract class Player extends GameObject implements CollissionListener {
 
     // -1 = left, 1 = right
     protected void walk(int dir) {
-        physicsComponent.addForce(new Vector2(dir*10, 0));
+        physicsComponent.addForce(new Vector2(dir * 10, 0));
         setDir(dir);
         setState2Walk();
     }
@@ -93,7 +92,8 @@ public abstract class Player extends GameObject implements CollissionListener {
         attackManager.doPunch();
     }
 
-    protected void block() {}
+    protected void block() {
+    }
 
     protected void setPlayerState() {
         if (!isOnGround) {
@@ -103,7 +103,7 @@ public abstract class Player extends GameObject implements CollissionListener {
     }
 
     public void setDir(int dir) {
-        this.transform.setScale(new Vector2(Math.abs(transform.getXScale())*dir, transform.getYScale()));
+        this.transform.setScale(new Vector2(Math.abs(transform.getXScale()) * dir, transform.getYScale()));
     }
 
     protected void setState2Walk() {
@@ -120,15 +120,19 @@ public abstract class Player extends GameObject implements CollissionListener {
         String tag1 = c1.getGameObject().getTag();
         String tag2 = c2.getGameObject().getTag();
 
-        if ((tag1.equals(this.tag) || tag2.equals(this.tag)) && (tag1.equals("Ground") || tag2.equals("Ground"))) {
-            isOnGround = true;
-        }
+        //if ((tag1.equals(this.tag) || tag2.equals(this.tag)) && (tag1.equals("Ground") || tag2.equals("Ground"))) {
+        isOnGround = true;
+        //}
 
     }
 
     // endregion
 
-    public PhysicsGameComponent getPlayerPhysics() { return this.physicsComponent; }
+    public PhysicsGameComponent getPlayerPhysics() {
+        return this.physicsComponent;
+    }
 
-    public Transform getTransform() { return this.transform; }
+    public Transform getTransform() {
+        return this.transform;
+    }
 }

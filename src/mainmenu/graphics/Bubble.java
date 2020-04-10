@@ -6,7 +6,7 @@ import logic.Vector2;
 import java.util.Random;
 
 public class Bubble {
-    private static Random random = new Random();
+    private static final Random random = new Random();
 
     private Vector2 position;
     private Vector2 velocity;

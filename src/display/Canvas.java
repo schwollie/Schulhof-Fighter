@@ -1,10 +1,7 @@
 package display;
 
-import graphics.Sprite;
-
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Canvas extends JPanel {
 

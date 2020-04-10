@@ -4,8 +4,10 @@ import display.Camera;
 import display.Window;
 import graphics.RectSprite;
 import input.InputManager;
-import input.PlayerKeyListener;
-import logic.*;
+import logic.Dimension2D;
+import logic.PlayerTypes;
+import logic.Transform;
+import logic.Vector2;
 import mainmenu.graphics.MenuCanvas;
 import physics.PhysicsGameComponent;
 import physics.RectCollider;
@@ -53,22 +55,20 @@ public class Game {
         HumanPlayer a = new HumanPlayer(scene, new Vector2(0, 0), PlayerTypes.Hausperger, "Player1");
         HumanPlayer b = new HumanPlayer(scene, new Vector2(2, 0), PlayerTypes.Hausperger, "Player2");
 
-        inputManager.setListenerMapping1((PlayerKeyListener) a);
-        inputManager.setListenerMapping2((PlayerKeyListener) b);
+        inputManager.setListenerMapping1(a);
+        inputManager.setListenerMapping2(b);
 
         scene.addGameObject(a);
         scene.addGameObject(b);
 
         // Todo ground as gameObject
-        Transform groundTrans = new Transform(0,  5);
+        Transform groundTrans = new Transform(0, 5);
         GameObject ground = new GameObject("Ground", scene);
         ground.setTransform(groundTrans);
         PhysicsGameComponent groundCollider = new PhysicsGameComponent(ground);
         ground.setPhysicsComponent(groundCollider);
         groundCollider.setStatic(true);
-
         groundCollider.setCollider(new RectCollider(ground, new Vector2(0, -2), new Dimension2D(10, 1)));
-
         ground.addComponent(new RectSprite(ground, new Vector2(0, -2), new Dimension2D(10, 1)));
 
         scene.gameObjects.add(ground);

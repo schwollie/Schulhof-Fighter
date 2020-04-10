@@ -12,8 +12,8 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 public abstract class Panel extends JPanel implements MouseListener, MouseMotionListener {
-    private ArrayList<GuiComponent> components = new ArrayList<>();
-    private ArrayList<GuiListener> listeners = new ArrayList<>();
+    private final ArrayList<GuiComponent> components = new ArrayList<>();
+    private final ArrayList<GuiListener> listeners = new ArrayList<>();
 
     public Panel() {
         super();

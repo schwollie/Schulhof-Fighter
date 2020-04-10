@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class CircleSprite extends Sprite {
 
-    private double radius;
+    private final double radius;
     private Color color = new Color(0, 255, 0);
 
     public CircleSprite(GameObject reference, Vector2 offset, double radius) {
@@ -24,13 +24,15 @@ public class CircleSprite extends Sprite {
 
     @Override
     public synchronized void Render(Graphics2D g, Camera cam) {
-        if (!visible) { return; }
+        if (!visible) {
+            return;
+        }
 
         Transform ownTrans = this.getTransform().addPosition(offset);
         ownTrans.setScale(new Vector2(radius, radius));
         Transform screenCoord = cam.worldToScreen(ownTrans);
 
         g.setColor(this.color);
-        g.fillOval((int)screenCoord.getX(), (int)screenCoord.getY(), (int)screenCoord.getXScale(), (int) screenCoord.getYScale());
+        g.fillOval((int) screenCoord.getX(), (int) screenCoord.getY(), (int) screenCoord.getXScale(), (int) screenCoord.getYScale());
     }
 }

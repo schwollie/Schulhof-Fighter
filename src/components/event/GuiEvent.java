@@ -1,7 +1,6 @@
 package components.event;
 
 import components.GuiComponent;
-import components.event.GuiEventType;
 
 public class GuiEvent {
     private GuiComponent source;

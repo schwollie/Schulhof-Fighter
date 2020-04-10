@@ -1,23 +1,20 @@
 package display;
 
-import game.ComponentType;
 import game.Consts;
 import game.GameObject;
 import game.Scene;
-import graphics.Sprite;
 import logic.Dimension2D;
 import logic.Transform;
 import logic.Vector2;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Camera extends GameObject {
 
-    private Canvas canvas;
-    private double ratio = Consts.ratio;
-    private double scale = 6;
-    private Dimension2D ScreenSize = new Dimension2D(Consts.windowWidth, Consts.windowHeight);
+    private final Canvas canvas;
+    private final double ratio = Consts.ratio;
+    private final double scale = 6;
+    private final Dimension2D ScreenSize = new Dimension2D(Consts.windowWidth, Consts.windowHeight);
 
     public Camera(Scene scene) {
         super("Camera", scene);
@@ -43,15 +40,15 @@ public class Camera extends GameObject {
     }
 
     public Shape getClip() {
-        Rectangle clipShape = new Rectangle(0, 0, (int)this.ScreenSize.getWidth(), (int)this.ScreenSize.getHeight());
-        return  clipShape;
+        Rectangle clipShape = new Rectangle(0, 0, (int) this.ScreenSize.getWidth(), (int) this.ScreenSize.getHeight());
+        return clipShape;
     }
 
     public Transform worldToScreen(Transform trans) {
         Transform screen = new Transform();
 
-        double xFactor =  ScreenSize.getWidth() / scale;
-        double yFactor = ScreenSize.getHeight() / scale*ratio;
+        double xFactor = ScreenSize.getWidth() / scale;
+        double yFactor = ScreenSize.getHeight() / scale * ratio;
 
         // new position
         Vector2 newPos = trans.getPosition().subtract(this.transform.getPosition());

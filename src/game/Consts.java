@@ -8,8 +8,8 @@ import java.awt.*;
 public abstract class Consts {
 
     public static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public static final int windowWidth = (int) screenSize.getWidth()/1;
-    public static final int windowHeight = (int) screenSize.getHeight()/1;
+    public static final int windowWidth = (int) screenSize.getWidth() / 1;
+    public static final int windowHeight = (int) screenSize.getHeight() / 1;
     public static final boolean Fullscreen = true;
     public static final double ratio = (double) windowWidth / windowHeight;
 

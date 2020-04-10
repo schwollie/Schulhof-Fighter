@@ -1,8 +1,8 @@
 package player;
 
 import display.Camera;
-import game.GameComponent;
 import game.ComponentType;
+import game.GameComponent;
 import game.GameObject;
 import graphics.AnimationManager;
 import logic.PlayerTypes;
@@ -12,7 +12,7 @@ import java.awt.*;
 
 public class VisualPlayer extends GameComponent {
 
-    private AnimationManager animManager;
+    private final AnimationManager animManager;
 
     public VisualPlayer(PlayerTypes type, GameObject ref) {
         super(ref, ComponentType.VisualElement);
