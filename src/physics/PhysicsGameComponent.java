@@ -1,7 +1,10 @@
 package physics;
 
+import display.Camera;
 import game.*;
 import logic.Vector2;
+
+import java.awt.*;
 
 public class PhysicsGameComponent extends GameComponent {
 
@@ -20,6 +23,7 @@ public class PhysicsGameComponent extends GameComponent {
 
     //region Physics Calculations:
 
+    @Override
     public void tick() {
         double deltaTime = reference.getTime().getDeltaTime();
         if (isStatic) {
@@ -30,6 +34,12 @@ public class PhysicsGameComponent extends GameComponent {
         this.force = new Vector2(0, 0);  // reset all forces
 
         updatePos(deltaTime);
+    }
+
+    @Override
+    public void Render(Graphics2D g, Camera cam) {
+        this.collider.Render(g, cam);
+
     }
 
     public void updatePos(double dt) {

@@ -7,21 +7,25 @@ import time.TimeManager;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Scene {
 
-    public TimeManager timeManager;
+    private LinkedList<GameObject> gameObjects2add = new LinkedList<>();
+    private LinkedList<GameObject> gameObjects2remove = new LinkedList<>();
 
     public ArrayList<GameObject> gameObjects = new ArrayList<>();
 
     private final ArrayList<PhysicsGameComponent> physicsComponents = new ArrayList<>();
 
+    public TimeManager timeManager;
+
     public void addGameObject(GameObject gameObject) {
-        gameObjects.add(gameObject);
+        gameObjects2add.add(gameObject);
     }
 
     public void removeGameObject(GameObject gameObject) {
-        gameObjects.remove(gameObject);
+        gameObjects2remove.remove(gameObject);
     }
 
     public ArrayList<GameObject> getGameObjects() {
@@ -61,15 +65,22 @@ public class Scene {
         return physicsComponents;
     }
 
-    public void tick() {
-
+    public synchronized void tick() {
         for (GameObject g : gameObjects) {
             g.tick();
         }
 
+        //add and remove all gameObject
+        gameObjects.addAll(gameObjects2add);
+        gameObjects2add.clear();
+
+        //add and remove all gameObject
+        gameObjects.removeAll(gameObjects2remove);
+        gameObjects2remove.clear();
+
     }
 
-    public void Render(Graphics2D g, Camera cam) {
+    public synchronized void Render(Graphics2D g, Camera cam) {
         for (GameObject gm : gameObjects) {
             gm.Render(g, cam);
         }

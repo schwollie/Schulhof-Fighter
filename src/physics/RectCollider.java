@@ -15,6 +15,7 @@ public class RectCollider extends Collider {
     public RectCollider(GameObject reference, Vector2 offset, Dimension2D dimensions) {
         super(reference, offset);
         this.dimensions = dimensions;  // width, height
+        checkDimensions();
     }
 
     @Override
@@ -49,16 +50,28 @@ public class RectCollider extends Collider {
         debugSprite.Render(g, cam);
     }
 
+    private void checkDimensions() {
+        if (this.dimensions.getWidth() < 0) {
+            this.dimensions.setWidth(dimensions.getWidth()*-1);
+            this.offset = this.offset.add(new Vector2(-dimensions.getWidth(), 0));
+        }
+
+        if (this.dimensions.getHeight() < 0) {
+            this.dimensions.setHeight(dimensions.getHeight()*-1);
+            this.offset = this.offset.add(new Vector2(0, -dimensions.getHeight()));
+        }
+    }
+
     public Dimension2D getDimensions() {
         return dimensions;
     }
 
     public double getX() {
-        return this.offset.getX();
+        return this.offset.getX() + reference.getTransform().getX();
     }
 
     public double getY() {
-        return this.offset.getY();
+        return this.offset.getY() + reference.getTransform().getY();
     }
 
     public double getWidth() {

@@ -120,9 +120,9 @@ public abstract class Player extends GameObject implements CollissionListener {
         String tag1 = c1.getGameObject().getTag();
         String tag2 = c2.getGameObject().getTag();
 
-        if ((tag1.equals(this.tag) || tag2.equals(this.tag)) && (tag1.equals("Ground") || tag2.equals("Ground"))) {
-            isOnGround = true;
-        }
+        //if ((tag1.equals(this.tag) || tag2.equals(this.tag)) && (tag1.equals("Ground") || tag2.equals("Ground"))) {
+        isOnGround = true;
+        //}
 
     }
 

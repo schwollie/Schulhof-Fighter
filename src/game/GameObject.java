@@ -27,6 +27,9 @@ public class GameObject {
     }
 
     public void Render(Graphics2D g, Camera cam) {
+        if (physicsComponent!=null)
+            physicsComponent.Render(g, cam);
+
         for (GameComponent c : gameComponents) {
             c.Render(g, cam);
         }
