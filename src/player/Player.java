@@ -30,7 +30,7 @@ public abstract class Player extends GameObject implements CollissionListener {
         super(tag, world);
         this.transform = new Transform(pos);
         this.physicsComponent = new PhysicsGameComponent(this);
-        this.physicsComponent.setCollider(new RectCollider(this, new Vector2(-0.2, -0.4), new Dimension2D(0.4, 0.9)));
+        this.physicsComponent.setCollider(new RectCollider(this, new Vector2(-0.2, -0.5), new Dimension2D(0.4, 0.9)));
         this.physicsComponent.getCollider().addListener(this);
 
         this.type = type;
@@ -65,7 +65,7 @@ public abstract class Player extends GameObject implements CollissionListener {
     protected void Jump() {
 
         if (isOnGround) {
-            physicsComponent.setVelocityY(-3);
+            physicsComponent.setVelocityY(3);
             isOnGround = false;
             if (!hasComponent(Shaker.class))
                 scene.getCam().addComponent(new Shaker(scene.getCam(), new Vector2(0.02, 0.02), new Vector2(1, 1), 1));

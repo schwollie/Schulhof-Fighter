@@ -13,11 +13,12 @@ public class Camera extends GameObject {
 
     private final Canvas canvas;
     private final double ratio = Consts.ratio;
-    private final double scale = 6;
+    private final double scale = 10;
     private final Dimension2D ScreenSize = new Dimension2D(Consts.windowWidth, Consts.windowHeight);
 
-    public Camera(Scene scene) {
+    public Camera(Scene scene, Vector2 pos) {
         super("Camera", scene);
+        this.transform.setPosition(pos);
         canvas = new Canvas();
         canvas.setCam(this);
     }
@@ -53,7 +54,7 @@ public class Camera extends GameObject {
         // new position
         Vector2 newPos = trans.getPosition().subtract(this.transform.getPosition());
         newPos.setX(newPos.getX() * xFactor);
-        newPos.setY(newPos.getY() * yFactor);
+        newPos.setY(-newPos.getY() * yFactor);
         screen.setPosition(newPos);
 
         // new Scale

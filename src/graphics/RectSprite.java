@@ -29,11 +29,16 @@ public class RectSprite extends Sprite {
             return;
         }
 
-        Transform ownTrans = this.getTransform().addPosition(offset);
+        Transform ownTrans = this.getTransform().addPosition(this.offset);
         ownTrans.setScale(new Vector2(Size.getWidth(), Size.getHeight()));
         Transform screenCoord = cam.worldToScreen(ownTrans);
 
+        int x = (int) screenCoord.getX();
+        int y = (int) screenCoord.getY();
+        int width = (int) screenCoord.getXScale();
+        int height = -(int) (screenCoord.getYScale());
+
         g.setColor(this.color);
-        g.fillRect((int) screenCoord.getX(), (int) screenCoord.getY(), (int) screenCoord.getXScale(), (int) screenCoord.getYScale());
+        g.fillRect(x, y, width, height);
     }
 }

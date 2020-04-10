@@ -1,5 +1,7 @@
 package logic;
 
+import com.sun.javaws.exceptions.ErrorCodeResponseException;
+
 public class Dimension2D {
 
     private double width;

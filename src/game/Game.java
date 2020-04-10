@@ -37,7 +37,7 @@ public class Game {
 
         inputManager = new InputManager();
 
-        cam = new Camera(scene);
+        cam = new Camera(scene, new Vector2(0, 4));
         scene.addGameObject(cam);
 
         mainmenu = new MenuCanvas();
@@ -52,8 +52,8 @@ public class Game {
     }
 
     public void initGame() {
-        HumanPlayer a = new HumanPlayer(scene, new Vector2(0, 0), PlayerTypes.Hausperger, "Player1");
-        HumanPlayer b = new HumanPlayer(scene, new Vector2(2, 0), PlayerTypes.Hausperger, "Player2");
+        HumanPlayer a = new HumanPlayer(scene, new Vector2(0, 2), PlayerTypes.Hausperger, "Player1");
+        HumanPlayer b = new HumanPlayer(scene, new Vector2(2, 2), PlayerTypes.Hausperger, "Player2");
 
         inputManager.setListenerMapping1(a);
         inputManager.setListenerMapping2(b);
@@ -62,14 +62,14 @@ public class Game {
         scene.addGameObject(b);
 
         // Todo ground as gameObject
-        Transform groundTrans = new Transform(0, 5);
+        Transform groundTrans = new Transform(0, 0);
         GameObject ground = new GameObject("Ground", scene);
         ground.setTransform(groundTrans);
         PhysicsGameComponent groundCollider = new PhysicsGameComponent(ground);
         ground.setPhysicsComponent(groundCollider);
         groundCollider.setStatic(true);
-        groundCollider.setCollider(new RectCollider(ground, new Vector2(0, -2), new Dimension2D(10, 1)));
-        ground.addComponent(new RectSprite(ground, new Vector2(0, -2), new Dimension2D(10, 1)));
+        groundCollider.setCollider(new RectCollider(ground, new Vector2(0, 0), new Dimension2D(10, 1)));
+        ground.addComponent(new RectSprite(ground, new Vector2(0, 0), new Dimension2D(10, 1)));
 
         scene.gameObjects.add(ground);
     }
@@ -93,7 +93,7 @@ public class Game {
 
             scene.tick();
 
-            //System.out.println(fpsTracker.getCurrentFPS());
+            System.out.println(timeManager.getCurrentFPS());
 
             //mainmenu.tick(fpsTracker.getDeltaTime(), inputManager.getMousePosition());
 
