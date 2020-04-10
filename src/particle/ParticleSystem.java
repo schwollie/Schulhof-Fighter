@@ -1,5 +1,7 @@
 package particle;
 
+import game.ComponentType;
+import game.GameComponent;
 import game.GameObject;
 import game.Scene;
 import logic.Transform;
@@ -8,27 +10,27 @@ import time.TimeEventListener;
 import time.Timer;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
-public class ParticleSystem extends GameObject implements TimeEventListener {
+public class ParticleSystem extends GameComponent implements TimeEventListener {
+
     private final Timer timer;
     private final String timerName;
     private double liveTime, spread;
-    private ArrayList<Particle> particles;
+    private LinkedList<Particle> particles;
     private ParticleType particleType;
 
-    public ParticleSystem(Scene scene, Vector2 pos, double liveTime, double interval, ParticleType type) {
-        super("Particle System", scene);
-        this.transform = new Transform(pos);
+    public ParticleSystem(GameObject ref, double liveTime, double interval, ParticleType type) {
+        super(ref, ComponentType.ParticleSystem);
         this.liveTime = liveTime;
         this.timerName = "spawnParticle";
         this.timer = new Timer(timerName, interval, this);
-        this.particles = new ArrayList<>();
+        this.particles = new LinkedList<>();
     }
 
     @Override
     public void tick() {
-        super.tick();
-        double dt = getTime().getDeltaTime();
+        double dt = reference.getTime().getDeltaTime();
         timer.tick(dt);
     }
 
@@ -45,7 +47,7 @@ public class ParticleSystem extends GameObject implements TimeEventListener {
     }
 
     private void spawnParticle() {
-        Particle particle = new Particle(ParticleType.PUNCH, scene, transform.getPosition());
+        Particle particle = new Particle(this, ParticleType.PUNCH, new Vector2(0,0));
         particles.add(particle);
     }
 
@@ -53,6 +55,6 @@ public class ParticleSystem extends GameObject implements TimeEventListener {
         for (Particle p : particles) {
             p.destroy();
         }
-        destroy();
+        //super.destroy();
     }
 }

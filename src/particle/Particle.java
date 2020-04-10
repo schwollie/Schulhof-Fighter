@@ -1,34 +1,43 @@
 package particle;
 
-import game.Consts;
-import game.GameObject;
-import game.Scene;
+import display.Camera;
+import game.*;
 import graphics.Animation;
 import graphics.AnimationLoader;
 import logic.Transform;
 import logic.Vector2;
 
-public class Particle extends GameObject {
+import java.awt.*;
+
+public class Particle extends GameComponent {
+
     private double livingTime;
     private Animation animation;
+    private Vector2 pos;
 
-    public Particle(Animation animation, Scene world, Vector2 pos, double livingTime) {
-        super("Particle", world);
+    private ParticleSystem parentSystem;
+
+    public Particle(ParticleSystem parentSystem, Animation animation, Vector2 pos, double livingTime) {
+        super(parentSystem.getReference(), ComponentType.Particle);
+        this.parentSystem = parentSystem;
         this.animation = animation;
         this.livingTime = livingTime;
-        this.transform = new Transform(pos);
+        this.pos = pos;
     }
 
-    public Particle(ParticleType type, Scene world, Vector2 pos) {
-        super("Particle", world);
+    public Particle(ParticleSystem parentSystem, ParticleType type, Vector2 pos) {
+        super(parentSystem.getReference(), ComponentType.Particle);
+        this.parentSystem = parentSystem;
         loadStandardParticle(type);
-        this.transform = new Transform(pos);
+        this.pos = pos;
     }
 
     private void loadStandardParticle(ParticleType type) {
         switch (type) {
             case PUNCH:
-                animation = AnimationLoader.loadParticleAnimation(ParticleType.PUNCH, Consts.punchParticlePicCount, Consts.punchParticleAnimSpeed, Consts.punchParticleSize, this, true);
+                animation = AnimationLoader.loadParticleAnimation(ParticleType.PUNCH,
+                        Consts.punchParticlePicCount, Consts.punchParticleAnimSpeed,
+                        Consts.punchParticleSize, parentSystem.getReference(), true);
                 livingTime = Consts.punchParticleLivingTime;
                 break;
             default:
@@ -36,4 +45,8 @@ public class Particle extends GameObject {
         }
     }
 
+    @Override
+    public void Render(Graphics2D g, Camera cam) {
+        super.Render(g, cam);
+    }
 }

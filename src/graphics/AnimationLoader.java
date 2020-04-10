@@ -39,8 +39,6 @@ public abstract class AnimationLoader {
         File f = new File(path);
         if (!f.exists()) {
             System.out.println("File does not exist : " + path + " -> TODO : using default path instead");
-            //animSpec = getAnimSpecs(AnimationType.Default, type);
-            //path = AnimationLoader.getPath(type, animSpec);
         }
 
         animSpec.loopAnim = loopAnim;

@@ -47,10 +47,6 @@ public class GameObject {
         manageComponentChanges();
     }
 
-    public void destroy() {
-        scene.removeGameObject(this);
-    }
-
     private void manageComponentChanges() {
         gameComponents.addAll(components2Add);
         components2Add.clear();
@@ -132,6 +128,10 @@ public class GameObject {
         }
 
         throw new Error("GameObject has no Component : " + component + " -> Check this with hasComponent()!");
+    }
+
+    public void destroy() {
+        scene.removeGameObject(this);
     }
 
     //endregion

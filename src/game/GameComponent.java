@@ -29,4 +29,8 @@ public abstract class GameComponent {
     public ComponentType getType() {
         return type;
     }
+
+    public void destroy() {
+        reference.removeComponent(this);
+    }
 }
