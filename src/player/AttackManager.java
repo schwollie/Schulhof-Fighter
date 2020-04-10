@@ -1,11 +1,14 @@
 package player;
 
-import game.GameComponent;
 import game.ComponentType;
+import game.GameComponent;
 import game.GameObject;
+import logic.Dimension2D;
 import logic.Shaker;
 import logic.Vector2;
-import physics.*;
+import physics.Collider;
+import physics.CollissionListener;
+import physics.RectCollider;
 import time.TimeEventListener;
 import time.Timer;
 
@@ -15,51 +18,51 @@ public class AttackManager extends GameComponent implements CollissionListener, 
     private Collider atBoxLow;
 
     // flags:
-    private boolean isBlocking = false;
+    private final boolean isBlocking = false;
 
     // timers
-    private Timer punchTimer = new Timer("punchTimer", 0.25);
+    private final Timer punchTimer = new Timer("punchTimer", 0.25);
 
 
     public AttackManager(GameObject g) {
         super(g, ComponentType.Logic);
         punchTimer.addListener(this);
+        punchTimer.pause();
     }
 
     public void doKick() {
-        Collider[] cs = getCollidersInRange(0.3, 0.2);
+        Collider[] cs = getCollidersInRange(0.2, 0.2);
 
-        for (Collider c: cs) {
-            if (c.getGameObject() instanceof Player) {
-                Player other = (Player)c.getGameObject();
-                other.takeDamage(2, new Vector2(getDirection()*200, 4000));
+        for (Collider c : cs) {
+            if (c.getGameObject() instanceof Player && !c.getGameObject().equals(reference)) {
+                Player other = (Player) c.getGameObject();
+                other.takeDamage(2, new Vector2(getDirection() * 200, -40));
             }
         }
     }
 
-    private Collider[] getCollidersInRange(double rangeX, double rangeY){
+    private Collider[] getCollidersInRange(double rangeX, double rangeY) {
         double directionFactor = getDirection();
-        Vector2 pos = reference.getTransform().getPosition().add( new Vector2(directionFactor*rangeX, rangeY));
-        return Collider.doesCollide(Collider.getPointCollider(pos), reference.getScene().getPhysicsComponentsTypePlayer());
+        GameObject p = GameObject.getPlaceHolder( reference.getTransform(), reference.getScene());
+        RectCollider col = new RectCollider(p, Vector2.zero, new Dimension2D(rangeX , rangeY));
+        return Collider.doesCollide(col, reference.getScene().getPhysicsComponentsTypePlayer());
     }
-    private double getDirection(){
+
+    private double getDirection() {
         return reference.getTransform().getXScale();
     }
 
     public void doPunch() {
-        if(punchTimer.isFinished()){
-            punchTimer.resetTimer();
-        }
+        punchTimer.resume();
     }
-    public void doPunchHit(){
+
+    public void doPunchHit() {
         Collider[] cs = getCollidersInRange(0.6, 0.2);
 
-        for (Collider c: cs) {
-            if (c.getGameObject() instanceof Player) {
-                Player other = (Player)c.getGameObject();
-                other.takeDamage(1, new Vector2(getDirection()*200, 500));
-                if (!other.hasComponent(Shaker.class))
-                    other.addComponent(new Shaker(other, new Vector2(0.05, 0.02), new Vector2(1, 1), 1));
+        for (Collider c : cs) {
+            if (c.getGameObject() instanceof Player && !c.getGameObject().equals(reference)) {
+                Player other = (Player) c.getGameObject();
+                other.takeDamage(1, new Vector2(getDirection() * 200, 500));
             }
         }
     }
@@ -77,8 +80,10 @@ public class AttackManager extends GameComponent implements CollissionListener, 
 
     @Override
     public void onTimerStops(String timerName) {
-        if(timerName.equals("punchTimer")){
+        if (timerName.equals("punchTimer")) {
             doPunchHit();
+            punchTimer.resetTimer();
+            punchTimer.pause();
         }
     }
 }

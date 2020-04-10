@@ -6,9 +6,9 @@ import game.GameObject;
 
 public class HealthManager extends GameComponent {
 
-    private double regBonus = 0.1; // health per second
+    private final double regBonus = 0.1; // health per second
 
-    private double maxHealth;
+    private final double maxHealth;
     private double currentHealth;
 
     //Todo: implement stamina
@@ -32,7 +32,7 @@ public class HealthManager extends GameComponent {
 
     private void regenerate(double dt) {
         if (currentHealth < maxHealth && currentHealth > 0) {
-            this.currentHealth = Math.min(currentHealth + regBonus*dt, maxHealth);
+            this.currentHealth = Math.min(currentHealth + regBonus * dt, maxHealth);
         }
     }
 

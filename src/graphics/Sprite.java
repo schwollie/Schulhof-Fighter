@@ -1,8 +1,8 @@
 package graphics;
 
 import display.Camera;
-import game.GameComponent;
 import game.ComponentType;
+import game.GameComponent;
 import game.GameObject;
 import logic.Transform;
 import logic.Vector2;

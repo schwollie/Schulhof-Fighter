@@ -9,7 +9,7 @@ import java.io.InputStream;
 
 public abstract class GuiComponent implements ComponentMethods {
     private final int UNUSED = -Integer.MAX_VALUE;
-    protected final Color transparentColor = new Color(0,0,0,0);
+    protected final Color transparentColor = new Color(0, 0, 0, 0);
     private double left, right, top, bottom;
     private double width, height;
     protected float textSize;
@@ -142,32 +142,36 @@ public abstract class GuiComponent implements ComponentMethods {
         this.textColor = textColor;
     }
 
-    public int getX(){
-        double factor = left==UNUSED?(right==UNUSED?0:right/100):left/100;
-        return (int)(parentPanel.getWidth() * factor);
+    public int getX() {
+        double factor = left == UNUSED ? (right == UNUSED ? 0 : right / 100) : left / 100;
+        return (int) (parentPanel.getWidth() * factor);
     }
-    public int getY(){
-        double factor = top==UNUSED?(bottom==UNUSED?0:bottom/100):top/100;
-        return (int)(parentPanel.getWidth() * factor);
+
+    public int getY() {
+        double factor = top == UNUSED ? (bottom == UNUSED ? 0 : bottom / 100) : top / 100;
+        return (int) (parentPanel.getWidth() * factor);
     }
-    public int getWidth(){
-        return (int)(parentPanel.getWidth() * (width/100));
+
+    public int getWidth() {
+        return (int) (parentPanel.getWidth() * (width / 100));
     }
-    public int getHeight(){
-        return (int)(parentPanel.getWidth() * (height/100));
+
+    public int getHeight() {
+        return (int) (parentPanel.getWidth() * (height / 100));
     }
 
     public Panel getParentPanel() {
         return parentPanel;
     }
+
     public void setParentPanel(Panel parentPanel) {
         this.parentPanel = parentPanel;
     }
 
     protected String testStringLength(String text, FontMetrics fontMetrics) {
         String result = text;
-        while(fontMetrics.stringWidth(result) > getWidth()){
-            result = result.substring(0, result.length()-1);
+        while (fontMetrics.stringWidth(result) > getWidth()) {
+            result = result.substring(0, result.length() - 1);
         }
         return result;
     }
@@ -176,11 +180,11 @@ public abstract class GuiComponent implements ComponentMethods {
         CENTER, LEFT, RIGHT
     }
 
-    public static Font loadFont(String fontName){
+    public static Font loadFont(String fontName) {
         InputStream stream;
         Font font = null;
         try {
-            stream = new FileInputStream(new File("fonts/"+fontName+".ttf"));
+            stream = new FileInputStream(new File("fonts/" + fontName + ".ttf"));
             font = Font.createFont(Font.TRUETYPE_FONT, stream);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();

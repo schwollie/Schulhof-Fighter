@@ -1,8 +1,8 @@
 package graphics;
 
 import display.Camera;
-import game.GameComponent;
 import game.ComponentType;
+import game.GameComponent;
 import game.GameObject;
 import logic.AnimationType;
 import logic.Dimension2D;
@@ -11,8 +11,8 @@ import java.awt.*;
 
 public class Animation extends GameComponent {
 
-    private GameObject ref;
-    private ImageSprite[] images;
+    private final GameObject ref;
+    private final ImageSprite[] images;
     private float speed = 7f;  // pictures per second
     private boolean loopAnim;
     private boolean hasFinished = false; // only for non looped animations
@@ -36,7 +36,7 @@ public class Animation extends GameComponent {
         this.visible = true;
         timeElapsed += deltaTime;
 
-        if (timeElapsed > 1/speed || currentSprite == null) {
+        if (timeElapsed > 1 / speed || currentSprite == null) {
             nextFrame();
             timeElapsed = 0;
         }
@@ -60,11 +60,13 @@ public class Animation extends GameComponent {
 
         }
 
-        if (images.length == 0) { return; }
+        if (images.length == 0) {
+            return;
+        }
 
         currentSprite = images[currentImage];
 
-        currentImage ++;
+        currentImage++;
     }
 
     public boolean hasFinished() {
@@ -124,10 +126,10 @@ public class Animation extends GameComponent {
 
         // create sprites from spritesheet
         ImageSprite[] animImages = new ImageSprite[pictureCount];
-        ImageSprite animSheet = new ImageSprite(ref, new Dimension((int)(bounds.getWidth()*pictureCount), (int)bounds.getHeight()), animSheetPath);
+        ImageSprite animSheet = new ImageSprite(ref, new Dimension((int) (bounds.getWidth() * pictureCount), (int) bounds.getHeight()), animSheetPath);
 
         for (int i = 0; i < pictureCount; i++) {
-            animImages[i] = animSheet.getSlice((int)(i*bounds.getWidth()), 0, (int)bounds.getWidth(), (int)bounds.getHeight());
+            animImages[i] = animSheet.getSlice((int) (i * bounds.getWidth()), 0, (int) bounds.getWidth(), (int) bounds.getHeight());
         }
 
         // setup Animation

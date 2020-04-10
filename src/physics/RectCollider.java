@@ -19,20 +19,28 @@ public class RectCollider extends Collider {
 
     @Override
     public void manageCollision(PhysicsGameComponent self, PhysicsGameComponent other) {
-        if (other.getCollider() instanceof RectCollider) { this.resolveRectVsRect(this, (RectCollider) other.getCollider(), self, other);}
-        if (other.getCollider() instanceof CircleCollider) { return; } //Collider.resolveCircleVsRect(this, (CircleCollider)other.getCollider()); }
+        if (other.getCollider() instanceof RectCollider) {
+            this.resolveRectVsRect(this, (RectCollider) other.getCollider(), self, other);
+        }
+        if (other.getCollider() instanceof CircleCollider) {
+            return;
+        } //Collider.resolveCircleVsRect(this, (CircleCollider)other.getCollider()); }
     }
 
     @Override
     public boolean doesCollide(Collider c) {
-        if (c instanceof RectCollider) { return RectVsRect(this, (RectCollider) c); }
-        if (c instanceof CircleCollider) { return CircleVsRect((CircleCollider)c, this); }
+        if (c instanceof RectCollider) {
+            return RectVsRect(this, (RectCollider) c);
+        }
+        if (c instanceof CircleCollider) {
+            return CircleVsRect((CircleCollider) c, this);
+        }
         throw new Error("Type of collider is unknown");
     }
 
     @Override
     public void Render(Graphics2D g, Camera cam) {
-        if (debugSprite==null) {
+        if (debugSprite == null) {
             debugSprite = new RectSprite(GameObject.getPlaceHolder(this.reference.getTransform(), reference.getScene()), this.offset, this.dimensions);
         } else {
             debugSprite.setGameObjectRef(GameObject.getPlaceHolder(this.reference.getTransform(), reference.getScene()));

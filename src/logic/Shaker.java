@@ -13,11 +13,11 @@ public class Shaker extends GameComponent implements TimeEventListener {
 
     private Vector2 offset;
 
-    private Vector2 maxDeviation;
-    private Vector2 speed;
-    private Timer timer;
+    private final Vector2 maxDeviation;
+    private final Vector2 speed;
+    private final Timer timer;
 
-    private Vector2 lastOffset = new Vector2(0,0);
+    private Vector2 lastOffset = new Vector2(0, 0);
 
     public Shaker(GameObject ref, Vector2 maxDeviation, Vector2 speed, double maxTime) {
         super(ref, ComponentType.Logic);
@@ -51,10 +51,10 @@ public class Shaker extends GameComponent implements TimeEventListener {
 
     public Vector2 getOffset() {
         double p = timer.getElapsedTimePercentage();
-        double strength = 1-p; // linear
+        double strength = 1 - p; // linear
 
-        double newX = Math.sin(timer.getEl                               apsedTime()*speed.getX()) * maxDeviation.getX() * strength;
-        double newY = Math.cos(timer.getElapsedTime()*speed.getY()) * maxDeviation.getY() * strength;
+        double newX = Math.sin(timer.getElapsedTime() * speed.getX()) * maxDeviation.getX() * strength;
+        double newY = Math.cos(timer.getElapsedTime() * speed.getY()) * maxDeviation.getY() * strength;
         return new Vector2(newX, newY);
     }
 

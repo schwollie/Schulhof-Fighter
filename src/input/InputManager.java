@@ -198,21 +198,45 @@ public class InputManager implements KeyListener, MouseMotionListener {
     }
 
     private void sendMapping1() {
-        if (upPressed1) { inputMapping1.keyUp(); }
-        if (leftPressed1) { inputMapping1.keyLeft(); }
-        if (rightPressed1) { inputMapping1.keyRight(); }
-        if (kickPressed1) { inputMapping1.keyKick(); }
-        if (punchPressed1) { inputMapping1.keyPunch(); }
-        if (blockPressed1) { inputMapping1.keyBlock(); }
+        if (upPressed1) {
+            inputMapping1.keyUp();
+        }
+        if (leftPressed1) {
+            inputMapping1.keyLeft();
+        }
+        if (rightPressed1) {
+            inputMapping1.keyRight();
+        }
+        if (kickPressed1) {
+            inputMapping1.keyKick();
+        }
+        if (punchPressed1) {
+            inputMapping1.keyPunch();
+        }
+        if (blockPressed1) {
+            inputMapping1.keyBlock();
+        }
     }
 
     private void sendMapping2() {
-        if (upPressed2) { inputMapping2.keyUp(); }
-        if (leftPressed2) { inputMapping2.keyLeft(); }
-        if (rightPressed2) { inputMapping2.keyRight(); }
-        if (kickPressed2) { inputMapping2.keyKick(); }
-        if (punchPressed2) { inputMapping2.keyPunch(); }
-        if (blockPressed2) { inputMapping2.keyBlock(); }
+        if (upPressed2) {
+            inputMapping2.keyUp();
+        }
+        if (leftPressed2) {
+            inputMapping2.keyLeft();
+        }
+        if (rightPressed2) {
+            inputMapping2.keyRight();
+        }
+        if (kickPressed2) {
+            inputMapping2.keyKick();
+        }
+        if (punchPressed2) {
+            inputMapping2.keyPunch();
+        }
+        if (blockPressed2) {
+            inputMapping2.keyBlock();
+        }
     }
 
     public void setListenerMapping1(PlayerKeyListener p) {

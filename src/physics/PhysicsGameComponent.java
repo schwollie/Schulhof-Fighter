@@ -7,7 +7,7 @@ public class PhysicsGameComponent extends GameComponent {
 
     private boolean isStatic = false;
     private double mass = 1;
-    private double massInverse = 1/mass;  // for calculations
+    private double massInverse = 1 / mass;  // for calculations
     private Vector2 velocity = new Vector2(0, 0);
 
     private Collider collider = null;
@@ -22,7 +22,9 @@ public class PhysicsGameComponent extends GameComponent {
 
     public void tick() {
         double deltaTime = reference.getTime().getDeltaTime();
-        if (isStatic) { return; }
+        if (isStatic) {
+            return;
+        }
         this.calcPhysics(deltaTime, reference.getScene());
         this.applyForce(deltaTime);
         this.force = new Vector2(0, 0);  // reset all forces
@@ -31,7 +33,9 @@ public class PhysicsGameComponent extends GameComponent {
     }
 
     public void updatePos(double dt) {
-        if (isStatic) {return; }
+        if (isStatic) {
+            return;
+        }
         updateTransform(dt);
     }
 
@@ -44,15 +48,21 @@ public class PhysicsGameComponent extends GameComponent {
 
     private void addGravity() {
         // F = m*a = m*g
-        addForce( new Vector2(0, Consts.gravity).scalarMult(mass));
+        addForce(new Vector2(0, Consts.gravity).scalarMult(mass));
     }
 
     private void calcCollisionForce(Scene scene) {
 
-        for (PhysicsGameComponent p: scene.getPhysicsComponents()) {
-            if (p == this) { continue; }
-            if (p.collider == null) { continue; }
-            if (this.collider == null) { return; }
+        for (PhysicsGameComponent p : scene.getPhysicsComponents()) {
+            if (p == this) {
+                continue;
+            }
+            if (p.collider == null) {
+                continue;
+            }
+            if (this.collider == null) {
+                return;
+            }
 
             this.collider.manageCollision(this, p);
         }
@@ -73,12 +83,12 @@ public class PhysicsGameComponent extends GameComponent {
     }
 
     private void applyForce(double dt) {
-        this.velocity = velocity.add( this.force.scalarMult((1/this.mass)).scalarMult(dt) );
+        this.velocity = velocity.add(this.force.scalarMult((1 / this.mass)).scalarMult(dt));
     }
 
     private void updateTransform(double dt) {
         Vector2 newV = this.velocity.scalarMult(dt);
-        reference.setTransform(reference.getTransform().addPosition( newV));
+        reference.setTransform(reference.getTransform().addPosition(newV));
     }
 
     //endregion
@@ -89,9 +99,17 @@ public class PhysicsGameComponent extends GameComponent {
         this.force = this.force.add(force);
     }
 
-    public Collider getCollider() { return this.collider; }
-    public Vector2 getVelocity() { return this.velocity; }
-    public Vector2 getForce() { return this.force; }
+    public Collider getCollider() {
+        return this.collider;
+    }
+
+    public Vector2 getVelocity() {
+        return this.velocity;
+    }
+
+    public Vector2 getForce() {
+        return this.force;
+    }
 
     public double getMass() {
         return mass;
@@ -112,19 +130,24 @@ public class PhysicsGameComponent extends GameComponent {
     }
 
     public void addPosition(Vector2 pos) {
-        this.reference.getTransform().setPosition( reference.getTransform().addPosition(pos).getPosition() );
+        this.reference.getTransform().setPosition(reference.getTransform().addPosition(pos).getPosition());
     }
 
     public void addVelocity(Vector2 v) {
         this.velocity = this.velocity.add(v);
     }
 
-    public void setVelocityX (double x) { this.velocity.setX(x); }
-    public void setVelocityY (double y) { this.velocity.setY(y); }
+    public void setVelocityX(double x) {
+        this.velocity.setX(x);
+    }
+
+    public void setVelocityY(double y) {
+        this.velocity.setY(y);
+    }
 
     public void setMass(double mass) {
         this.mass = mass;
-        this.massInverse = 1/mass;
+        this.massInverse = 1 / mass;
     }
 
     //endregion

@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 public class Timer {
 
-    private String name;
+    private final String name;
 
-    private double startTime;
+    private final double startTime;
     private double time;
     private double elapsedTime = 0;
 
     private boolean hasStopped = false;
+    private boolean pause = false;
 
     private ArrayList<TimeEventListener> listeners = new ArrayList<>();
 
@@ -37,7 +38,9 @@ public class Timer {
     public void tick(double dt) {
         elapsedTime += dt;
 
-        if (hasStopped) { return; }
+        if (hasStopped || pause) {
+            return;
+        }
 
         time -= dt;
 
@@ -47,10 +50,11 @@ public class Timer {
         }
     }
 
-    public void resetTimer(){
+    public void resetTimer() {
         elapsedTime = 0;
         time = startTime;
         hasStopped = false;
+        pause = false;
     }
 
     private void sendEvent() {
@@ -58,11 +62,12 @@ public class Timer {
             t.onTimerStops(this.name);
         }
     }
+
     public void addListener(TimeEventListener l) {
         this.listeners.add(l);
     }
 
-    public void removeListener(TimeEventListener l ) {
+    public void removeListener(TimeEventListener l) {
         this.listeners.remove(l);
     }
 
@@ -70,10 +75,20 @@ public class Timer {
         return elapsedTime;
     }
 
-    public double getElapsedTimePercentage() { return elapsedTime/startTime; }
+    public double getElapsedTimePercentage() {
+        return elapsedTime / startTime;
+    }
 
     public boolean isFinished() {
         return time <= 0;
+    }
+
+    public void pause() {
+        this.pause = true;
+    }
+
+    public void resume() {
+        this.pause = false;
     }
 
     @Override

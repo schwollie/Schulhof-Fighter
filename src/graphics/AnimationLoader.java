@@ -5,7 +5,6 @@ import game.GameObject;
 import logic.AnimationType;
 import logic.Dimension2D;
 import logic.PlayerTypes;
-import player.Player;
 
 import java.io.File;
 
@@ -34,7 +33,7 @@ public abstract class AnimationLoader {
     }
 
     private static String getTypePath(PlayerTypes type) {
-        if (type==PlayerTypes.Hausperger) {
+        if (type == PlayerTypes.Hausperger) {
             return Consts.Hausperger;
         }
 
@@ -42,32 +41,26 @@ public abstract class AnimationLoader {
     }
 
     private static AnimSpecs getAnimSpecs(AnimationType type, PlayerTypes pType) {
-        if (type== AnimationType.Default) {
+        if (type == AnimationType.Default) {
             return new AnimSpecs(Consts.defaultSheet, Consts.defaultPicCount, Consts.defaultAnimSpeed, getSpriteSize(pType));
-        }
-        else if(type== AnimationType.Run) {
+        } else if (type == AnimationType.Run) {
             return new AnimSpecs(Consts.runSheet, Consts.runPicCount, Consts.runAnimSpeed, getSpriteSize(pType));
-        }
-        else if(type== AnimationType.Jump) {
+        } else if (type == AnimationType.Jump) {
             return new AnimSpecs(Consts.jumpSheet, Consts.jumpSheetPicCount, Consts.jumpAnimSpeed, getSpriteSize(pType));
-        }
-        else if(type== AnimationType.Kick) {
+        } else if (type == AnimationType.Kick) {
             return new AnimSpecs(Consts.kickSheet, Consts.kickSheetPicCount, Consts.kickAnimSpeed, getSpriteSize(pType));
-        }
-        else if(type== AnimationType.Punch) {
+        } else if (type == AnimationType.Punch) {
             return new AnimSpecs(Consts.punchSheet, Consts.punchSheetPicCount, Consts.punchAnimSpeed, getSpriteSize(pType));
-        }
-        else if(type== AnimationType.Block) {
+        } else if (type == AnimationType.Block) {
             return new AnimSpecs(Consts.blockSheet, Consts.blockSheetPicCount, Consts.blockAnimSpeed, getSpriteSize(pType));
-        }
-        else if (type== AnimationType.SpecialAttack) {
+        } else if (type == AnimationType.SpecialAttack) {
             return new AnimSpecs(Consts.specialAttackSheet, Consts.specialAttackPicCount, Consts.specialAttackAnimSpeed, getSpriteSize(pType));
         }
         throw new Error("NO SHEET FOUND: " + type);
     }
 
     private static Dimension2D getSpriteSize(PlayerTypes type) {
-        if (type==PlayerTypes.Hausperger) {
+        if (type == PlayerTypes.Hausperger) {
             return Consts.hauspergerCharacterSize;
         }
         throw new Error("NO SHEET FOUND: " + type);
@@ -75,12 +68,12 @@ public abstract class AnimationLoader {
 
 }
 
-class AnimSpecs{
+class AnimSpecs {
 
-    private float animSpeed;
-    private int animPicCount;
-    private String animSheet;
-    private Dimension2D imgDimensions;
+    private final float animSpeed;
+    private final int animPicCount;
+    private final String animSheet;
+    private final Dimension2D imgDimensions;
 
     public boolean loopAnim = false;
     public int priority = 0;

@@ -1,11 +1,8 @@
 package logic;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Spliterator;
-import java.util.function.Consumer;
 
-public class Queue<T> implements Iterable<T>{
+public class Queue<T> implements Iterable<T> {
 
     private QueueElement<T> start;
     private QueueElement<T> end;
@@ -26,13 +23,17 @@ public class Queue<T> implements Iterable<T>{
     }
 
     public T dequeue() {
-        if (size == 0) { return null; }
+        if (size == 0) {
+            return null;
+        }
 
         size--;
         QueueElement<T> currentStart = start;
 
         start = start.getNext();
-        if (start == null) { end = null; }
+        if (start == null) {
+            end = null;
+        }
 
         return currentStart.getData();
     }
@@ -126,7 +127,7 @@ public class Queue<T> implements Iterable<T>{
 
 class QueueElement<T> {
 
-    private T data;
+    private final T data;
 
     private QueueElement<T> next;
 

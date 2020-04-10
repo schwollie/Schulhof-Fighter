@@ -18,8 +18,8 @@ public class GameObject {
 
     protected ArrayList<GameComponent> gameComponents = new ArrayList<>();
 
-    private ArrayList<GameComponent> components2Add = new ArrayList<>();
-    private ArrayList<GameComponent> components2Remove = new ArrayList<>();
+    private final ArrayList<GameComponent> components2Add = new ArrayList<>();
+    private final ArrayList<GameComponent> components2Remove = new ArrayList<>();
 
     public GameObject(String tag, Scene world) {
         this.tag = tag;
@@ -96,12 +96,20 @@ public class GameObject {
         return p;
     }
 
-    public TimeManager getTime() { return this.scene.timeManager; }
+    public static GameObject getPlaceHolderEmpty(Scene g) {
+        GameObject p = new GameObject("placeholder", g);
+        p.transform = Transform.getEmpty();
+        return p;
+    }
+
+    public TimeManager getTime() {
+        return this.scene.timeManager;
+    }
 
     public boolean hasComponent(Class<? extends GameComponent> component) {
         // return gameComponents.stream().anyMatch(c -> c.getClass()==component);
-        for (GameComponent c: gameComponents) {
-            if (c.getClass()==component) {
+        for (GameComponent c : gameComponents) {
+            if (c.getClass() == component) {
                 return true;
             }
         }
@@ -110,8 +118,8 @@ public class GameObject {
     }
 
     public GameComponent getComponent(Class<GameComponent> component) {
-        for (GameComponent c: gameComponents) {
-            if (c.getClass()==component) {
+        for (GameComponent c : gameComponents) {
+            if (c.getClass() == component) {
                 return c;
             }
         }

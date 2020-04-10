@@ -10,7 +10,7 @@ import java.awt.*;
 
 public class RectSprite extends Sprite {
 
-    private Dimension2D Size;
+    private final Dimension2D Size;
     private Color color = new Color(0, 0, 0);
 
     public RectSprite(GameObject reference, Vector2 offset, Dimension2D dimensions) {
@@ -25,13 +25,15 @@ public class RectSprite extends Sprite {
 
     @Override
     public synchronized void Render(Graphics2D g, Camera cam) {
-        if (!visible) { return; }
+        if (!visible) {
+            return;
+        }
 
         Transform ownTrans = this.getTransform().addPosition(offset);
         ownTrans.setScale(new Vector2(Size.getWidth(), Size.getHeight()));
         Transform screenCoord = cam.worldToScreen(ownTrans);
 
         g.setColor(this.color);
-        g.fillRect((int)screenCoord.getX(), (int)screenCoord.getY(), (int)screenCoord.getXScale(), (int) screenCoord.getYScale());
+        g.fillRect((int) screenCoord.getX(), (int) screenCoord.getY(), (int) screenCoord.getXScale(), (int) screenCoord.getYScale());
     }
 }

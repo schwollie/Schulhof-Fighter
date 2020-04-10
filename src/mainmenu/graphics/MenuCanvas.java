@@ -6,14 +6,13 @@ import components.Panel;
 import game.Consts;
 import logic.Vector2;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class MenuCanvas extends Panel {
 
-    private ArrayList<Bubble> bubbles;
-    private ArrayList<Bubble> bubblesInRadius = new ArrayList<>();
+    private final ArrayList<Bubble> bubbles;
+    private final ArrayList<Bubble> bubblesInRadius = new ArrayList<>();
 
 
     public MenuCanvas() {

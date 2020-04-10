@@ -1,8 +1,8 @@
 package graphics;
 
 import display.Camera;
-import game.GameComponent;
 import game.ComponentType;
+import game.GameComponent;
 import game.GameObject;
 import logic.AnimationType;
 import logic.PlayerTypes;
@@ -12,13 +12,13 @@ import java.awt.*;
 
 public class AnimationManager extends GameComponent {
 
-    private Animation kickAnim;
-    private Animation punchAnim;
-    private Animation defaultAnim;
-    private Animation specialAttackAnim;
-    private Animation runAnim;
-    private Animation jumpAnim;
-    private Animation blockAnim;
+    private final Animation kickAnim;
+    private final Animation punchAnim;
+    private final Animation defaultAnim;
+    private final Animation specialAttackAnim;
+    private final Animation runAnim;
+    private final Animation jumpAnim;
+    private final Animation blockAnim;
 
     private Animation currentAnim;
     private Animation lastAnim;
@@ -44,7 +44,7 @@ public class AnimationManager extends GameComponent {
 
         Animation newAnim = getAnim(playerState);
 
-        if (currentAnim==null || currentAnim.getPriority() < newAnim.getPriority()) {
+        if (currentAnim == null || currentAnim.getPriority() < newAnim.getPriority()) {
             currentAnim = newAnim;
         }
     }
@@ -56,11 +56,11 @@ public class AnimationManager extends GameComponent {
     }
 
     private void manageAnimations(double dt) {
-        if (lastAnim!=currentAnim) {
+        if (lastAnim != currentAnim) {
             endAllAnimations();
         }
 
-        if (currentAnim==null) {
+        if (currentAnim == null) {
             currentAnim = getAnim(PlayerState.Default);
         }
 
@@ -74,11 +74,17 @@ public class AnimationManager extends GameComponent {
     }
 
     private Animation getAnim(PlayerState playerState) {
-        if (playerState==PlayerState.Default) { return defaultAnim; }
-        else if (playerState==PlayerState.Walk) { return runAnim; }
-        else if (playerState==PlayerState.Jump) { return jumpAnim; }
-        else if (playerState==PlayerState.Kick) { return kickAnim; }
-        else if (playerState==PlayerState.Punch) { return punchAnim; }
+        if (playerState == PlayerState.Default) {
+            return defaultAnim;
+        } else if (playerState == PlayerState.Walk) {
+            return runAnim;
+        } else if (playerState == PlayerState.Jump) {
+            return jumpAnim;
+        } else if (playerState == PlayerState.Kick) {
+            return kickAnim;
+        } else if (playerState == PlayerState.Punch) {
+            return punchAnim;
+        }
         throw new Error("No matching Animation found");
     }
 

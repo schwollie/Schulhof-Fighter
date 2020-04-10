@@ -14,7 +14,7 @@ public class Scene {
 
     public ArrayList<GameObject> gameObjects = new ArrayList<>();
 
-    private ArrayList<PhysicsGameComponent> physicsComponents = new ArrayList<>();
+    private final ArrayList<PhysicsGameComponent> physicsComponents = new ArrayList<>();
 
     public void addGameObject(GameObject gameObject) {
         gameObjects.add(gameObject);
@@ -29,7 +29,7 @@ public class Scene {
     }
 
     public GameObject getCam() {
-        for (GameObject g: gameObjects) {
+        for (GameObject g : gameObjects) {
             if (g.tag.equals("Camera")) {
                 return g;
             }
@@ -40,7 +40,7 @@ public class Scene {
     public ArrayList<PhysicsGameComponent> getPhysicsComponents() {
         physicsComponents.clear();
 
-        for (GameObject g: gameObjects) {
+        for (GameObject g : gameObjects) {
             if (g.physicsComponent != null) {
                 physicsComponents.add(g.physicsComponent);
             }
@@ -52,7 +52,7 @@ public class Scene {
     public ArrayList<PhysicsGameComponent> getPhysicsComponentsTypePlayer() {
         physicsComponents.clear();
 
-        for (GameObject g: gameObjects) {
+        for (GameObject g : gameObjects) {
             if (g.physicsComponent != null && g instanceof Player) {
                 physicsComponents.add(g.physicsComponent);
             }
@@ -63,14 +63,14 @@ public class Scene {
 
     public void tick() {
 
-        for (GameObject g: gameObjects) {
+        for (GameObject g : gameObjects) {
             g.tick();
         }
 
     }
 
     public void Render(Graphics2D g, Camera cam) {
-        for (GameObject gm: gameObjects) {
+        for (GameObject gm : gameObjects) {
             gm.Render(g, cam);
         }
     }

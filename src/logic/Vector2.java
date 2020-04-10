@@ -1,8 +1,6 @@
 package logic;
 
 
-import java.awt.*;
-
 public class Vector2 {
 
     public static final Vector2 zero = new ImmutableVector2(0, 0);
@@ -15,7 +13,8 @@ public class Vector2 {
         this.y = y;
     }
 
-    public Vector2() {}
+    public Vector2() {
+    }
 
     public Vector2(Vector2 v) {
         this.x = v.x;
@@ -29,11 +28,13 @@ public class Vector2 {
 
     public void normalize() {
         double len = getLength();
-        if (len == 0) { return; }
+        if (len == 0) {
+            return;
+        }
 
-        double factor = 1/len;
-        this.x = x*factor;
-        this.y = y*factor;
+        double factor = 1 / len;
+        this.x = x * factor;
+        this.y = y * factor;
     }
 
     public Vector2 getNormalized() {
@@ -43,25 +44,27 @@ public class Vector2 {
     }
 
     public double getLength() {
-        return Math.sqrt(this.x*this.x + this.y*this.y);
+        return Math.sqrt(this.x * this.x + this.y * this.y);
     }
 
     public double getLengthSquared() {
-        return (this.x*this.x + this.y*this.y);
+        return (this.x * this.x + this.y * this.y);
     }
 
     public Vector2 add(Vector2 v) {
         return new Vector2(this.x + v.getX(), this.y + v.getY());
     }
 
-    public Vector2 subtract(Vector2 v) { return new Vector2(this.x - v.getX(), this.y - v.getY()); }
+    public Vector2 subtract(Vector2 v) {
+        return new Vector2(this.x - v.getX(), this.y - v.getY());
+    }
 
     public Vector2 rowWiseMultiplication(Vector2 other) {
-        return new Vector2(this.getX()*other.getX(),  this.getY()*other.getY());
+        return new Vector2(this.getX() * other.getX(), this.getY() * other.getY());
     }
 
     public Vector2 scalarMult(double a) {
-        return new Vector2(a*this.getX(), a*this.getY());
+        return new Vector2(a * this.getX(), a * this.getY());
     }
 
     public double dotProduct(Vector2 other) {
@@ -79,14 +82,24 @@ public class Vector2 {
     }
 
     public double getDistance(Vector2 other) {
-        return Math.sqrt( Math.pow(other.getX() - x, 2) + Math.pow(other.getY() - y, 2));
+        return Math.sqrt(Math.pow(other.getX() - x, 2) + Math.pow(other.getY() - y, 2));
     }
 
-    public void setX(double x) { this.x = x; }
-    public void setY(double y) { this.y = y; }
+    public void setX(double x) {
+        this.x = x;
+    }
 
-    public double getX() { return this.x; }
-    public double getY() { return this.y; }
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public double getX() {
+        return this.x;
+    }
+
+    public double getY() {
+        return this.y;
+    }
 
     public void print() {
         System.out.println("(" + this.getX() + " | " + this.getY() + ")" + "    Length: " + this.getLength());
@@ -103,10 +116,11 @@ public class Vector2 {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Vector2) {
-            Vector2 other = (Vector2)obj;
-            if (other.getX()==this.x && other.getY() == this.y) { return true; }
+            Vector2 other = (Vector2) obj;
+            return other.getX() == this.x && other.getY() == this.y;
+        } else {
             return false;
-        } else { return false; }
+        }
     }
 }
 
