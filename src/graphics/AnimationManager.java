@@ -26,15 +26,15 @@ public class AnimationManager extends GameComponent {
     public AnimationManager(PlayerTypes type, GameObject ref) {
         super(ref, ComponentType.AnimationController);
 
-        defaultAnim = AnimationLoader.loadAnimation(type, AnimationType.Default, ref, true, 1);
+        defaultAnim = AnimationLoader.loadPlayerAnimation(type, AnimationType.Default, ref, true, 1);
         //  when no certain Animation is set this will be played
 
-        kickAnim = AnimationLoader.loadAnimation(type, AnimationType.Kick, ref, false, 4);
-        punchAnim = AnimationLoader.loadAnimation(type, AnimationType.Punch, ref, false, 4);
-        specialAttackAnim = AnimationLoader.loadAnimation(type, AnimationType.SpecialAttack, ref, false, 5);
-        blockAnim = AnimationLoader.loadAnimation(type, AnimationType.Block, ref, true, 4);
-        runAnim = AnimationLoader.loadAnimation(type, AnimationType.Run, ref, true, 2);
-        jumpAnim = AnimationLoader.loadAnimation(type, AnimationType.Jump, ref, true, 2);
+        kickAnim = AnimationLoader.loadPlayerAnimation(type, AnimationType.Kick, ref, false, 4);
+        punchAnim = AnimationLoader.loadPlayerAnimation(type, AnimationType.Punch, ref, false, 4);
+        specialAttackAnim = AnimationLoader.loadPlayerAnimation(type, AnimationType.SpecialAttack, ref, false, 5);
+        blockAnim = AnimationLoader.loadPlayerAnimation(type, AnimationType.Block, ref, true, 4);
+        runAnim = AnimationLoader.loadPlayerAnimation(type, AnimationType.Run, ref, true, 2);
+        jumpAnim = AnimationLoader.loadPlayerAnimation(type, AnimationType.Jump, ref, true, 2);
 
         currentAnim = defaultAnim;
         lastAnim = defaultAnim;

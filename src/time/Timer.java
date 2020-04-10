@@ -57,6 +57,11 @@ public class Timer {
         pause = false;
     }
 
+    public void resetTime() {
+        time = startTime;
+        hasStopped = false;
+    }
+
     private void sendEvent() {
         for (TimeEventListener t : listeners) {
             t.onTimerStops(this.name);

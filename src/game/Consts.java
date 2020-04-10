@@ -23,7 +23,7 @@ public abstract class Consts {
     public static final double linearDrag = 10;
 
     // image constants and file paths
-    public static final String imageSrc = "images/";
+    public static final String imageSrc = "images/", imageParticlesSrc = imageSrc + "particles/";
 
     // animation sheet paths:
     public static final String defaultSheet = "defaultSheet.png";
@@ -59,7 +59,13 @@ public abstract class Consts {
     public static final Dimension2D defaultCharacterSize = new Dimension2D(500, 500);
 
     // Hausperger
-    public static final String Hausperger = "Hausperger/";
     public static final Dimension2D hauspergerCharacterSize = new Dimension2D(500, 500);
 
+    // -- Particles --
+    // Punch
+    public static final String punch = "runSheet.png";
+    public static final int punchParticlePicCount = 1;
+    public static final float punchParticleAnimSpeed = 1f; // in fps
+    public static final float punchParticleLivingTime = 50f; // in fps
+    public static final Dimension2D punchParticleSize = new Dimension2D(500, 500);
 }
