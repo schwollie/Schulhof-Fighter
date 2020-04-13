@@ -5,6 +5,7 @@ import logic.Transform;
 import physics.PhysicsGameComponent;
 import time.TimeEventListener;
 import time.TimeManager;
+import time.Timer;
 
 import java.awt.*;
 import java.io.Serializable;

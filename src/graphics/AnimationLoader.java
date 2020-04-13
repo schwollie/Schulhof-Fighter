@@ -58,7 +58,7 @@ public abstract class AnimationLoader {
             case Default:
                 specs = new AnimSpecs(Consts.defaultSheet, Consts.defaultPicCount, Consts.defaultAnimSpeed, getSpriteSize(pType));
                 break;
-            case Run:
+            case Walk:
                 specs = new AnimSpecs(Consts.runSheet, Consts.runPicCount, Consts.runAnimSpeed, getSpriteSize(pType));
                 break;
             case Jump:

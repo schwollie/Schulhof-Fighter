@@ -38,8 +38,8 @@ public class AnimationManager extends GameComponent {
         animations.put(PlayerState.SpecialAttack, specialAttackAnim);
         Animation blockAnim = AnimationLoader.loadPlayerAnimation(playerType, PlayerState.Block, reference, true, 4);
         animations.put(PlayerState.Block, blockAnim);
-        Animation runAnim = AnimationLoader.loadPlayerAnimation(playerType, PlayerState.Run, reference, true, 2);
-        animations.put(PlayerState.Run, runAnim);
+        Animation runAnim = AnimationLoader.loadPlayerAnimation(playerType, PlayerState.Walk, reference, true, 2);
+        animations.put(PlayerState.Walk, runAnim);
         Animation jumpAnim = AnimationLoader.loadPlayerAnimation(playerType, PlayerState.Jump, reference, true, 2);
         animations.put(PlayerState.Jump, jumpAnim);
 
