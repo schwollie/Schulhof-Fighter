@@ -5,12 +5,12 @@ import logic.Transform;
 import physics.PhysicsGameComponent;
 import time.TimeEventListener;
 import time.TimeManager;
-import time.Timer;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GameObject implements TimeEventListener {
+public class GameObject implements Serializable, TimeEventListener {
 
     protected Scene scene;
 
@@ -147,6 +147,27 @@ public class GameObject implements TimeEventListener {
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
+    }
+
+    public void unloadImage() {
+        for (GameComponent c : gameComponents) {
+            c.unloadImage();
+        }
+        for (GameComponent c : components2Add) {
+            c.unloadImage();
+        }
+        for (GameComponent c : components2Remove) {
+            c.unloadImage();
+        }
+    }
+
+    public void loadImage() {
+        for (GameComponent c : gameComponents) {
+            c.loadImage();
+        }
+        for (GameComponent c : components2Add) {
+            c.loadImage();
+        }
     }
 
     //endregion

@@ -1,8 +1,9 @@
 package logic;
 
-import com.sun.javaws.exceptions.ErrorCodeResponseException;
 
-public class Dimension2D {
+import java.io.Serializable;
+
+public class Dimension2D implements Serializable {
 
     private double width;
     private double height;

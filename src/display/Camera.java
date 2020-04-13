@@ -8,8 +8,9 @@ import logic.Transform;
 import logic.Vector2;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class Camera extends GameObject {
+public class Camera extends GameObject implements Serializable {
 
     private final Canvas canvas;
     private final double ratio = Consts.ratio;

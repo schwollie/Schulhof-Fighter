@@ -1,9 +1,10 @@
 package logic;
 
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Vector2 {
+public class Vector2 implements Serializable {
 
     public static final Vector2 zero = new ImmutableVector2(0, 0);
     public static final Vector2 ones = new ImmutableVector2(1, 1);

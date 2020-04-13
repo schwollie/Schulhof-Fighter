@@ -1,6 +1,8 @@
 package logic;
 
-public class Transform {
+import java.io.Serializable;
+
+public class Transform implements Serializable {
 
     private Vector2 position;
     private Vector2 scale;

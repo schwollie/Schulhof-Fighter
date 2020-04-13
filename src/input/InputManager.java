@@ -6,8 +6,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.io.Serializable;
 
-public class InputManager implements KeyListener, MouseMotionListener {
+public class InputManager implements KeyListener, MouseMotionListener, Serializable {
 
     // region Key Flags:
 

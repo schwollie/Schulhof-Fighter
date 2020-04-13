@@ -1,9 +1,5 @@
 package time;
 
-import game.ComponentType;
-import game.GameComponent;
-import game.GameObject;
-
 import java.util.ArrayList;
 
 public class Timer extends GameComponent {

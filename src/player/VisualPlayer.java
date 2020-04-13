@@ -32,4 +32,12 @@ public class VisualPlayer extends GameComponent {
     public void setState(PlayerState state) {
         animManager.setState(state);
     }
+
+    public void unloadImage() {
+        animManager.unloadImage();
+    }
+
+    public void loadImage() {
+        animManager.loadImage();
+    }
 }
