@@ -25,7 +25,7 @@ public class Scene {
     }
 
     public void removeGameObject(GameObject gameObject) {
-        gameObjects2remove.remove(gameObject);
+        gameObjects2remove.add(gameObject);
     }
 
     public ArrayList<GameObject> getGameObjects() {

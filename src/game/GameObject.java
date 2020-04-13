@@ -3,12 +3,14 @@ package game;
 import display.Camera;
 import logic.Transform;
 import physics.PhysicsGameComponent;
+import time.TimeEventListener;
 import time.TimeManager;
+import time.Timer;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-public class GameObject {
+public class GameObject implements TimeEventListener {
 
     protected Scene scene;
 
@@ -130,8 +132,21 @@ public class GameObject {
         throw new Error("GameObject has no Component : " + component + " -> Check this with hasComponent()!");
     }
 
-    public void destroy() {
-        scene.removeGameObject(this);
+    public void destroy(double time) {
+        this.addComponent(new Timer(this,"_DestroyObject_", time, this));
+    }
+
+    @Override
+    public void onTimerStops(String timerName) {
+        if (timerName.equals("_DestroyObject_")) {
+            scene.removeGameObject(this);
+            System.gc();
+        }
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
     }
 
     //endregion

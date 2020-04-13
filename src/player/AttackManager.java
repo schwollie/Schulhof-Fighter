@@ -4,35 +4,40 @@ import game.ComponentType;
 import game.GameComponent;
 import game.GameObject;
 import logic.Dimension2D;
-import logic.Shaker;
 import logic.Vector2;
-import particle.ParticleSystem;
 import physics.Collider;
 import physics.CollissionListener;
-import physics.PhysicsGameComponent;
 import physics.RectCollider;
 import time.TimeEventListener;
 import time.Timer;
 
 public class AttackManager extends GameComponent implements CollissionListener, TimeEventListener {
 
-    private Collider atBoxNormal;
-    private Collider atBoxLow;
-
     // flags:
     private final boolean isBlocking = false;
 
     // timers
-    private final Timer punchTimer = new Timer("punchTimer", 0.25);
-    private final Timer kickTimer = new Timer("kickTimer", 0.25);
+    private final Timer punchTimer = new Timer(this.reference, "punchTimer", 0.25);
+    private final Timer kickTimer = new Timer(this.reference, "kickTimer", 0.25);
+
+    private final Timer coolDownTimer = new Timer(this.reference, "coolDownTimer", 0.5);
 
 
-    public AttackManager(GameObject g) {
-        super(g, ComponentType.Logic);
+    public AttackManager(GameObject ref) {
+        super(ref, ComponentType.Logic);
+
+        if (!(ref instanceof Player)) {
+            throw new Error("GameObject has to be of type Player");
+        }
+
         punchTimer.addListener(this);
         kickTimer.addListener(this);
         punchTimer.pause();
         kickTimer.pause();
+    }
+
+    public void block() {
+
     }
 
     public void doKick() {
@@ -60,21 +65,20 @@ public class AttackManager extends GameComponent implements CollissionListener, 
                 other.takeDamage(damage, new Vector2(getDirection() * force.getX(), force.getY()));
             }
         }
-
-        reference.addComponent(new ParticleSystem(reference,
-                0.01, .2, range.scalarMult(0.5).rowWiseMultiplication(new Vector2(getDirection(), 1))));
+        //reference.addComponent(new ParticleSystem(reference,
+        //        0.01, .2, range.scalarMult(0.5).rowWiseMultiplication(new Vector2(getDirection(), 1))));
     }
 
     private Collider[] getCollidersInRange(Vector2 range, Vector2 _offset) {
         double directionFactor = getDirection();
-        Vector2 offset = new Vector2(_offset.getX()*directionFactor, _offset.getY());
+        Vector2 offset = new Vector2(_offset.getX() * directionFactor, _offset.getY());
 
-        GameObject p = GameObject.getPlaceHolder( reference.getTransform(), reference.getScene());
+        GameObject p = GameObject.getPlaceHolder(reference.getTransform(), reference.getScene());
         RectCollider col = new RectCollider(p, offset, new Dimension2D(range.getX() * directionFactor, range.getY()));
 
-        PhysicsGameComponent pc = new PhysicsGameComponent(p);
-        pc.setCollider(col);
-        p.setPhysicsComponent(pc);
+        //PhysicsGameComponent pc = new PhysicsGameComponent(p);
+        //pc.setCollider(col);
+        //p.setPhysicsComponent(pc);
 
         //reference.getScene().addGameObject(p);
 
@@ -87,9 +91,8 @@ public class AttackManager extends GameComponent implements CollissionListener, 
 
     @Override
     public void tick() {
-        double dt = reference.getTime().getDeltaTime();
-        punchTimer.tick(dt);
-        kickTimer.tick(dt);
+        punchTimer.tick();
+        kickTimer.tick();
     }
 
     @Override
@@ -99,6 +102,7 @@ public class AttackManager extends GameComponent implements CollissionListener, 
 
     @Override
     public void onTimerStops(String timerName) {
+
         if (timerName.equals("punchTimer")) {
             doPunchHit();
             punchTimer.resetTimer();

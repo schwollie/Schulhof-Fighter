@@ -44,7 +44,6 @@ public abstract class Player extends GameObject implements CollissionListener {
     @Override
     public void tick() {
         super.tick();
-
         this.setPlayerState();
         visualPlayer.tick();
         attackManager.tick();
@@ -54,7 +53,6 @@ public abstract class Player extends GameObject implements CollissionListener {
     @Override
     public void Render(Graphics2D g, Camera cam) {
         super.Render(g, cam);
-
         this.visualPlayer.Render(g, cam);
     }
 
@@ -65,12 +63,11 @@ public abstract class Player extends GameObject implements CollissionListener {
     }
 
     protected void Jump() {
-
         if (isOnGround) {
             physicsComponent.setVelocityY(3);
             isOnGround = false;
-            if (!hasComponent(Shaker.class))
-                scene.getCam().addComponent(new Shaker(scene.getCam(), new Vector2(0.02, 0.02), new Vector2(1, 1), 1));
+            //if (!hasComponent(Shaker.class))
+            //    scene.getCam().addComponent(new Shaker(scene.getCam(), new Vector2(0.02, 0.02), new Vector2(1, 1), 1));
         }
     }
 
@@ -95,6 +92,9 @@ public abstract class Player extends GameObject implements CollissionListener {
     }
 
     protected void block() {
+        this.playerState = PlayerState.Block;
+        visualPlayer.setState(playerState);
+        attackManager.block();
     }
 
     protected void setPlayerState() {
@@ -118,14 +118,11 @@ public abstract class Player extends GameObject implements CollissionListener {
 
     @Override
     public void onCollision(Collider c1, Collider c2) {
-        //test for collision with ground
-        String tag1 = c1.getGameObject().getTag();
-        String tag2 = c2.getGameObject().getTag();
-
-        //if ((tag1.equals(this.tag) || tag2.equals(this.tag)) && (tag1.equals("Ground") || tag2.equals("Ground"))) {
         isOnGround = true;
-        //}
+    }
 
+    public void onDeath() {
+        this.destroy(1);
     }
 
     // endregion

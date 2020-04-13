@@ -1,8 +1,12 @@
 package time;
 
+import game.ComponentType;
+import game.GameComponent;
+import game.GameObject;
+
 import java.util.ArrayList;
 
-public class Timer {
+public class Timer extends GameComponent {
 
     private final String name;
 
@@ -15,27 +19,32 @@ public class Timer {
 
     private ArrayList<TimeEventListener> listeners = new ArrayList<>();
 
-    public Timer(String name, double time) {
+    public Timer(GameObject ref, String name, double time) {
+        super(ref, ComponentType.Timer);
         this.name = name;
         this.time = time;
         this.startTime = time;
     }
 
-    public Timer(String name, double time, TimeEventListener l) {
+    public Timer(GameObject ref, String name, double time, TimeEventListener l) {
+        super(ref, ComponentType.Timer);
         this.name = name;
         this.time = time;
         this.listeners.add(l);
         this.startTime = time;
     }
 
-    public Timer(String name, double time, ArrayList<TimeEventListener> l) {
+    public Timer(GameObject ref, String name, double time, ArrayList<TimeEventListener> l) {
+        super(ref, ComponentType.Timer);
         this.name = name;
         this.time = time;
         this.listeners = l;
         this.startTime = time;
     }
 
-    public void tick(double dt) {
+    @Override
+    public void tick() {
+        double dt = reference.getTime().getDeltaTime();
         elapsedTime += dt;
 
         if (hasStopped || pause) {

@@ -23,13 +23,12 @@ public class Shaker extends GameComponent implements TimeEventListener {
         super(ref, ComponentType.Logic);
         this.maxDeviation = maxDeviation;
         this.speed = speed.scalarMult(10);
-        timer = new Timer("ShakerTimer", maxTime, this);
+        timer = new Timer(ref,"ShakerTimer", maxTime, this);
     }
 
     @Override
     public void tick() {
-        double dt = reference.getTime().getDeltaTime();
-        timer.tick(dt);
+        timer.tick();
 
         //newOffset
         Vector2 offset = getOffset();

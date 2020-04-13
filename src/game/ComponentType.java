@@ -2,6 +2,6 @@ package game;
 
 public enum ComponentType {
 
-    PhysicsComponent, Logic, Animation, VisualElement, Sprite, AnimationController, Collider, ParticleSystem, Particle
+    PhysicsComponent, Logic, Animation, VisualElement, Sprite, AnimationController, Collider, ParticleSystem, Particle, Timer
 
 }

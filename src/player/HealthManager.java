@@ -17,12 +17,19 @@ public class HealthManager extends GameComponent {
 
     public HealthManager(GameObject ref, double maxHealth) {
         super(ref, ComponentType.Logic);
+
+        if (! (ref instanceof Player)) { throw new Error("GameObject has to be of type Player"); }
+
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
     }
 
     public void takeDamage(double damage) {
         currentHealth -= damage;
+
+        if (currentHealth <= 0) {
+            ((Player)reference).onDeath();
+        }
     }
 
     public void tick() {

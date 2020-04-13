@@ -33,7 +33,7 @@ public class ParticleSystem extends GameComponent implements TimeEventListener {
         super(ref, ComponentType.ParticleSystem);
         this.liveTime = liveTime;
         this.timerName = "spawnParticle";
-        this.timer = new Timer(timerName, interval, this);
+        this.timer = new Timer(ref, timerName, interval, this);
         this.particles = new LinkedList<>();
 
         this.startPos = startPos;
@@ -44,8 +44,7 @@ public class ParticleSystem extends GameComponent implements TimeEventListener {
 
     @Override
     public void tick() {
-        double dt = reference.getTime().getDeltaTime();
-        timer.tick(dt);
+        timer.tick();
 
         for (Particle p: particles) {
             p.tick();
