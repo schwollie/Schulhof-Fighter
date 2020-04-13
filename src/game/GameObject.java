@@ -6,9 +6,10 @@ import physics.PhysicsGameComponent;
 import time.TimeManager;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GameObject {
+public class GameObject implements Serializable {
 
     protected Scene scene;
 
@@ -132,6 +133,27 @@ public class GameObject {
 
     public void destroy() {
         scene.removeGameObject(this);
+    }
+
+    public void unloadImage() {
+        for (GameComponent c : gameComponents) {
+            c.unloadImage();
+        }
+        for (GameComponent c : components2Add) {
+            c.unloadImage();
+        }
+        for (GameComponent c : components2Remove) {
+            c.unloadImage();
+        }
+    }
+
+    public void loadImage() {
+        for (GameComponent c : gameComponents) {
+            c.loadImage();
+        }
+        for (GameComponent c : components2Add) {
+            c.loadImage();
+        }
     }
 
     //endregion

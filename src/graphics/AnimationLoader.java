@@ -2,23 +2,23 @@ package graphics;
 
 import game.Consts;
 import game.GameObject;
-import logic.AnimationType;
 import logic.Dimension2D;
 import logic.PlayerTypes;
 import particle.ParticleType;
+import player.PlayerState;
 
 import java.io.File;
 
 public abstract class AnimationLoader {
 
-    public static Animation loadPlayerAnimation(PlayerTypes type, AnimationType animType, GameObject ref, boolean loopAnim, int priority) {
+    public static Animation loadPlayerAnimation(PlayerTypes type, PlayerState animType, GameObject ref, boolean loopAnim, int priority) {
         AnimSpecs animSpec = getAnimSpecs(animType, type);
         String path = AnimationLoader.getPath(type, animSpec);
 
         File f = new File(path);
         if (!f.exists()) {
             System.out.println("File does not exist : " + path + " -> using default path instead");
-            animSpec = getAnimSpecs(AnimationType.Default, type);
+            animSpec = getAnimSpecs(PlayerState.Default, type);
             path = AnimationLoader.getPath(type, animSpec);
         }
 
@@ -52,7 +52,7 @@ public abstract class AnimationLoader {
     }
 
 
-    private static AnimSpecs getAnimSpecs(AnimationType type, PlayerTypes pType) {
+    private static AnimSpecs getAnimSpecs(PlayerState type, PlayerTypes pType) {
         AnimSpecs specs = null;
         switch (type) {
             case Default:
@@ -100,7 +100,7 @@ class AnimSpecs {
 
     public boolean loopAnim = false;
     public int priority = 0;
-    public AnimationType animType = AnimationType.Default;
+    public PlayerState animType = PlayerState.Default;
 
     public AnimSpecs(String animSheet, int animPicCount, float animSpeed, Dimension2D dim) {
         this.animPicCount = animPicCount;

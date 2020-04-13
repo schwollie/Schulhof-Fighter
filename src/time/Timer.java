@@ -1,8 +1,9 @@
 package time;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Timer {
+public class Timer implements Serializable {
 
     private final String name;
 

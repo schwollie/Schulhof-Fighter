@@ -3,7 +3,6 @@ package game;
 import display.Camera;
 import display.Window;
 import graphics.RectSprite;
-import input.InputManager;
 import logic.Dimension2D;
 import logic.PlayerTypes;
 import logic.Transform;
@@ -22,41 +21,49 @@ public class Game {
     public Window window;
     public Camera cam;
 
-    // Input
-    public InputManager inputManager;
 
     // World
-    public Scene scene = new Scene();
+    public Scene scene;
+    public SceneManager sceneManager;
 
     //MAIN MENU
     private MenuCanvas mainmenu;
 
+    public void init() {
+        scene = new Scene();
+        sceneManager = new SceneManager();
+    }
+
     public void initGraphics() {
         // initialize the window & canvas as well as the KeyEventListener
         window = new Window(Consts.windowWidth, Consts.windowHeight);
-
-        inputManager = new InputManager();
 
         cam = new Camera(scene, new Vector2(0, 4));
         scene.addGameObject(cam);
 
         mainmenu = new MenuCanvas();
 
-        window.addMouseMotionListener(inputManager);
-        window.addKeyListener(inputManager);
+        window.addMouseMotionListener(scene.getInputManager());
+        window.addKeyListener(scene.getInputManager());
         window.add(cam.getCanvas());
         //window.add(mainmenu);
         window.setVisible(true);
 
         //mainmenu.createStandardBubbles(Consts.bubblesAmount);
+
     }
 
     public void initGame() {
+        loadSceneManually();
+        //scene = sceneManager.loadScene("default");
+    }
+
+    public void loadSceneManually() {
         HumanPlayer a = new HumanPlayer(scene, new Vector2(0, 2), PlayerTypes.Hausperger, "Player1");
         HumanPlayer b = new HumanPlayer(scene, new Vector2(2, 2), PlayerTypes.Hausperger, "Player2");
 
-        inputManager.setListenerMapping1(a);
-        inputManager.setListenerMapping2(b);
+        scene.getInputManager().setListenerMapping1(a);
+        scene.getInputManager().setListenerMapping2(b);
 
         scene.addGameObject(a);
         scene.addGameObject(b);
@@ -72,6 +79,8 @@ public class Game {
         ground.addComponent(new RectSprite(ground, new Vector2(0, 0), new Dimension2D(10, 1)));
 
         scene.gameObjects.add(ground);
+
+        sceneManager.saveScene(scene, "default");
     }
 
     public void start() {
@@ -88,8 +97,6 @@ public class Game {
         while (true) {
             timeManager.stepForward();
             timeManager.waitForTargetFPS();
-
-            inputManager.sendKeyStates();
 
             scene.tick();
 

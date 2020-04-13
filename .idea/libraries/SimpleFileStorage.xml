@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="SimpleFileStorage">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/SimpleFileStorage.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

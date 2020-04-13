@@ -4,8 +4,8 @@ import display.Camera;
 import game.ComponentType;
 import game.GameComponent;
 import game.GameObject;
-import logic.AnimationType;
 import logic.Dimension2D;
+import player.PlayerState;
 
 import java.awt.*;
 
@@ -16,7 +16,7 @@ public class Animation extends GameComponent {
     private float speed = 7f;  // pictures per second
     private boolean loopAnim;
     private boolean hasFinished = false; // only for non looped animations
-    private AnimationType animType = AnimationType.NotSpecified;
+    private PlayerState animType = PlayerState.NotSpecified;
     private int priority = 0;
 
     // for animation
@@ -77,16 +77,38 @@ public class Animation extends GameComponent {
         return loopAnim;
     }
 
-    public AnimationType getAnimType() {
-        return animType;
+    public static Animation loadAnim(String animSheetPath, AnimSpecs specs, GameObject ref) {
+        int pictureCount = specs.getAnimPicCount();
+        int priority = specs.priority;
+        boolean loopAnim = specs.loopAnim;
+
+        PlayerState type = specs.animType;
+        Dimension2D bounds = specs.getImgDimensions();
+
+        // create sprites from spritesheet
+        ImageSprite[] animImages = new ImageSprite[pictureCount];
+        ImageSprite animSheet = new ImageSprite(ref, new Dimension2D((int) (bounds.getWidth() * pictureCount), (int) bounds.getHeight()), animSheetPath);
+
+        for (int i = 0; i < pictureCount; i++) {
+            animImages[i] = animSheet.getSlice((int) (i * bounds.getWidth()), 0, (int) bounds.getWidth(), (int) bounds.getHeight());
+        }
+
+        // setup Animation
+        Animation anim = new Animation(animImages, ref);
+        anim.setSpeed(specs.getAnimSpeed());
+        anim.setAnimType(specs.animType);
+        anim.setPriority(specs.priority);
+        anim.setLoopAnim(specs.loopAnim);
+
+        return anim;
     }
 
     public int getPriority() {
         return priority;
     }
 
-    public void setAnimType(AnimationType animType) {
-        this.animType = animType;
+    public PlayerState getAnimType() {
+        return animType;
     }
 
     public void setLoopAnim(boolean loopAnim) {
@@ -115,31 +137,16 @@ public class Animation extends GameComponent {
                 '}';
     }
 
-    public static Animation loadAnim(String animSheetPath, AnimSpecs specs, GameObject ref) {
+    public void setAnimType(PlayerState animType) {
+        this.animType = animType;
+    }
 
-        int pictureCount = specs.getAnimPicCount();
-        int priority = specs.priority;
-        boolean loopAnim = specs.loopAnim;
-
-        AnimationType type = specs.animType;
-        Dimension2D bounds = specs.getImgDimensions();
-
-        // create sprites from spritesheet
-        ImageSprite[] animImages = new ImageSprite[pictureCount];
-        ImageSprite animSheet = new ImageSprite(ref, new Dimension2D((int) (bounds.getWidth() * pictureCount), (int) bounds.getHeight()), animSheetPath);
-
-        for (int i = 0; i < pictureCount; i++) {
-            animImages[i] = animSheet.getSlice((int) (i * bounds.getWidth()), 0, (int) bounds.getWidth(), (int) bounds.getHeight());
+    @Override
+    public void unloadImage() {
+        super.unloadImage();
+        for (ImageSprite img : images) {
+            img.unloadImage();
         }
-
-        // setup Animation
-        Animation anim = new Animation(animImages, ref);
-        anim.setSpeed(specs.getAnimSpeed());
-        anim.setAnimType(specs.animType);
-        anim.setPriority(specs.priority);
-        anim.setLoopAnim(specs.loopAnim);
-
-        return anim;
     }
 
 }

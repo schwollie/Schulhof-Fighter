@@ -4,8 +4,6 @@ import display.Camera;
 import game.GameObject;
 import game.Scene;
 import logic.*;
-import particle.ParticleSystem;
-import particle.ParticleType;
 import physics.Collider;
 import physics.CollissionListener;
 import physics.PhysicsGameComponent;
@@ -39,6 +37,9 @@ public abstract class Player extends GameObject implements CollissionListener {
         this.visualPlayer = new VisualPlayer(type, this);
         this.attackManager = new AttackManager(this);
         this.healthManager = new HealthManager(this, maxHealth);
+        addComponent(visualPlayer);
+        addComponent(attackManager);
+        addComponent(healthManager);
     }
 
     @Override
@@ -46,16 +47,11 @@ public abstract class Player extends GameObject implements CollissionListener {
         super.tick();
 
         this.setPlayerState();
-        visualPlayer.tick();
-        attackManager.tick();
-        healthManager.tick();
     }
 
     @Override
     public void Render(Graphics2D g, Camera cam) {
         super.Render(g, cam);
-
-        this.visualPlayer.Render(g, cam);
     }
 
     // region action Handling:
@@ -110,7 +106,7 @@ public abstract class Player extends GameObject implements CollissionListener {
 
     protected void setState2Walk() {
         if (isOnGround && this.physicsComponent.getVelocity().getLengthSquared() > 0.2) {
-            this.playerState = PlayerState.Walk;
+            this.playerState = PlayerState.Run;
             visualPlayer.setState(playerState);
         }
     }

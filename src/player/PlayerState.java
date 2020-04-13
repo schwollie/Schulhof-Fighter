@@ -1,5 +1,5 @@
 package player;
 
 public enum PlayerState {
-    Default, Walk, Jump, Kick, Punch
+    Default, Kick, Block, Punch, SpecialAttack, Run, Jump, NotSpecified
 }

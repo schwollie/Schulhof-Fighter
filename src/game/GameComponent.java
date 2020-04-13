@@ -4,8 +4,9 @@ import display.Camera;
 import logic.Transform;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public abstract class GameComponent {
+public abstract class GameComponent implements Serializable {
 
     protected GameObject reference;
     protected ComponentType type;
@@ -46,5 +47,13 @@ public abstract class GameComponent {
         return transform;
     }
 
-    public Transform getAbsoluteTransform() { return transform.add(reference.transform); }
+    public Transform getAbsoluteTransform() {
+        return transform.add(reference.transform);
+    }
+
+    public void unloadImage() {
+    }
+
+    public void loadImage() {
+    }
 }
