@@ -5,6 +5,7 @@ import game.ComponentType;
 import game.GameComponent;
 import game.GameObject;
 import graphics.AnimationManager;
+import graphics.SpriteManager;
 import logic.PlayerTypes;
 
 import java.awt.*;
@@ -25,8 +26,8 @@ public class VisualPlayer extends GameComponent {
     }
 
     @Override
-    public void Render(Graphics2D g, Camera cam) {
-        animManager.Render(g, cam);
+    public void UpdateSprites(SpriteManager spriteManager) {
+        animManager.UpdateSprites(spriteManager);
     }
 
     public void setState(PlayerState state) {

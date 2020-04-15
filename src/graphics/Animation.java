@@ -124,9 +124,9 @@ public class Animation extends GameComponent {
     }
 
     @Override
-    public void Render(Graphics2D g, Camera cam) {
+    public void UpdateSprites(SpriteManager spriteManager) {
         if (visible && currentSprite != null) {
-            currentSprite.Render(g, cam);
+            currentSprite.UpdateSprites(spriteManager);
         }
     }
 

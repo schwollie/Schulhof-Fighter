@@ -3,9 +3,8 @@ package particle;
 import display.Camera;
 import game.*;
 import graphics.Animation;
-import graphics.AnimationLoader;
 import graphics.ImageSprite;
-import logic.Transform;
+import graphics.SpriteManager;
 import logic.Vector2;
 
 import java.awt.*;
@@ -56,9 +55,9 @@ public class Particle extends GameComponent {
     }
 
     @Override
-    public void Render(Graphics2D g, Camera cam) {
+    public void UpdateSprites(SpriteManager spriteManager) {
         ImageSprite sprite2draw = parentSystem.getParticleImg();
         sprite2draw.setRelativeTransform(this.transform);
-        sprite2draw.Render(g, cam);
+        sprite2draw.UpdateSprites(spriteManager);
     }
 }

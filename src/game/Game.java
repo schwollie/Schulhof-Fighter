@@ -80,7 +80,7 @@ public class Game {
 
         scene.gameObjects.add(ground);
 
-        sceneManager.saveScene(scene, "default");
+        //sceneManager.saveScene(scene, "default");
     }
 
     public void start() {
@@ -91,7 +91,7 @@ public class Game {
 
     public void startGameLoop() {
 
-        TimeManager timeManager = new TimeManager(120);
+        TimeManager timeManager = new TimeManager(250);
         scene.timeManager = timeManager;
 
         while (true) {
@@ -99,8 +99,9 @@ public class Game {
             timeManager.waitForTargetFPS();
 
             scene.tick();
+            scene.updateSprites();
 
-            //System.out.println(timeManager.getCurrentFPS());
+            System.out.println(timeManager.getCurrentFPS());
 
             //mainmenu.tick(fpsTracker.getDeltaTime(), inputManager.getMousePosition());
 

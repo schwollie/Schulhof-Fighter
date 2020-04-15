@@ -14,7 +14,7 @@ public class Camera extends GameObject implements Serializable {
 
     private final Canvas canvas;
     private final double ratio = Consts.ratio;
-    private final double scale = 10;
+    private final double scale = 6;
     private final Dimension2D ScreenSize = new Dimension2D(Consts.windowWidth, Consts.windowHeight);
 
     public Camera(Scene scene, Vector2 pos) {
@@ -29,8 +29,8 @@ public class Camera extends GameObject implements Serializable {
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void Tick() {
+        super.Tick();
     }
 
     public Canvas getCanvas() {

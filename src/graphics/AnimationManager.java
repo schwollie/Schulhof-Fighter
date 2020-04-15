@@ -95,13 +95,13 @@ public class AnimationManager extends GameComponent {
     }
 
     @Override
-    public void Render(Graphics2D g, Camera cam) {
+    public void UpdateSprites(SpriteManager spriteManager) {
         Animation defaultAnimation = animations.get(PlayerState.Default);
 
         if (lastAnim != null) {
-            lastAnim.Render(g, cam);
+            lastAnim.UpdateSprites(spriteManager);
         } else if (defaultAnimation != null) {
-            defaultAnimation.Render(g, cam);
+            defaultAnimation.UpdateSprites(spriteManager);
         } else {
             System.out.println("Warning: Currently no Animation is Rendered");
         }

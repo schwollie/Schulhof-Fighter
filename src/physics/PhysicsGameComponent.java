@@ -2,6 +2,7 @@ package physics;
 
 import display.Camera;
 import game.*;
+import graphics.SpriteManager;
 import logic.Vector2;
 
 import java.awt.*;
@@ -37,8 +38,8 @@ public class PhysicsGameComponent extends GameComponent {
     }
 
     @Override
-    public void Render(Graphics2D g, Camera cam) {
-        this.collider.Render(g, cam);
+    public void UpdateSprites(SpriteManager spriteManager) {
+        this.collider.UpdateSprites(spriteManager);
 
     }
 

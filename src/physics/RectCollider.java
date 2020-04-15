@@ -3,6 +3,7 @@ package physics;
 import display.Camera;
 import game.GameObject;
 import graphics.RectSprite;
+import graphics.SpriteManager;
 import logic.Dimension2D;
 import logic.Vector2;
 
@@ -40,14 +41,14 @@ public class RectCollider extends Collider {
     }
 
     @Override
-    public void Render(Graphics2D g, Camera cam) {
+    public void UpdateSprites(SpriteManager spriteManager) {
         if (debugSprite == null) {
             debugSprite = new RectSprite(GameObject.getPlaceHolder(this.reference.getTransform(), reference.getScene()), this.offset, this.dimensions);
         } else {
             debugSprite.setGameObjectRef(GameObject.getPlaceHolder(this.reference.getTransform(), reference.getScene()));
         }
 
-        debugSprite.Render(g, cam);
+        debugSprite.UpdateSprites(spriteManager);
     }
 
     private void checkDimensions() {

@@ -4,16 +4,14 @@ import display.Camera;
 import game.ComponentType;
 import game.GameComponent;
 import game.GameObject;
-import game.Scene;
 import graphics.ImageSprite;
+import graphics.SpriteManager;
 import logic.Dimension2D;
-import logic.Transform;
 import logic.Vector2;
 import time.TimeEventListener;
 import time.Timer;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -92,9 +90,9 @@ public class ParticleSystem extends GameComponent implements TimeEventListener {
     }
 
     @Override
-    public void Render(Graphics2D g, Camera cam) {
+    public void UpdateSprites(SpriteManager spriteManager) {
         for (Particle p: particles) {
-            p.Render(g, cam);
+            p.UpdateSprites(spriteManager);
         }
     }
 }

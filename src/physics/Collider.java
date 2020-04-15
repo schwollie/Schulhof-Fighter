@@ -5,6 +5,7 @@ import game.ComponentType;
 import game.GameComponent;
 import game.GameObject;
 import graphics.Sprite;
+import graphics.SpriteManager;
 import logic.Transform;
 import logic.Vector2;
 
@@ -31,7 +32,8 @@ public abstract class Collider extends GameComponent {
 
     public abstract boolean doesCollide(Collider c);
 
-    public abstract void Render(Graphics2D g, Camera cam);
+    @Override
+    public abstract void UpdateSprites(SpriteManager spriteManager);
 
     public Vector2 getPosition() {
         return new Vector2(this.reference.getTransform().getPosition()).add(offset);

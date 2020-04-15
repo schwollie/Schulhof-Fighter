@@ -3,9 +3,8 @@ package player;
 import display.Camera;
 import game.GameObject;
 import game.Scene;
+import graphics.SpriteManager;
 import logic.*;
-import particle.ParticleSystem;
-import particle.ParticleType;
 import physics.Collider;
 import physics.CollissionListener;
 import physics.PhysicsGameComponent;
@@ -42,8 +41,8 @@ public abstract class Player extends GameObject implements CollissionListener {
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void Tick() {
+        super.Tick();
 
         this.setPlayerState();
         visualPlayer.tick();
@@ -52,10 +51,10 @@ public abstract class Player extends GameObject implements CollissionListener {
     }
 
     @Override
-    public void Render(Graphics2D g, Camera cam) {
-        super.Render(g, cam);
+    public void UpdateSprites(SpriteManager spriteManager) {
+        super.UpdateSprites(spriteManager);
 
-        this.visualPlayer.Render(g, cam);
+        this.visualPlayer.UpdateSprites(spriteManager);
     }
 
     // region action Handling:

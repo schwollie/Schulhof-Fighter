@@ -1,6 +1,7 @@
 package game;
 
 import display.Camera;
+import graphics.SpriteManager;
 import input.InputManager;
 import physics.PhysicsGameComponent;
 import player.Player;
@@ -14,6 +15,8 @@ import java.util.LinkedList;
 public class Scene implements Serializable {
 
     public InputManager inputManager;
+
+    public SpriteManager spriteManager = new SpriteManager();
 
     private LinkedList<GameObject> gameObjects2add = new LinkedList<>();
     private LinkedList<GameObject> gameObjects2remove = new LinkedList<>();
@@ -85,7 +88,7 @@ public class Scene implements Serializable {
         inputManager.sendKeyStates();
 
         for (GameObject g : gameObjects) {
-            g.tick();
+            g.Tick();
         }
 
         //add and remove all gameObject
@@ -99,8 +102,12 @@ public class Scene implements Serializable {
     }
 
     public synchronized void Render(Graphics2D g, Camera cam) {
+        spriteManager.RenderSprites(g, cam);
+    }
+
+    public synchronized void updateSprites() {
         for (GameObject gm : gameObjects) {
-            gm.Render(g, cam);
+            gm.UpdateSprites(spriteManager);
         }
     }
 

@@ -1,6 +1,6 @@
 package game;
 
-//import com.blogspot.debukkitsblog.util.FileStorage;
+import com.blogspot.debukkitsblog.util.FileStorage;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,8 +10,7 @@ public class SceneManager {
     public final String KEY_VALUE = "scene";
 
     public Scene loadScene(String name) {
-        return null;
-        /*String path = "scenes/" + name + ".dat";
+        String path = "scenes/" + name + ".dat";
         File file = new File(path);
         FileStorage fs = null;
         if (!file.exists()) {
@@ -26,11 +25,11 @@ public class SceneManager {
         Scene scene = (Scene) fs.get(KEY_VALUE);
         scene.loadImages();
         System.out.println("Loaded scene::" + name);
-        return scene;*/
+        return scene;
     }
 
     public void saveScene(Scene scene, String name) {
-        /*scene.unloadImages();
+        scene.unloadImages();
         File file = new File("scenes/" + name + ".dat");
         FileStorage fs = null;
         try {
@@ -42,6 +41,6 @@ public class SceneManager {
             e.printStackTrace();
         }
         System.out.println("Saved scene::" + name);
-        scene.loadImages();*/
+        scene.loadImages();
     }
 }
