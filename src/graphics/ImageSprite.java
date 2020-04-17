@@ -17,6 +17,26 @@ public class ImageSprite extends Sprite {
     private BufferedImage img;
     private String filename;
     private Dimension2D boundaries;  // array with length 2 [width, height]
+    private Anchor anchor = Anchor.Center;
+
+    public ImageSprite(GameObject reference, double resolution, String filename) {
+        super(reference);
+        this.filename = filename;
+        this.visible = false;
+        loadImage();
+        img = rescaleImage((int)(img.getWidth()*resolution), (int)(img.getHeight()*resolution));
+        this.boundaries = new Dimension2D(img.getWidth(), img.getHeight());
+    }
+
+    public ImageSprite(GameObject reference, double resolution, String filename, Anchor anchor) {
+        super(reference);
+        this.filename = filename;
+        this.visible = false;
+        loadImage();
+        img = rescaleImage((int)(img.getWidth()*resolution), (int)(img.getHeight()*resolution));
+        this.boundaries = new Dimension2D(img.getWidth(), img.getHeight());
+        this.anchor = anchor;
+    }
 
     public ImageSprite(GameObject reference, Dimension2D boundaries, String filename) {
         super(reference);
@@ -83,20 +103,19 @@ public class ImageSprite extends Sprite {
             int height = (int) (screenCoord.getYScale() * getYScaleFactor());
 
             // center of image is on x, y
-            g.drawImage(img, x - width / 2, y - height / 2, width, height, null);
+            switch (anchor) {
+                case Center -> g.drawImage(img, x - width / 2, y - height / 2, width, height, null);
+                case BottomLeft -> g.drawImage(img, x, y - height, width, height, null);
+                case BottomRight -> g.drawImage(img, x - width, y - height, width, height, null);
+                case TopLeft -> g.drawImage(img, x, y, width, height, null);
+                case TopRight -> g.drawImage(img, x - width, y, width, height, null);
+                default -> throw new Error("No Anchor on ImageSprite is specified!");
+            }
+
         }
     }
 
-    public Dimension2D getBoundaries() {
-        return boundaries;
+    public void setAnchor(Anchor anchor) {
+        this.anchor = anchor;
     }
-
-    public void updateBoundaries(Dimension2D newBounds) {
-        if (newBounds.getWidth() != this.boundaries.getWidth() || boundaries.getHeight() != this.boundaries.getHeight()) {
-            rescaleImage((int) newBounds.getWidth(), (int) newBounds.getHeight());
-        }
-
-        this.boundaries = newBounds;
-    }
-
 }

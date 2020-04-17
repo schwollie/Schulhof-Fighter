@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class GameObject implements Serializable, TimeEventListener {
 
-    protected Scene scene;
+    protected final Scene scene;
 
     protected String tag;
     protected Transform transform = new Transform();
@@ -29,6 +29,13 @@ public class GameObject implements Serializable, TimeEventListener {
         this.tag = tag;
         this.scene = world;
     }
+
+    public GameObject(String tag, Scene world, int layer) {
+        this.tag = tag;
+        this.scene = world;
+        this.layer = layer;
+    }
+
 
     public void UpdateSprites(SpriteManager spriteManager) {
         //if (physicsComponent!=null)

@@ -2,6 +2,9 @@ package game;
 
 import display.Camera;
 import display.Window;
+import graphics.Anchor;
+import graphics.CircleSprite;
+import graphics.ImageSprite;
 import graphics.RectSprite;
 import logic.Dimension2D;
 import logic.PlayerTypes;
@@ -11,6 +14,8 @@ import mainmenu.graphics.MenuCanvas;
 import physics.PhysicsGameComponent;
 import physics.RectCollider;
 import player.HumanPlayer;
+import prefabs.Background;
+import prefabs.Ground;
 import time.TimeManager;
 
 import java.awt.*;
@@ -38,7 +43,7 @@ public class Game {
         // initialize the window & canvas as well as the KeyEventListener
         window = new Window(Consts.windowWidth, Consts.windowHeight);
 
-        cam = new Camera(scene, new Vector2(0, 4));
+        cam = new Camera(scene, new Vector2(0, 3.2));
         scene.addGameObject(cam);
 
         mainmenu = new MenuCanvas();
@@ -68,17 +73,13 @@ public class Game {
         scene.addGameObject(a);
         scene.addGameObject(b);
 
-        // Todo ground as gameObject
-        Transform groundTrans = new Transform(0, 0);
-        GameObject ground = new GameObject("Ground", scene);
-        ground.setTransform(groundTrans);
-        PhysicsGameComponent groundCollider = new PhysicsGameComponent(ground);
-        ground.setPhysicsComponent(groundCollider);
-        groundCollider.setStatic(true);
-        groundCollider.setCollider(new RectCollider(ground, new Vector2(0, 0), new Dimension2D(10, 1)));
-        ground.addComponent(new RectSprite(ground, new Vector2(0, 0), new Dimension2D(10, 1)));
 
-        scene.gameObjects.add(ground);
+        Ground ground = new Ground(scene);
+        scene.addGameObject(ground);
+
+        // Background
+        Background background = new Background(scene);
+        scene.addGameObject(background);
 
         //sceneManager.saveScene(scene, "default");
     }
