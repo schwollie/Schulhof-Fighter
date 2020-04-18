@@ -1,4 +1,4 @@
-package prefabs;
+package prefabs.gameobjects;
 
 import game.GameObject;
 import game.Scene;

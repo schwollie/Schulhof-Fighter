@@ -11,11 +11,12 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
-public abstract class Panel extends JPanel implements MouseListener, MouseMotionListener {
+public class HUDCanvas extends JPanel implements MouseListener, MouseMotionListener {
+
     private final ArrayList<GuiComponent> components = new ArrayList<>();
     private final ArrayList<GuiListener> listeners = new ArrayList<>();
 
-    public Panel() {
+    public HUDCanvas() {
         super();
         addMouseMotionListener(this);
         addMouseListener(this);
@@ -30,7 +31,7 @@ public abstract class Panel extends JPanel implements MouseListener, MouseMotion
     }
 
     public void addGuiComponent(GuiComponent component) {
-        component.setParentPanel(this);
+        component.setParentHUD(this);
         components.add(component);
     }
 

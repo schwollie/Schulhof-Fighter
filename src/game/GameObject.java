@@ -117,7 +117,7 @@ public class GameObject implements Serializable, TimeEventListener {
     }
 
     public TimeManager getTime() {
-        return this.scene.timeManager;
+        return this.scene.getTimeManager();
     }
 
     public int getLayer() {

@@ -1,5 +1,6 @@
 package display;
 
+import components.HUDCanvas;
 import game.Consts;
 import game.GameObject;
 import game.Scene;
@@ -13,6 +14,7 @@ import java.io.Serializable;
 public class Camera extends GameObject implements Serializable {
 
     private final Canvas canvas;
+    private final HUDCanvas HUD;
     private final double ratio = Consts.ratio;
     private final double scale = 6;
     private final Dimension2D ScreenSize = new Dimension2D(Consts.windowWidth, Consts.windowHeight);
@@ -22,6 +24,7 @@ public class Camera extends GameObject implements Serializable {
         this.transform.setPosition(pos);
         canvas = new Canvas();
         canvas.setCam(this);
+        this.HUD = new HUDCanvas();
     }
 
     public void RenderScene(Graphics2D g) {
@@ -36,6 +39,8 @@ public class Camera extends GameObject implements Serializable {
     public Canvas getCanvas() {
         return canvas;
     }
+
+    public HUDCanvas getHUD() { return this.HUD; }
 
     public Dimension2D getScreenSize() {
         return ScreenSize;

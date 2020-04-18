@@ -2,14 +2,14 @@ package mainmenu.graphics;
 
 import components.Button;
 import components.GuiComponent;
-import components.Panel;
+import components.HUDCanvas;
 import game.Consts;
 import logic.Vector2;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-public class MenuCanvas extends Panel {
+public class MenuCanvas extends HUDCanvas {
 
     private final ArrayList<Bubble> bubbles;
     private final ArrayList<Bubble> bubblesInRadius = new ArrayList<>();

@@ -16,7 +16,7 @@ public abstract class GuiComponent implements ComponentMethods {
     protected TextAlign textAlign;
     protected String name, text;
     protected boolean pressed, hovered;
-    protected Panel parentPanel;
+    protected HUDCanvas parentHUD;
     protected Color color, textColor;
 
     public GuiComponent(double width, double height) {
@@ -29,6 +29,7 @@ public abstract class GuiComponent implements ComponentMethods {
         this.textAlign = TextAlign.LEFT;
         this.textSize = 20;
     }
+
 
     public double getLeft() {
         return left;
@@ -144,28 +145,28 @@ public abstract class GuiComponent implements ComponentMethods {
 
     public int getX() {
         double factor = left == UNUSED ? (right == UNUSED ? 0 : right / 100) : left / 100;
-        return (int) (parentPanel.getWidth() * factor);
+        return (int) (parentHUD.getWidth() * factor);
     }
 
     public int getY() {
         double factor = top == UNUSED ? (bottom == UNUSED ? 0 : bottom / 100) : top / 100;
-        return (int) (parentPanel.getWidth() * factor);
+        return (int) (parentHUD.getWidth() * factor);
     }
 
     public int getWidth() {
-        return (int) (parentPanel.getWidth() * (width / 100));
+        return (int) (parentHUD.getWidth() * (width / 100));
     }
 
     public int getHeight() {
-        return (int) (parentPanel.getWidth() * (height / 100));
+        return (int) (parentHUD.getWidth() * (height / 100));
     }
 
-    public Panel getParentPanel() {
-        return parentPanel;
+    public HUDCanvas getParentHUD() {
+        return parentHUD;
     }
 
-    public void setParentPanel(Panel parentPanel) {
-        this.parentPanel = parentPanel;
+    public void setParentHUD(HUDCanvas parentHUD) {
+        this.parentHUD = parentHUD;
     }
 
     protected String testStringLength(String text, FontMetrics fontMetrics) {

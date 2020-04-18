@@ -1,5 +1,6 @@
 package game;
 
+import components.HUDCanvas;
 import display.Camera;
 import graphics.SpriteManager;
 import input.InputManager;
@@ -14,18 +15,19 @@ import java.util.LinkedList;
 
 public class Scene implements Serializable {
 
-    public InputManager inputManager;
+    private final InputManager inputManager;
+    private TimeManager timeManager;
+    private final SpriteManager spriteManager = new SpriteManager();
 
-    public SpriteManager spriteManager = new SpriteManager();
+    public Scene() {
+        this.inputManager = new InputManager();
+    }
 
-    private LinkedList<GameObject> gameObjects2add = new LinkedList<>();
-    private LinkedList<GameObject> gameObjects2remove = new LinkedList<>();
-
-    public ArrayList<GameObject> gameObjects = new ArrayList<>();
-
+    private final LinkedList<GameObject> gameObjects2add = new LinkedList<>();
+    private final LinkedList<GameObject> gameObjects2remove = new LinkedList<>();
+    private final ArrayList<GameObject> gameObjects = new ArrayList<>();
     private final ArrayList<PhysicsGameComponent> physicsComponents = new ArrayList<>();
 
-    public TimeManager timeManager;
 
     public void addGameObject(GameObject gameObject) {
         gameObjects2add.add(gameObject);
@@ -35,29 +37,8 @@ public class Scene implements Serializable {
         gameObjects2remove.add(gameObject);
     }
 
-    public ArrayList<GameObject> getGameObjects() {
-        return gameObjects;
-    }
-
-    public Scene() {
-        this.inputManager = new InputManager();
-    }
-
     public InputManager getInputManager() {
         return inputManager;
-    }
-
-    public void setInputManager(InputManager inputManager) {
-        this.inputManager = inputManager;
-    }
-
-    public GameObject getCam() {
-        for (GameObject g : gameObjects) {
-            if (g.tag.equals("Camera")) {
-                return g;
-            }
-        }
-        throw new Error("No Camera Found!");
     }
 
     public ArrayList<PhysicsGameComponent> getPhysicsComponents() {
@@ -83,6 +64,21 @@ public class Scene implements Serializable {
 
         return physicsComponents;
     }
+
+    public GameObject getCam() {
+        for (GameObject g : gameObjects) {
+            if (g.tag.equals("Camera")) {
+                return g;
+            }
+        }
+        throw new Error("No Camera Found!");
+    }
+
+    public void setTimeManager(TimeManager m) {
+        this.timeManager = m;
+    }
+
+    public TimeManager getTimeManager() { return timeManager; }
 
     public synchronized void tick() {
         inputManager.sendKeyStates();

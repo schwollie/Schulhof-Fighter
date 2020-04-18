@@ -2,20 +2,12 @@ package game;
 
 import display.Camera;
 import display.Window;
-import graphics.Anchor;
-import graphics.CircleSprite;
-import graphics.ImageSprite;
-import graphics.RectSprite;
-import logic.Dimension2D;
 import logic.PlayerTypes;
-import logic.Transform;
 import logic.Vector2;
 import mainmenu.graphics.MenuCanvas;
-import physics.PhysicsGameComponent;
-import physics.RectCollider;
 import player.HumanPlayer;
-import prefabs.Background;
-import prefabs.Ground;
+import prefabs.gameobjects.Background;
+import prefabs.gameobjects.Ground;
 import time.TimeManager;
 
 import java.awt.*;
@@ -93,7 +85,7 @@ public class Game {
     public void startGameLoop() {
 
         TimeManager timeManager = new TimeManager(250);
-        scene.timeManager = timeManager;
+        scene.setTimeManager(timeManager);
 
         while (true) {
             timeManager.stepForward();
