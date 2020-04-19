@@ -133,6 +133,10 @@ public class Vector2 implements Serializable {
             return false;
         }
     }
+
+    public Vector2 getCopy() {
+        return new Vector2(this.getX(), this.getY());
+    }
 }
 
 class ImmutableVector2 extends Vector2 {

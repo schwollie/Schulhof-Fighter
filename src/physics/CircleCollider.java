@@ -1,12 +1,9 @@
 package physics;
 
-import display.Camera;
 import game.GameObject;
 import graphics.CircleSprite;
-import graphics.SpriteManager;
+import graphics.RenderManager;
 import logic.Vector2;
-
-import java.awt.*;
 
 public class CircleCollider extends Collider {
 
@@ -40,14 +37,14 @@ public class CircleCollider extends Collider {
     }
 
     @Override
-    public void UpdateSprites(SpriteManager spriteManager) {
+    public void UpdateDrawables(RenderManager renderManager) {
         if (debugSprite == null) {
             debugSprite = new CircleSprite(GameObject.getPlaceHolder(this.reference.getTransform(), reference.getScene()), this.offset, this.radius);
         } else {
             debugSprite.setGameObjectRef(GameObject.getPlaceHolder(this.reference.getTransform(), reference.getScene()));
         }
 
-        debugSprite.UpdateSprites(spriteManager);
+        debugSprite.UpdateDrawables(renderManager);
     }
 
     public double getRadius() {

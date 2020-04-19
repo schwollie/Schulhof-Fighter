@@ -1,16 +1,13 @@
 package player;
 
-import display.Camera;
 import game.GameObject;
 import game.Scene;
-import graphics.SpriteManager;
+import graphics.RenderManager;
 import logic.*;
 import physics.Collider;
 import physics.CollissionListener;
 import physics.PhysicsGameComponent;
 import physics.RectCollider;
-
-import java.awt.*;
 
 
 public abstract class Player extends GameObject implements CollissionListener {
@@ -51,10 +48,10 @@ public abstract class Player extends GameObject implements CollissionListener {
     }
 
     @Override
-    public void UpdateSprites(SpriteManager spriteManager) {
-        super.UpdateSprites(spriteManager);
+    public void UpdateSprites(RenderManager renderManager) {
+        super.UpdateSprites(renderManager);
 
-        this.visualPlayer.UpdateSprites(spriteManager);
+        this.visualPlayer.UpdateDrawables(renderManager);
     }
 
     // region action Handling:
@@ -117,7 +114,9 @@ public abstract class Player extends GameObject implements CollissionListener {
 
     @Override
     public void onCollision(Collider c1, Collider c2) {
-        isOnGround = true;
+        if (c1.getGameObject().getTag().equals("ground") || c2.getGameObject().getTag().equals("ground")) {
+            isOnGround = true;
+        }
     }
 
     public void onDeath() {

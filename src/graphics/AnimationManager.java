@@ -1,13 +1,11 @@
 package graphics;
 
-import display.Camera;
 import game.ComponentType;
 import game.GameComponent;
 import game.GameObject;
 import logic.PlayerTypes;
 import player.PlayerState;
 
-import java.awt.*;
 import java.util.HashMap;
 
 public class AnimationManager extends GameComponent {
@@ -95,13 +93,13 @@ public class AnimationManager extends GameComponent {
     }
 
     @Override
-    public void UpdateSprites(SpriteManager spriteManager) {
+    public void UpdateDrawables(RenderManager renderManager) {
         Animation defaultAnimation = animations.get(PlayerState.Default);
 
         if (lastAnim != null) {
-            lastAnim.UpdateSprites(spriteManager);
+            lastAnim.UpdateDrawables(renderManager);
         } else if (defaultAnimation != null) {
-            defaultAnimation.UpdateSprites(spriteManager);
+            defaultAnimation.UpdateDrawables(renderManager);
         } else {
             System.out.println("Warning: Currently no Animation is Rendered");
         }

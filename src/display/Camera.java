@@ -16,7 +16,7 @@ public class Camera extends GameObject implements Serializable {
     private final Canvas canvas;
     private final HUDCanvas HUD;
     private final double ratio = Consts.ratio;
-    private final double scale = 6;
+    private final double scale = 4;
     private final Dimension2D ScreenSize = new Dimension2D(Consts.windowWidth, Consts.windowHeight);
 
     public Camera(Scene scene, Vector2 pos) {

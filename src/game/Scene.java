@@ -1,8 +1,7 @@
 package game;
 
-import components.HUDCanvas;
 import display.Camera;
-import graphics.SpriteManager;
+import graphics.RenderManager;
 import input.InputManager;
 import physics.PhysicsGameComponent;
 import player.Player;
@@ -17,7 +16,7 @@ public class Scene implements Serializable {
 
     private final InputManager inputManager;
     private TimeManager timeManager;
-    private final SpriteManager spriteManager = new SpriteManager();
+    private final RenderManager renderManager = new RenderManager();
 
     public Scene() {
         this.inputManager = new InputManager();
@@ -98,12 +97,14 @@ public class Scene implements Serializable {
     }
 
     public synchronized void Render(Graphics2D g, Camera cam) {
-        spriteManager.RenderSprites(g, cam);
+        updateSprites();
+        renderManager.RenderSprites(g, cam);
     }
 
     public synchronized void updateSprites() {
+        renderManager.clearBuffer();
         for (GameObject gm : gameObjects) {
-            gm.UpdateSprites(spriteManager);
+            gm.UpdateSprites(renderManager);
         }
     }
 

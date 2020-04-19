@@ -1,11 +1,8 @@
 package physics;
 
-import display.Camera;
 import game.*;
-import graphics.SpriteManager;
+import graphics.RenderManager;
 import logic.Vector2;
-
-import java.awt.*;
 
 public class PhysicsGameComponent extends GameComponent {
 
@@ -38,8 +35,8 @@ public class PhysicsGameComponent extends GameComponent {
     }
 
     @Override
-    public void UpdateSprites(SpriteManager spriteManager) {
-        this.collider.UpdateSprites(spriteManager);
+    public void UpdateDrawables(RenderManager renderManager) {
+        this.collider.UpdateDrawables(renderManager);
 
     }
 
@@ -53,7 +50,7 @@ public class PhysicsGameComponent extends GameComponent {
     private void calcPhysics(double dt, Scene scene) {
         this.calcCollisionForce(scene);
         this.addGravity();
-        this.addDrag(dt);
+        this.addDrag();
         //this.getForce().print();
     }
 
@@ -79,7 +76,7 @@ public class PhysicsGameComponent extends GameComponent {
         }
     }
 
-    private void addDrag(double dt) {
+    private void addDrag() {
         //Todo: wrong formula
         // F = v * -drag
         double v = this.velocity.getLength();

@@ -35,7 +35,7 @@ public class Game {
         // initialize the window & canvas as well as the KeyEventListener
         window = new Window(Consts.windowWidth, Consts.windowHeight);
 
-        cam = new Camera(scene, new Vector2(0, 3.2));
+        cam = new Camera(scene, new Vector2(0, 2.2));
         scene.addGameObject(cam);
 
         mainmenu = new MenuCanvas();
@@ -84,7 +84,7 @@ public class Game {
 
     public void startGameLoop() {
 
-        TimeManager timeManager = new TimeManager(250);
+        TimeManager timeManager = new TimeManager(1000);
         scene.setTimeManager(timeManager);
 
         while (true) {
@@ -92,9 +92,8 @@ public class Game {
             timeManager.waitForTargetFPS();
 
             scene.tick();
-            scene.updateSprites();
 
-            System.out.println(timeManager.getCurrentFPS());
+            //System.out.println(timeManager.getCurrentFPS());
 
             //mainmenu.tick(fpsTracker.getDeltaTime(), inputManager.getMousePosition());
 

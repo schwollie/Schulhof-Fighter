@@ -8,9 +8,9 @@ import java.awt.*;
 public abstract class Consts {
 
     public static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public static final int windowWidth = (int) screenSize.getWidth();
-    public static final int windowHeight = (int) screenSize.getHeight();
-    public static final boolean Fullscreen = true;
+    public static final int windowWidth = (int) screenSize.getWidth() / 2;
+    public static final int windowHeight = (int) screenSize.getHeight() / 2;
+    public static final boolean Fullscreen = false;
     public static final double ratio = (double) windowWidth / windowHeight;
 
 
@@ -42,9 +42,9 @@ public abstract class Consts {
     public static final int blockSheetPicCount = 2;
     public static final float blockAnimSpeed = 7f; // in fps
 
-    public static final String specialAttackSheet = "defaultSheet.png";
-    public static final int specialAttackPicCount = 2;
-    public static final float specialAttackAnimSpeed = 7f; // in fps
+    public static final String specialAttackSheet = "specialSheet.png";
+    public static final int specialAttackPicCount = 3;
+    public static final float specialAttackAnimSpeed = 5f; // in fps
 
     public static final String runSheet = "runSheet.png";
     public static final int runPicCount = 8;

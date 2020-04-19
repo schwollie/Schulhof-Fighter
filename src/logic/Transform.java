@@ -102,6 +102,14 @@ public class Transform implements Serializable {
         return new Transform(0, 0);
     }
 
+    public Transform getCopy() {
+        Transform newTrans = new Transform();
+        newTrans.setPosition(this.position.getCopy());
+        newTrans.setScale(this.scale.getCopy());
+        newTrans.setRotation(this.rotation);
+        return newTrans;
+    }
+
     @Override
     public String toString() {
         return "Transform{" +

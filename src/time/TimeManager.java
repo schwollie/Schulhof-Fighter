@@ -51,7 +51,8 @@ public class TimeManager {
     }
 
     public double getDeltaTime() {
-        return deltaTime / 1000;
+        // Min of 5 fps -> to prevent weired physics
+        return Math.min(deltaTime / 1000, 0.2);
     }
 
     @Override

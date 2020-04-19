@@ -21,5 +21,7 @@ public class Ground extends GameObject {
         groundCollider.setStatic(true);
         groundCollider.setCollider(new RectCollider(this, new Vector2(0, 0), new Dimension2D(10, .1)));
         this.addComponent(new RectSprite(this, new Vector2(0, 0), new Dimension2D(10, .1)));
+
+        this.getTransform().addPosition(new Vector2(0, -1));
     }
 }

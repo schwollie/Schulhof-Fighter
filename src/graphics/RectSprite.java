@@ -38,6 +38,7 @@ public class RectSprite extends Sprite {
         int width = (int) screenCoord.getXScale();
         int height = -(int) (screenCoord.getYScale());
 
+        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this.alpha));
         g.setColor(this.color);
         g.fillRect(x, y, width, height);
     }

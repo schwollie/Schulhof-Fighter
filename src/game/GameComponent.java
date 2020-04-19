@@ -1,10 +1,8 @@
 package game;
 
-import display.Camera;
-import graphics.SpriteManager;
+import graphics.RenderManager;
 import logic.Transform;
 
-import java.awt.*;
 import java.io.Serializable;
 
 public abstract class GameComponent implements Serializable {
@@ -23,7 +21,7 @@ public abstract class GameComponent implements Serializable {
 
     }
 
-    public void UpdateSprites(SpriteManager spriteManager) {
+    public void UpdateDrawables(RenderManager renderManager) {
         // most components don't need to be rendered
     }
 

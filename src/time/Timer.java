@@ -90,7 +90,7 @@ public class Timer extends GameComponent {
     }
 
     public double getElapsedTimePercentage() {
-        return elapsedTime / startTime;
+        return Math.max(Math.min(1, elapsedTime / startTime), 0);
     }
 
     public boolean isFinished() {

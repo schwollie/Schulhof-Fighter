@@ -1,13 +1,10 @@
 package physics;
 
-import display.Camera;
 import game.GameObject;
 import graphics.RectSprite;
-import graphics.SpriteManager;
+import graphics.RenderManager;
 import logic.Dimension2D;
 import logic.Vector2;
-
-import java.awt.*;
 
 public class RectCollider extends Collider {
 
@@ -41,14 +38,14 @@ public class RectCollider extends Collider {
     }
 
     @Override
-    public void UpdateSprites(SpriteManager spriteManager) {
+    public void UpdateDrawables(RenderManager renderManager) {
         if (debugSprite == null) {
             debugSprite = new RectSprite(GameObject.getPlaceHolder(this.reference.getTransform(), reference.getScene()), this.offset, this.dimensions);
         } else {
             debugSprite.setGameObjectRef(GameObject.getPlaceHolder(this.reference.getTransform(), reference.getScene()));
         }
 
-        debugSprite.UpdateSprites(spriteManager);
+        debugSprite.UpdateDrawables(renderManager);
     }
 
     private void checkDimensions() {

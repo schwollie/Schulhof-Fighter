@@ -1,15 +1,13 @@
 package physics;
 
-import display.Camera;
 import game.ComponentType;
 import game.GameComponent;
 import game.GameObject;
 import graphics.Sprite;
-import graphics.SpriteManager;
+import graphics.RenderManager;
 import logic.Transform;
 import logic.Vector2;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 
@@ -33,7 +31,7 @@ public abstract class Collider extends GameComponent {
     public abstract boolean doesCollide(Collider c);
 
     @Override
-    public abstract void UpdateSprites(SpriteManager spriteManager);
+    public abstract void UpdateDrawables(RenderManager renderManager);
 
     public Vector2 getPosition() {
         return new Vector2(this.reference.getTransform().getPosition()).add(offset);

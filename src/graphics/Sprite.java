@@ -8,23 +8,17 @@ import logic.Vector2;
 
 import java.awt.*;
 
-public abstract class Sprite extends GameComponent {
+public abstract class Sprite extends GameComponent implements Drawable {
 
     protected boolean visible = true;
     protected Vector2 offset = new Vector2(0, 0);
     protected int layer;
+    protected float alpha = 1f;
 
     public Sprite(GameObject ref) {
         super(ref, ComponentType.Sprite);
         layer = ref.getLayer();
     }
-
-    @Override
-    public final void UpdateSprites(SpriteManager spriteManager) {
-        spriteManager.addSprite(this);
-    }
-
-    public abstract void Render(Graphics2D g, Camera cam);
 
     public void setVisibility(boolean visibility) {
         this.visible = visibility;
@@ -33,4 +27,31 @@ public abstract class Sprite extends GameComponent {
     public void setGameObjectRef(GameObject gameObjectRef) {
         this.reference = gameObjectRef;
     }
+
+    public void setAlpha(double alpha) {
+        this.alpha = (float)alpha;
+    }
+
+    public void setOffset(Vector2 offset) {
+        this.offset = offset;
+    }
+
+    @Override
+    public final void UpdateDrawables(RenderManager renderManager) {
+        renderManager.addDrawable(this);
+    }
+
+    @Override
+    public abstract void Render(Graphics2D g, Camera cam);
+
+    @Override
+    public int getRenderLayer() {
+        return layer;
+    }
+
+    @Override
+    public void setRenderLayer(int layer) {
+        this.layer = layer;
+    }
+
 }

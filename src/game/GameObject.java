@@ -1,6 +1,6 @@
 package game;
 
-import graphics.SpriteManager;
+import graphics.RenderManager;
 import logic.Transform;
 import physics.PhysicsGameComponent;
 import time.TimeEventListener;
@@ -37,12 +37,12 @@ public class GameObject implements Serializable, TimeEventListener {
     }
 
 
-    public void UpdateSprites(SpriteManager spriteManager) {
+    public void UpdateSprites(RenderManager renderManager) {
         //if (physicsComponent!=null)
         //    physicsComponent.Render(g, cam);
 
         for (GameComponent c : gameComponents) {
-            c.UpdateSprites(spriteManager);
+            c.UpdateDrawables(renderManager);
         }
     }
 

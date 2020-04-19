@@ -102,6 +102,8 @@ public class ImageSprite extends Sprite {
             int width = (int) screenCoord.getXScale();
             int height = (int) (screenCoord.getYScale() * getYScaleFactor());
 
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this.alpha));
+
             // center of image is on x, y
             switch (anchor) {
                 case Center -> g.drawImage(img, x - width / 2, y - height / 2, width, height, null);

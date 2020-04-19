@@ -1,13 +1,10 @@
 package graphics;
 
-import display.Camera;
 import game.ComponentType;
 import game.GameComponent;
 import game.GameObject;
 import logic.Dimension2D;
 import player.PlayerState;
-
-import java.awt.*;
 
 public class Animation extends GameComponent {
 
@@ -124,9 +121,9 @@ public class Animation extends GameComponent {
     }
 
     @Override
-    public void UpdateSprites(SpriteManager spriteManager) {
+    public void UpdateDrawables(RenderManager renderManager) {
         if (visible && currentSprite != null) {
-            currentSprite.UpdateSprites(spriteManager);
+            currentSprite.UpdateDrawables(renderManager);
         }
     }
 

@@ -32,6 +32,7 @@ public class CircleSprite extends Sprite {
         ownTrans.setScale(new Vector2(radius, radius));
         Transform screenCoord = cam.worldToScreen(ownTrans);
 
+        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this.alpha));
         g.setColor(this.color);
         g.fillOval((int) screenCoord.getX(), (int) screenCoord.getY(), (int) screenCoord.getXScale(), (int) screenCoord.getYScale());
     }

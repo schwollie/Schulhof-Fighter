@@ -1,14 +1,11 @@
 package player;
 
-import display.Camera;
 import game.ComponentType;
 import game.GameComponent;
 import game.GameObject;
 import graphics.AnimationManager;
-import graphics.SpriteManager;
+import graphics.RenderManager;
 import logic.PlayerTypes;
-
-import java.awt.*;
 
 
 public class VisualPlayer extends GameComponent {
@@ -26,8 +23,8 @@ public class VisualPlayer extends GameComponent {
     }
 
     @Override
-    public void UpdateSprites(SpriteManager spriteManager) {
-        animManager.UpdateSprites(spriteManager);
+    public void UpdateDrawables(RenderManager renderManager) {
+        animManager.UpdateDrawables(renderManager);
     }
 
     public void setState(PlayerState state) {

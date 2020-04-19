@@ -5,6 +5,8 @@ import game.GameComponent;
 import game.GameObject;
 import logic.Dimension2D;
 import logic.Vector2;
+import logic.XRange;
+import particle.ParticleSystem;
 import physics.Collider;
 import physics.CollissionListener;
 import physics.RectCollider;
@@ -45,7 +47,7 @@ public class AttackManager extends GameComponent implements CollissionListener, 
     }
 
     public void doKickHit() {
-        doAttack(new Vector2(0.5, 0.2), Vector2.zero, 1, new Vector2(200, -40));
+        doAttack(new Vector2(0.5, 0.2), Vector2.zero, 1, new Vector2(200, 100));
     }
 
     public void doPunch() {
@@ -53,7 +55,7 @@ public class AttackManager extends GameComponent implements CollissionListener, 
     }
 
     public void doPunchHit() {
-        doAttack(new Vector2(0.5, 0.2), Vector2.zero, 1, new Vector2(200, -40));
+        doAttack(new Vector2(0.5, 0.2), Vector2.zero, 1, new Vector2(200, 100));
     }
 
     private void doAttack(Vector2 range, Vector2 offset, double damage, Vector2 force) {
@@ -65,8 +67,10 @@ public class AttackManager extends GameComponent implements CollissionListener, 
                 other.takeDamage(damage, new Vector2(getDirection() * force.getX(), force.getY()));
             }
         }
-        //reference.addComponent(new ParticleSystem(reference,
-        //        0.01, .2, range.scalarMult(0.5).rowWiseMultiplication(new Vector2(getDirection(), 1))));
+
+        ParticleSystem p = new ParticleSystem(reference, new XRange(0.5, 2), 2, new XRange(100, 100));
+        p.start();
+        reference.addComponent(p);
     }
 
     private Collider[] getCollidersInRange(Vector2 range, Vector2 _offset) {
