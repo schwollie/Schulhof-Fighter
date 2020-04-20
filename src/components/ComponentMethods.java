@@ -1,9 +1,11 @@
 package components;
 
+import display.Camera;
+
 import java.awt.*;
 
 public interface ComponentMethods {
-    void paint(Graphics g);
+    void Render(Graphics2D g, Camera cam);
 
     void onClick();
 

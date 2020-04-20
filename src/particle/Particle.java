@@ -111,7 +111,7 @@ public class Particle extends GameComponent implements Drawable, TimeEventListen
     public void Render(Graphics2D g, Camera cam) {
         parentSystem.getParticleSprite().setRenderLayer(10);
         parentSystem.getParticleSprite().setAlpha(opacity);
-        parentSystem.getParticleSprite().setRelativeTransform(this.transform);
+        parentSystem.getParticleSprite().setRelativeTransform(this.transform.add(parentSystem.getRelativeTransform()));
         parentSystem.getParticleSprite().Render(g, cam);
     }
 

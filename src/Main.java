@@ -4,9 +4,11 @@ public class Main {
 
     public static void main(String[] args) {
         Game game = new Game();
-        game.init();
-        game.initGame();
-        game.initGraphics();
+
+        game.initDisplay();
+        game.initScene();
+        game.initSceneGraphics();
+
         game.start();
     }
 }

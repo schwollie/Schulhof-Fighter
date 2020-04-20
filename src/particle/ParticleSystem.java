@@ -201,5 +201,13 @@ public class ParticleSystem extends GameComponent implements Drawable, TimeEvent
         this.particleMass = particleMass;
     }
 
+    public void setStartForce(XRange startForce) {
+        this.startForce = startForce;
+    }
+
+    public XRange getStartForce() {
+        return startForce;
+    }
+
     // endregion
 }

@@ -1,4 +1,8 @@
-package components;
+package components.elements;
+
+import components.GuiComponent;
+import components.ScreenTransform;
+import display.Camera;
 
 import java.awt.*;
 
@@ -11,21 +15,26 @@ public class Button extends GuiComponent {
     private Color pressedTextColor;
     private final boolean pressActivated;
 
-    public Button(String text, int width, int height) {
-        super(width, height);
-        this.text = text;
+    public Button(String text, ScreenTransform transform) {
+        super(transform);
+        //this.text = text;
         color = transparentColor;
         textColor = new Color(255, 255, 255, 180);
         hoverColor = transparentColor;
         hoverTextColor = new Color(255, 255, 255);
-        textSize = 25;
+        //textSize = 25;
         pressActivated = false;
     }
 
     @Override
-    public void paint(Graphics g) {
-        int x = getX(), y = getY(), width = getWidth(), height = getHeight();
+    public void Render(Graphics2D g, Camera cam) {
+        /*int x = getInPixelX(cam.getResolution());
+        int y = getInPixelY(cam.getResolution());
+        int width = getInPixelWidth(cam.getResolution());
+        int height = getInPixelHeight(cam.getResolution());
+
         g.setFont(buttonFont.deriveFont(pressed ? textSize - 2 : textSize).deriveFont(Font.BOLD));
+
         if (pressActivated && pressed) {
             g.setColor(Color.WHITE);
             g.fillRect(x, y, width, height);
@@ -49,7 +58,7 @@ public class Button extends GuiComponent {
                     break;
             }
             g.drawString(testStringLength(text, g.getFontMetrics()), posX, y + height / 2);
-        }
+        }*/
     }
 
 

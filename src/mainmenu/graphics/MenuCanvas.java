@@ -1,26 +1,26 @@
 package mainmenu.graphics;
 
-import components.Button;
+import components.elements.Button;
 import components.GuiComponent;
-import components.HUDCanvas;
+import components.GuiCanvas;
 import game.Consts;
 import logic.Vector2;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-public class MenuCanvas extends HUDCanvas {
+public class MenuCanvas {//extends GuiCanvas {
 
-    private final ArrayList<Bubble> bubbles;
-    private final ArrayList<Bubble> bubblesInRadius = new ArrayList<>();
+    /*private ArrayList<Bubble> bubbles;
+    private ArrayList<Bubble> bubblesInRadius = new ArrayList<>();
 
 
     public MenuCanvas() {
-        bubbles = new ArrayList<>();
-        Button testBtn = new Button("TEST BUTTON", 20, 10);
-        testBtn.setTextAlign(GuiComponent.TextAlign.CENTER);
-        testBtn.setLeft(10);
-        addGuiComponent(testBtn);
+        //bubbles = new ArrayList<>();
+        //Button testBtn = new Button("TEST BUTTON", 20, 10);
+        //testBtn.setTextAlign(GuiComponent.TextAlign.CENTER);
+        //testBtn.setLeft(10);
+        //addGuiComponent(testBtn);
     }
 
     public void createStandardBubbles(int amount) {
@@ -98,6 +98,6 @@ public class MenuCanvas extends HUDCanvas {
         g.drawString("Schulhof-Fighter", 150, 500);
         g.setFont(new Font("Arial", Font.BOLD, 30));
         g.drawString("ok, die Schrift is nur hingeklatscht, aber es geht um die Partikel xD", 160, 570);
-    }
+    }*/
 
 }

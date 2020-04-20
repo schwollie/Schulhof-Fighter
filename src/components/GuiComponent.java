@@ -1,6 +1,8 @@
 package components;
 
 
+import logic.Dimension2D;
+
 import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,123 +11,18 @@ import java.io.InputStream;
 
 public abstract class GuiComponent implements ComponentMethods {
     private final int UNUSED = -Integer.MAX_VALUE;
-    protected final Color transparentColor = new Color(0, 0, 0, 0);
-    private double left, right, top, bottom;
-    private double width, height;
-    protected float textSize;
-    protected TextAlign textAlign;
-    protected String name, text;
+    protected final Color transparentColor = new Color(0, 0, 0, 1);
     protected boolean pressed, hovered;
-    protected HUDCanvas parentHUD;
     protected Color color, textColor;
+    protected GuiCanvas parentGUI;
+    protected boolean visible = true;
+    protected boolean preserveAspect = true;
+    protected ScreenTransform screenTransform;
 
-    public GuiComponent(double width, double height) {
-        this.left = UNUSED;
-        this.right = UNUSED;
-        this.bottom = UNUSED;
-        this.top = UNUSED;
-        this.width = width;
-        this.height = height;
-        this.textAlign = TextAlign.LEFT;
-        this.textSize = 20;
+    public GuiComponent(ScreenTransform screenTransform) {
+        this.screenTransform = screenTransform;
     }
 
-
-    public double getLeft() {
-        return left;
-    }
-
-    public void setLeft(double left) {
-        this.left = left;
-    }
-
-    public double getRight() {
-        return right;
-    }
-
-    public void setRight(double right) {
-        this.right = right;
-    }
-
-    public double getTop() {
-        return top;
-    }
-
-    public void setTop(double top) {
-        this.top = top;
-    }
-
-    public double getBottom() {
-        return bottom;
-    }
-
-    public void setBottom(double bottom) {
-        this.bottom = bottom;
-    }
-
-    public double getWidthInPercentage() {
-        return width;
-    }
-
-    public void setWidthInPercentage(double width) {
-        this.width = width;
-    }
-
-    public double getHeightInPercentage() {
-        return height;
-    }
-
-    public void setHeightInPercentage(double height) {
-        this.height = height;
-    }
-
-    public TextAlign getTextAlign() {
-        return textAlign;
-    }
-
-    public void setTextAlign(TextAlign textAlign) {
-        this.textAlign = textAlign;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public boolean isPressed() {
-        return pressed;
-    }
-
-    public void setPressed(boolean pressed) {
-        this.pressed = pressed;
-    }
-
-    public boolean isHovered() {
-        return hovered;
-    }
-
-    public void setHovered(boolean hovered) {
-        this.hovered = hovered;
-    }
-
-    public float getTextSize() {
-        return textSize;
-    }
-
-    public void setTextSize(float textSize) {
-        this.textSize = textSize;
-    }
 
     public Color getColor() {
         return color;
@@ -143,30 +40,52 @@ public abstract class GuiComponent implements ComponentMethods {
         this.textColor = textColor;
     }
 
-    public int getX() {
-        double factor = left == UNUSED ? (right == UNUSED ? 0 : right / 100) : left / 100;
-        return (int) (parentHUD.getWidth() * factor);
+    public double getX() {
+        return this.screenTransform.getPos().getX();
     }
 
-    public int getY() {
-        double factor = top == UNUSED ? (bottom == UNUSED ? 0 : bottom / 100) : top / 100;
-        return (int) (parentHUD.getWidth() * factor);
+    public double getY() {
+        return this.screenTransform.getPos().getY();
     }
 
-    public int getWidth() {
-        return (int) (parentHUD.getWidth() * (width / 100));
+    public double getWidth() {
+        return this.screenTransform.getScale().getX();
     }
 
-    public int getHeight() {
-        return (int) (parentHUD.getWidth() * (height / 100));
+    public double getHeight() {
+        return this.screenTransform.getScale().getY();
     }
 
-    public HUDCanvas getParentHUD() {
-        return parentHUD;
+    public int getInPixelX(Dimension2D resolution) {
+        return (int)(this.screenTransform.getPos().getX() * resolution.getWidth());
     }
 
-    public void setParentHUD(HUDCanvas parentHUD) {
-        this.parentHUD = parentHUD;
+    public int getInPixelY(Dimension2D resolution) {
+        return (int)(this.screenTransform.getPos().getY() * resolution.getHeight());
+    }
+
+    public int getInPixelWidth(Dimension2D resolution) {
+        return (int)(this.screenTransform.getScale().getX()*resolution.getWidth());
+    }
+
+    public int getInPixelHeight(Dimension2D resolution) {
+        return (int)(this.screenTransform.getScale().getY()*resolution.getHeight());
+    }
+
+    public ScreenTransform getScreenTransform() {
+        return screenTransform;
+    }
+
+    public void setVisible() { this.visible = true; }
+
+    public void hideElement() { this.visible = false; }
+
+    public GuiCanvas getParentGUI() {
+        return parentGUI;
+    }
+
+    public void setParentGUI(GuiCanvas parentGUI) {
+        this.parentGUI = parentGUI;
     }
 
     protected String testStringLength(String text, FontMetrics fontMetrics) {
@@ -175,10 +94,6 @@ public abstract class GuiComponent implements ComponentMethods {
             result = result.substring(0, result.length() - 1);
         }
         return result;
-    }
-
-    public enum TextAlign {
-        CENTER, LEFT, RIGHT
     }
 
     public static Font loadFont(String fontName) {

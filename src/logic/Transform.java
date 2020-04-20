@@ -94,6 +94,12 @@ public class Transform implements Serializable {
         this.scale = scale;
     }
 
+    public Transform setGetScale(Vector2 scale) {
+        Transform tNew = this.getCopy();
+        tNew.setScale(scale);
+        return tNew;
+    }
+
     public void move(Vector2 offset) {
         this.position.add(offset);
     }

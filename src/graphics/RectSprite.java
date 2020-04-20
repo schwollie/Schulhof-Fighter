@@ -31,7 +31,7 @@ public class RectSprite extends Sprite {
 
         Transform ownTrans = this.getAbsoluteTransform();
         ownTrans.setScale(new Vector2(Size.getWidth(), Size.getHeight()));
-        Transform screenCoord = cam.worldToScreen(ownTrans);
+        Transform screenCoord = cam.world2Screen(ownTrans);
 
         int x = (int) screenCoord.getX();
         int y = (int) screenCoord.getY();

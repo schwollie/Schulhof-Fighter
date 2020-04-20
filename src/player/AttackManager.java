@@ -4,6 +4,7 @@ import game.ComponentType;
 import game.GameComponent;
 import game.GameObject;
 import logic.Dimension2D;
+import logic.Transform;
 import logic.Vector2;
 import logic.XRange;
 import particle.ParticleSystem;
@@ -68,9 +69,14 @@ public class AttackManager extends GameComponent implements CollissionListener, 
             }
         }
 
-        ParticleSystem p = new ParticleSystem(reference, new XRange(0.5, 2), 2, new XRange(100, 100));
+        /*ParticleSystem p = new ParticleSystem(reference, new XRange(0.5, 2), 1, new XRange(100, 100));
+        p.setRelativeTransform(new Transform(new Vector2(.5*getDirection(),0)));
+        p.setRelativeTransform(p.getRelativeTransform().setGetScale(new Vector2(0.5, 0.5)));
+        p.setLiveTime(new XRange(0.1, 1));
+        p.setStartForce(new XRange(1, 5));
+        p.setGravityFactor(new XRange(0.1, 0.2));
         p.start();
-        reference.addComponent(p);
+        reference.addComponent(p);*/
     }
 
     private Collider[] getCollidersInRange(Vector2 range, Vector2 _offset) {

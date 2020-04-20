@@ -95,7 +95,7 @@ public class ImageSprite extends Sprite {
     public synchronized void Render(Graphics2D g, Camera cam) {
         if (visible) {
             Transform ownTrans = this.getAbsoluteTransform();
-            Transform screenCoord = cam.worldToScreen(ownTrans);
+            Transform screenCoord = cam.world2Screen(ownTrans);
 
             int x = (int) screenCoord.getX();
             int y = (int) screenCoord.getY();

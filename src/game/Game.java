@@ -8,6 +8,7 @@ import mainmenu.graphics.MenuCanvas;
 import player.HumanPlayer;
 import prefabs.gameobjects.Background;
 import prefabs.gameobjects.Ground;
+import prefabs.scenes.StandardSceneLoader;
 import time.TimeManager;
 
 import java.awt.*;
@@ -16,8 +17,6 @@ public class Game {
 
     // Visuals
     public Window window;
-    public Camera cam;
-
 
     // World
     public Scene scene;
@@ -26,78 +25,47 @@ public class Game {
     //MAIN MENU
     private MenuCanvas mainmenu;
 
-    public void init() {
-        scene = new Scene();
+    public void initScene() {
         sceneManager = new SceneManager();
+        scene = StandardSceneLoader.getStandardScene();
     }
 
-    public void initGraphics() {
-        // initialize the window & canvas as well as the KeyEventListener
+    public void initDisplay() {
         window = new Window(Consts.windowWidth, Consts.windowHeight);
+    }
 
-        cam = new Camera(scene, new Vector2(0, 2.2));
-        scene.addGameObject(cam);
-
-        mainmenu = new MenuCanvas();
-
+    // has to be called on every scene change
+    public void initSceneGraphics() {
         window.addMouseMotionListener(scene.getInputManager());
         window.addKeyListener(scene.getInputManager());
-        window.add(cam.getCanvas());
-        //window.add(mainmenu);
+        window.add(((Camera)scene.getCam()).getCanvas());
         window.setVisible(true);
 
+        //mainmenu = new MenuCanvas();
+        //window.add(mainmenu);
         //mainmenu.createStandardBubbles(Consts.bubblesAmount);
 
     }
 
-    public void initGame() {
-        loadSceneManually();
-        //scene = sceneManager.loadScene("default");
-    }
-
-    public void loadSceneManually() {
-        HumanPlayer a = new HumanPlayer(scene, new Vector2(0, 2), PlayerTypes.Hausperger, "Player1");
-        HumanPlayer b = new HumanPlayer(scene, new Vector2(2, 2), PlayerTypes.Hausperger, "Player2");
-
-        scene.getInputManager().setListenerMapping1(a);
-        scene.getInputManager().setListenerMapping2(b);
-
-        scene.addGameObject(a);
-        scene.addGameObject(b);
-
-
-        Ground ground = new Ground(scene);
-        scene.addGameObject(ground);
-
-        // Background
-        Background background = new Background(scene);
-        scene.addGameObject(background);
-
-        //sceneManager.saveScene(scene, "default");
-    }
-
     public void start() {
-        //Thread paintThread = new Thread(this::startPaintLoop);
-        //paintThread.start();
         startGameLoop();
     }
 
     public void startGameLoop() {
-
-        TimeManager timeManager = new TimeManager(1000);
-        scene.setTimeManager(timeManager);
-
         while (true) {
-            timeManager.stepForward();
-            timeManager.waitForTargetFPS();
 
+            //wait for target FPS
+            scene.getTimeManager().stepForward();
+            scene.getTimeManager().waitForTargetFPS();
+
+            // update physics and scripts
             scene.tick();
 
+            //redraw scene
+            EventQueue.invokeLater(((Camera)scene.getCam()).getCanvas()::repaint);
+
             //System.out.println(timeManager.getCurrentFPS());
-
             //mainmenu.tick(fpsTracker.getDeltaTime(), inputManager.getMousePosition());
-
-            EventQueue.invokeLater(cam.getCanvas()::repaint);
         }
     }
 }

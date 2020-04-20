@@ -1,8 +1,14 @@
 package components;
 
+import components.elements.TextAlign;
+import components.elements.TextView;
+import components.elements.UiImage;
 import components.event.GuiEvent;
 import components.event.GuiEventType;
 import components.event.GuiListener;
+import display.Camera;
+import logic.Dimension2D;
+import logic.Vector2;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,27 +17,33 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
-public class HUDCanvas extends JPanel implements MouseListener, MouseMotionListener {
+public class GuiCanvas extends JPanel implements MouseListener, MouseMotionListener {
 
+    private Dimension2D resolution;
     private final ArrayList<GuiComponent> components = new ArrayList<>();
     private final ArrayList<GuiListener> listeners = new ArrayList<>();
 
-    public HUDCanvas() {
+    public GuiCanvas(Dimension2D resolution) {
         super();
+        this.resolution = resolution;
         addMouseMotionListener(this);
         addMouseListener(this);
+
+        this.addGuiComponent(new UiImage(new ScreenTransform(new Vector2(.1,.1), new Vector2(0.25, 0.25)), "images/Particles/particle.png"));
+        //TextView textView = new TextView(new ScreenTransform(new Vector2(.5,.5), new Vector2(1, 1)), "Test");
+        //textView.setTextAlign(TextAlign.CENTER);
+        //this.addGuiComponent(textView);
     }
 
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void Render(Graphics2D g, Camera cam) {
         for (GuiComponent guiComponent : components) {
-            guiComponent.paint(g);
+            guiComponent.Render(g, cam);
         }
         repaint();
     }
 
     public void addGuiComponent(GuiComponent component) {
-        component.setParentHUD(this);
+        component.setParentGUI(this);
         components.add(component);
     }
 
@@ -66,7 +78,7 @@ public class HUDCanvas extends JPanel implements MouseListener, MouseMotionListe
         for (GuiComponent component : components) {
             if (isPointOnComponent(e.getX(), e.getY(), component)) {
                 component.onPress();
-                component.setPressed(true);
+                //component.setPressed(true);
                 evokeComponentAction(component, GuiEventType.PRESS);
             }
         }
@@ -79,7 +91,7 @@ public class HUDCanvas extends JPanel implements MouseListener, MouseMotionListe
                 component.onRelease();
                 evokeComponentAction(component, GuiEventType.RELEASE);
             }
-            component.setPressed(false);
+            //component.setPressed(false);
         }
     }
 
@@ -96,10 +108,10 @@ public class HUDCanvas extends JPanel implements MouseListener, MouseMotionListe
         for (GuiComponent component : components) {
             if (isPointOnComponent(e.getX(), e.getY(), component)) {
                 component.onDrag();
-                component.setHovered(true);
+                //component.setHovered(true);
                 evokeComponentAction(component, GuiEventType.DRAG);
             } else {
-                component.setHovered(false);
+                //component.setHovered(false);
             }
         }
     }
@@ -109,19 +121,19 @@ public class HUDCanvas extends JPanel implements MouseListener, MouseMotionListe
         for (GuiComponent component : components) {
             if (isPointOnComponent(e.getX(), e.getY(), component)) {
                 component.onHover();
-                component.setHovered(true);
+                //component.setHovered(true);
                 evokeComponentAction(component, GuiEventType.MOVE);
             } else {
-                component.setHovered(false);
+                //component.setHovered(false);
             }
         }
     }
 
     protected boolean isPointOnComponent(int x, int y, GuiComponent component) {
-        int maxX = component.getX() + component.getWidth();
-        int maxY = component.getY() + component.getHeight();
-        return x >= component.getX() && x <= maxX &&
-                y >= component.getY() && y <= maxY;
+        int maxX = component.getInPixelX(resolution) + component.getInPixelWidth(resolution);
+        int maxY = component.getInPixelY(resolution) + component.getInPixelHeight(resolution);
+        return x >= component.getInPixelX(resolution) && x <= maxX &&
+                y >= component.getInPixelY(resolution) && y <= maxY;
     }
 
     private void evokeComponentAction(GuiComponent component, GuiEventType type) {
