@@ -1,11 +1,13 @@
 package components.elements;
 
+import components.GuiCanvas;
 import components.GuiComponent;
 import components.ScreenTransform;
 import display.Camera;
 import graphics.Anchor;
 import logic.Dimension2D;
 import logic.Transform;
+import logic.Vector2;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -24,25 +26,35 @@ public class UiImage extends GuiComponent {
     private double ratio;
     private Rectangle2D.Double cropR = new Rectangle2D.Double(0,0,1,1);
 
-    public UiImage(ScreenTransform s, String filename) {
-        super(s);
+    public UiImage(GuiCanvas parent, ScreenTransform s, String filename) {
+        super(parent, s);
         this.filename = filename;
         loadImage();
         srcImg = rescaleImage((srcImg.getWidth()), (srcImg.getHeight()));
         this.boundaries = new Dimension2D(srcImg.getWidth(), srcImg.getHeight());
+
         setRatio();
+        updateTransform();
         updateCroppedImg();
     }
 
-    public UiImage(ScreenTransform s, double resolution, String filename, Anchor anchor) {
-        super(s);
+    public UiImage(GuiCanvas parent, ScreenTransform s, double resolution, String filename, Anchor anchor) {
+        super(parent, s);
         this.filename = filename;
         loadImage();
         srcImg = rescaleImage((int)(srcImg.getWidth()*resolution), (int)(srcImg.getHeight()*resolution));
         this.boundaries = new Dimension2D(srcImg.getWidth(), srcImg.getHeight());
         this.anchor = anchor;
+
         setRatio();
+        updateTransform();
         updateCroppedImg();
+    }
+
+    private void updateTransform() {
+        if (preserveAspect) {
+            this.screenTransform.setScale(new Vector2(screenTransform.getScale().getX(), screenTransform.getScale().getX()*1/ratio));
+        }
     }
 
     private void setRatio() {
@@ -55,6 +67,9 @@ public class UiImage extends GuiComponent {
             int y = (int)(cropR.getY() * boundaries.getHeight());
             int width = (int)(cropR.getWidth() * boundaries.getWidth());
             int height = (int)(cropR.getHeight() * boundaries.getHeight());
+
+            if (width == 0 || height == 0) { this.hideElement(); return; } else { this.setVisible(); }
+
             croppedImg = srcImg.getSubimage(x, y, width, height);
             return;
         }
@@ -62,7 +77,7 @@ public class UiImage extends GuiComponent {
     }
 
     // given in percentage of picture
-    private void setCropR(Rectangle2D.Double r) {
+    public void setCropR(Rectangle2D.Double r) {
         this.cropR = r;
         updateCroppedImg();
     }
@@ -84,15 +99,6 @@ public class UiImage extends GuiComponent {
         return resized;
     }
 
-    public int getYScaleFactor(int width, Transform screenCoord) { // to preserve image ratio
-        if (preserveAspect) {
-            return (int) (width * ratio);
-        } else {
-            return (int) (screenCoord.getYScale());
-        }
-
-    }
-
     @Override
     public synchronized void Render(Graphics2D g, Camera cam) {
         if (visible) {
@@ -102,7 +108,7 @@ public class UiImage extends GuiComponent {
             int x = (int) screenCoord.getX();
             int y = (int) screenCoord.getY();
             int width = (int) (screenCoord.getXScale() * cropR.getWidth());
-            int height = (int) (getYScaleFactor(width, screenCoord) * cropR.getHeight());
+            int height = (int) (screenCoord.getYScale() * cropR.getHeight());
 
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this.transparentColor.getAlpha()));
 

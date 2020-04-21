@@ -12,15 +12,15 @@ import java.io.InputStream;
 public abstract class GuiComponent implements ComponentMethods {
     private final int UNUSED = -Integer.MAX_VALUE;
     protected final Color transparentColor = new Color(0, 0, 0, 1);
-    protected boolean pressed, hovered;
     protected Color color, textColor;
     protected GuiCanvas parentGUI;
     protected boolean visible = true;
     protected boolean preserveAspect = true;
     protected ScreenTransform screenTransform;
 
-    public GuiComponent(ScreenTransform screenTransform) {
+    public GuiComponent(GuiCanvas parent, ScreenTransform screenTransform) {
         this.screenTransform = screenTransform;
+        this.parentGUI = parent;
     }
 
 
@@ -74,6 +74,10 @@ public abstract class GuiComponent implements ComponentMethods {
 
     public ScreenTransform getScreenTransform() {
         return screenTransform;
+    }
+
+    public void addTransform(ScreenTransform other) {
+        this.screenTransform = screenTransform.add(other);
     }
 
     public void setVisible() { this.visible = true; }

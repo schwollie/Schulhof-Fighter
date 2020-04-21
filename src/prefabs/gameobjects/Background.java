@@ -15,6 +15,7 @@ public class Background extends GameObject {
 
     public void setup() {
         this.addComponent(new ImageSprite(this, 1,"images/Background/back1.png", Anchor.BottomLeft));
-        this.getTransform().setScale(new Vector2(5, 5));
+        this.getTransform().setScale(new Vector2(4.5, 4.5));
+        this.getTransform().setPosition(new Vector2(0, -.05));
     }
 }

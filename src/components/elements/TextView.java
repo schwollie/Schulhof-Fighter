@@ -1,5 +1,6 @@
 package components.elements;
 
+import components.GuiCanvas;
 import components.GuiComponent;
 import components.ScreenTransform;
 import display.Camera;
@@ -18,8 +19,8 @@ public class TextView extends GuiComponent {
     private int fontType = Font.BOLD;
     private String text;
 
-    public TextView(ScreenTransform s, String text) {
-        super(s);
+    public TextView(GuiCanvas parent, ScreenTransform s, String text) {
+        super(parent, s);
         this.text = text;
     }
 
@@ -49,7 +50,7 @@ public class TextView extends GuiComponent {
             g.setFont(font.deriveFont(fSize).deriveFont(fontType));
 
             int width = g.getFontMetrics().stringWidth(text);
-            int height = (int)getStringBounds(g, text, x, y).getHeight();
+            int height = (int)(getStringBounds(g, text, x, y).getHeight() * 1/parentGUI.getRatio());
 
             switch (textAlign) {
                 case CENTER -> g.drawString(text, x - width/2, y - height/2);

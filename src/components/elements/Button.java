@@ -1,5 +1,6 @@
 package components.elements;
 
+import components.GuiCanvas;
 import components.GuiComponent;
 import components.ScreenTransform;
 import display.Camera;
@@ -15,8 +16,8 @@ public class Button extends GuiComponent {
     private Color pressedTextColor;
     private final boolean pressActivated;
 
-    public Button(String text, ScreenTransform transform) {
-        super(transform);
+    public Button(GuiCanvas parent, String text, ScreenTransform transform) {
+        super(parent, transform);
         //this.text = text;
         color = transparentColor;
         textColor = new Color(255, 255, 255, 180);

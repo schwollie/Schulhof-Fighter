@@ -8,6 +8,7 @@ import logic.Dimension2D;
 import physics.Collider;
 import physics.PhysicsGameComponent;
 import player.Player;
+import prefabs.HUD.GameHUD;
 import time.TimeManager;
 
 import java.awt.*;
@@ -21,7 +22,7 @@ public class Scene implements Serializable {
     private final InputManager inputManager;
     private final TimeManager timeManager;
     private final RenderManager renderManager;
-    private GuiCanvas guiCanvas = new GuiCanvas(new Dimension2D(Consts.windowWidth, Consts.windowHeight));
+    private GuiCanvas guiCanvas = new GameHUD(new Dimension2D(Consts.windowWidth, Consts.windowHeight));
 
     public Scene() {
         inputManager = new InputManager();

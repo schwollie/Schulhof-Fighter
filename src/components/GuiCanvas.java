@@ -1,5 +1,7 @@
 package components;
 
+import components.elements.Panel;
+import components.elements.Slider;
 import components.elements.TextAlign;
 import components.elements.TextView;
 import components.elements.UiImage;
@@ -16,8 +18,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class GuiCanvas extends JPanel implements MouseListener, MouseMotionListener {
+
+    public static final double defaultRatio = 1.77777777777777777777777;
 
     private Dimension2D resolution;
     private final ArrayList<GuiComponent> components = new ArrayList<>();
@@ -28,11 +33,6 @@ public class GuiCanvas extends JPanel implements MouseListener, MouseMotionListe
         this.resolution = resolution;
         addMouseMotionListener(this);
         addMouseListener(this);
-
-        this.addGuiComponent(new UiImage(new ScreenTransform(new Vector2(.1,.1), new Vector2(0.25, 0.25)), "images/Particles/particle.png"));
-        //TextView textView = new TextView(new ScreenTransform(new Vector2(.5,.5), new Vector2(1, 1)), "Test");
-        //textView.setTextAlign(TextAlign.CENTER);
-        //this.addGuiComponent(textView);
     }
 
     public void Render(Graphics2D g, Camera cam) {
@@ -61,6 +61,10 @@ public class GuiCanvas extends JPanel implements MouseListener, MouseMotionListe
 
     public void addGuiListener(GuiListener listener) {
         listeners.add(listener);
+    }
+
+    public double getRatio() {
+        return this.resolution.getWidth() / this.resolution.getHeight();
     }
 
     @Override

@@ -34,7 +34,6 @@ public class ScreenTransform {
         pos.setY(1-factor);
     }
 
-
     public Vector2 getPos() {
         return pos;
     }
@@ -49,5 +48,12 @@ public class ScreenTransform {
 
     public void setScale(Vector2 scale) {
         this.scale = scale;
+    }
+
+    public ScreenTransform add(ScreenTransform other) {
+        ScreenTransform newT = new ScreenTransform();
+        newT.pos = other.getPos().add(this.pos.rowWiseMultiplication(other.scale));
+        newT.scale = other.scale.rowWiseMultiplication(this.scale);
+        return newT;
     }
 }

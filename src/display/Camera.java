@@ -1,5 +1,6 @@
 package display;
 
+import components.GuiCanvas;
 import components.ScreenTransform;
 import game.Consts;
 import game.GameObject;
@@ -73,7 +74,7 @@ public class Camera extends GameObject implements Serializable {
         Transform screen = new Transform();
 
         double xFactor = resolution.getWidth();
-        double yFactor = resolution.getHeight();
+        double yFactor = resolution.getHeight() * GuiCanvas.defaultRatio;
 
         // new position
         Vector2 newPos = new Vector2(trans.getPos());
