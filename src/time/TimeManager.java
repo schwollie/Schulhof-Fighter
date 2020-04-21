@@ -23,7 +23,7 @@ public class TimeManager {
     }
 
     public void waitForTargetFPS() {
-        if (currentFPS < targetFPS) {
+        /*if (currentFPS < targetFPS) {
             return;
         }
 
@@ -32,6 +32,11 @@ public class TimeManager {
 
         try {
             Thread.sleep((long) waitTime);
+        } catch (InterruptedException e) {
+        }*/
+
+        try {
+            Thread.sleep(1);
         } catch (InterruptedException e) {
         }
 

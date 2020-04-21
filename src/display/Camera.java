@@ -8,9 +8,11 @@ import game.Scene;
 import logic.Dimension2D;
 import logic.Transform;
 import logic.Vector2;
+import settings.Settings;
 
 import java.awt.*;
 import java.io.Serializable;
+import java.util.HashMap;
 
 public class Camera extends GameObject implements Serializable {
 
@@ -28,6 +30,9 @@ public class Camera extends GameObject implements Serializable {
     }
 
     public void RenderScene(Graphics2D g) {
+        RenderingHints s = Settings.getQuality();
+        g.setRenderingHints(s);
+
         scene.Render(g, this);
     }
 

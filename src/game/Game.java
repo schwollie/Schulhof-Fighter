@@ -59,7 +59,7 @@ public class Game {
             //redraw scene
             EventQueue.invokeLater(((Camera)scene.getCam()).getCanvas()::repaint);
 
-            //System.out.println(timeManager.getCurrentFPS());
+            System.out.println(scene.getTimeManager().getCurrentFPS());
             //mainmenu.tick(fpsTracker.getDeltaTime(), inputManager.getMousePosition());
         }
     }

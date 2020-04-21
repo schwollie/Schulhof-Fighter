@@ -42,6 +42,7 @@ public class TextView extends GuiComponent {
             int x = (int) screenCoord.getX();
             int y = (int) screenCoord.getY();
 
+            g.setColor(this.color);
             //set alpha
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this.transparentColor.getAlpha()));
 
