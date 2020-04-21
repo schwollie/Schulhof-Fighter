@@ -9,6 +9,8 @@ import physics.CollissionListener;
 import physics.PhysicsGameComponent;
 import physics.RectCollider;
 
+import java.util.Random;
+
 
 public abstract class Player extends GameObject implements CollissionListener {
 
@@ -58,6 +60,14 @@ public abstract class Player extends GameObject implements CollissionListener {
     public void takeDamage(double damage, Vector2 force) {
         this.healthManager.takeDamage(damage);
         this.physicsComponent.addForce(force);
+
+        if (RandomClass.chance(0.5)) {
+            this.playerState = PlayerState.GotHit1;
+        } else {
+            this.playerState = PlayerState.GotHit2;
+        }
+
+        this.visualPlayer.setState(playerState);
     }
 
     protected void Jump() {

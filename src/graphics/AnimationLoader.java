@@ -76,6 +76,15 @@ public abstract class AnimationLoader {
             case SpecialAttack:
                 specs = new AnimSpecs(Consts.specialAttackSheet, Consts.specialAttackPicCount, Consts.specialAttackAnimSpeed, getSpriteSize(pType));
                 break;
+            case SpecialAttack2:
+                specs = new AnimSpecs(Consts.specialAttack2Sheet, Consts.specialAttack2PicCount, Consts.specialAttack2AnimSpeed, getSpriteSize(pType));
+                break;
+            case GotHit1:
+                specs = new AnimSpecs(Consts.gotHit1Sheet, Consts.gotHit1PicCount, Consts.gotHit1AnimSpeed, getSpriteSize(pType));
+                break;
+            case GotHit2:
+                specs = new AnimSpecs(Consts.gotHit2Sheet, Consts.gotHit2PicCount, Consts.gotHit2AnimSpeed, getSpriteSize(pType));
+                break;
             default:
                 throw new Error("NO SHEET FOUND: " + type);
         }

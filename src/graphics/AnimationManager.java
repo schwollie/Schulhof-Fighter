@@ -30,14 +30,28 @@ public class AnimationManager extends GameComponent {
 
         Animation kickAnim = AnimationLoader.loadPlayerAnimation(playerType, PlayerState.Kick, reference, false, 4);
         animations.put(PlayerState.Kick, kickAnim);
+
         Animation punchAnim = AnimationLoader.loadPlayerAnimation(playerType, PlayerState.Punch, reference, false, 4);
         animations.put(PlayerState.Punch, punchAnim);
+
         Animation specialAttackAnim = AnimationLoader.loadPlayerAnimation(playerType, PlayerState.SpecialAttack, reference, false, 5);
         animations.put(PlayerState.SpecialAttack, specialAttackAnim);
+
+        Animation specialAttackAnim2 = AnimationLoader.loadPlayerAnimation(playerType, PlayerState.SpecialAttack2, reference, false, 5);
+        animations.put(PlayerState.SpecialAttack2, specialAttackAnim2);
+
+        Animation gotHit1 = AnimationLoader.loadPlayerAnimation(playerType, PlayerState.GotHit1, reference, false, 50);
+        animations.put(PlayerState.GotHit1, gotHit1);
+
+        Animation gotHit2 = AnimationLoader.loadPlayerAnimation(playerType, PlayerState.GotHit2, reference, false, 50);
+        animations.put(PlayerState.GotHit2, gotHit2);
+
         Animation blockAnim = AnimationLoader.loadPlayerAnimation(playerType, PlayerState.Block, reference, true, 4);
         animations.put(PlayerState.Block, blockAnim);
+
         Animation runAnim = AnimationLoader.loadPlayerAnimation(playerType, PlayerState.Walk, reference, true, 2);
         animations.put(PlayerState.Walk, runAnim);
+
         Animation jumpAnim = AnimationLoader.loadPlayerAnimation(playerType, PlayerState.Jump, reference, true, 2);
         animations.put(PlayerState.Jump, jumpAnim);
 

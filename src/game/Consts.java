@@ -45,6 +45,18 @@ public abstract class Consts {
     public static final int specialAttackPicCount = 3;
     public static final float specialAttackAnimSpeed = 5f; // in fps
 
+    public static final String specialAttack2Sheet = "specialSheet2.png";
+    public static final int specialAttack2PicCount = 3;
+    public static final float specialAttack2AnimSpeed = 5f; // in fps
+
+    public static final String gotHit1Sheet = "gotHit1.png";
+    public static final int gotHit1PicCount = 1;
+    public static final float gotHit1AnimSpeed = 4f; // in fps
+
+    public static final String gotHit2Sheet = "gotHit2.png";
+    public static final int gotHit2PicCount = 1;
+    public static final float gotHit2AnimSpeed = 4f; // in fps
+
     public static final String runSheet = "runSheet.png";
     public static final int runPicCount = 8;
     public static final float runAnimSpeed = 8f; // in fps
