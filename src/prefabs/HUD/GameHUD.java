@@ -1,6 +1,7 @@
 package prefabs.HUD;
 
 import components.GuiCanvas;
+import components.GuiComponent;
 import components.ScreenTransform;
 import components.elements.Panel;
 import components.elements.Slider;
@@ -11,6 +12,26 @@ import logic.Vector2;
 
 public class GameHUD extends GuiCanvas {
 
+    private static final ScreenTransform backT = new ScreenTransform(new Vector2(0, 0), new Vector2(0.4, 0));
+    private static final ScreenTransform staminaT =  new ScreenTransform(new Vector2(0.041, 0.0106), new Vector2(0.3236, 0));
+    private static final ScreenTransform healthT = new ScreenTransform(new Vector2(0.2145, 0.031), new Vector2(.149, 0));
+    private static final ScreenTransform textT = new ScreenTransform(new Vector2(.11,.067), new Vector2(.1,.1));
+    private static final ScreenTransform overlayT = new ScreenTransform(new Vector2(0.038,0.01062), new Vector2(.329,.1));
+
+    private final Panel p1Panel = new Panel(this);
+    private UiImage p1Back;
+    private Slider p1HealthSlider;
+    private Slider p1StaminaSlider;
+    private TextView p1Text;
+    private UiImage p1Overlay;
+
+    private final Panel p2Panel = new Panel(this);
+    private UiImage p2Back;
+    private Slider p2HealthSlider;
+    private Slider p2StaminaSlider;
+    private TextView p2Text;
+    private UiImage p2Overlay;
+
     public GameHUD(Dimension2D resolution) {
         super(resolution);
         createHud();
@@ -18,51 +39,80 @@ public class GameHUD extends GuiCanvas {
 
     private void createHud() {
         //region hud for player1:
-        Panel p = new Panel(this);
-        UiImage stats = new UiImage(this, new ScreenTransform(new Vector2(0, 0), new Vector2(0.4, 0)), "images/Gui/stats.png");
-        p.addComponent(stats);
 
-        Slider hp = new Slider(this, new ScreenTransform(new Vector2(0.041, 0.0106), new Vector2(0.3236, 0)));
-        hp.loadBar("images/Gui/bar1.png");
-        hp.setProgress(.5);
-        p.addComponent(hp);
+        p1Back = new UiImage(this, backT, "images/Gui/stats.png");
+        p2Back = new UiImage(this, backT, "images/Gui/stats.png");
 
-        Slider xp = new Slider(this, new ScreenTransform(new Vector2(0.2145, 0.031), new Vector2(.149, 0)));
-        xp.loadBar("images/Gui/bar2.png");
-        xp.setProgress(.5);
-        p.addComponent(xp);
+        p1HealthSlider = new Slider(this, staminaT);
+        p1HealthSlider.loadBar("images/Gui/bar1.png");
+        p2HealthSlider = new Slider(this, staminaT);
+        p2HealthSlider.loadBar("images/Gui/bar1.png");
+        p2HealthSlider.setReverse(true);
 
-        TextView txt = new TextView(this, new ScreenTransform(new Vector2(.11,.067), new Vector2(.1,.1)) ,"Hausperger");
-        txt.setFontSize(12);
-        p.addComponent(txt);
+        p1StaminaSlider = new Slider(this, healthT);
+        p1StaminaSlider.loadBar("images/Gui/bar2.png");
+        p2StaminaSlider = new Slider(this, healthT);
+        p2StaminaSlider.loadBar("images/Gui/bar2.png");
+        p2StaminaSlider.setReverse(true);
 
-        UiImage overlay = new UiImage(this,  new ScreenTransform(new Vector2(0.038,0.01062), new Vector2(.329,.1)), "images/Gui/overlay1.png");
-        p.addComponent(overlay);
-        // endregion
+        p1Text = new TextView(this, textT, "");
+        p2Text = new TextView(this, textT, "");
 
-        //region hud for player2:
-        Panel p2 = new Panel(this);
-        UiImage stats2 = new UiImage(this, new ScreenTransform(new Vector2(0, 0), new Vector2(0.4, 0)), "images/Gui/stats.png");
-        p2.addComponent(stats2);
+        p1Overlay = new UiImage(this, overlayT, "images/Gui/overlay1.png");
+        p2Overlay = new UiImage(this, overlayT, "images/Gui/overlay1.png");
 
-        Slider hp2 = new Slider(this, new ScreenTransform(new Vector2(0.041, 0.0106), new Vector2(0.3236, 0)));
-        hp2.loadBar("images/Gui/bar1.png");
-        hp2.setProgress(.5);
-        p2.addComponent(hp2);
+        p1Panel.addComponents(new GuiComponent[] { p1Back, p1HealthSlider, p1StaminaSlider, p1Text, p1Overlay});
+        p2Panel.addComponents(new GuiComponent[] { p2Back, p2HealthSlider, p2StaminaSlider, p2Text, p2Overlay});
 
-        Slider xp2 = new Slider(this, new ScreenTransform(new Vector2(0.2145, 0.031), new Vector2(.149, 0)));
-        xp2.loadBar("images/Gui/bar2.png");
-        xp2.setProgress(.5);
-        p2.addComponent(xp2);
+        p2Panel.addTransform(new ScreenTransform(new Vector2(1,0), new Vector2(-1,1)));
 
-        TextView txt2 = new TextView(this, new ScreenTransform(new Vector2(.11,.067), new Vector2(.1,.1)) ,"Hausperger");
-        txt2.setFontSize(12);
-        p2.addComponent(txt2);
+    }
 
-        UiImage overlay2 = new UiImage(this,  new ScreenTransform(new Vector2(0.038,0.01062), new Vector2(.329,.1)), "images/Gui/overlay1.png");
-        p2.addComponent(overlay2);
+    public Panel getP1Panel() {
+        return p1Panel;
+    }
 
-        p2.addTransform(new ScreenTransform(new Vector2(1,0), new Vector2(-1, 1)));
-        // endregion
+    public UiImage getP1Back() {
+        return p1Back;
+    }
+
+    public Slider getP1HealthSlider() {
+        return p1HealthSlider;
+    }
+
+    public Slider getP1StaminaSlider() {
+        return p1StaminaSlider;
+    }
+
+    public TextView getP1Text() {
+        return p1Text;
+    }
+
+    public UiImage getP1Overlay() {
+        return p1Overlay;
+    }
+
+    public Panel getP2Panel() {
+        return p2Panel;
+    }
+
+    public UiImage getP2Back() {
+        return p2Back;
+    }
+
+    public Slider getP2HealthSlider() {
+        return p2HealthSlider;
+    }
+
+    public Slider getP2StaminaSlider() {
+        return p2StaminaSlider;
+    }
+
+    public TextView getP2Text() {
+        return p2Text;
+    }
+
+    public UiImage getP2Overlay() {
+        return p2Overlay;
     }
 }

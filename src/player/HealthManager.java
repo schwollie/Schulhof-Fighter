@@ -46,4 +46,8 @@ public class HealthManager extends GameComponent {
     public double getHealth() {
         return currentHealth;
     }
+
+    public double getHealthPercentage() {
+        return this.currentHealth/this.maxHealth;
+    }
 }

@@ -25,6 +25,7 @@ public class UiImage extends GuiComponent {
     private Anchor anchor = Anchor.TopLeft;
     private double ratio;
     private Rectangle2D.Double cropR = new Rectangle2D.Double(0,0,1,1);
+    private Vector2 offset = new Vector2(0,0);
 
     public UiImage(GuiCanvas parent, ScreenTransform s, String filename) {
         super(parent, s);
@@ -105,8 +106,8 @@ public class UiImage extends GuiComponent {
             ScreenTransform ownTrans = this.getScreenTransform();
             Transform screenCoord = cam.gui2Screen(ownTrans);
 
-            int x = (int) screenCoord.getX();
-            int y = (int) screenCoord.getY();
+            int x = (int) (screenCoord.getX() + offset.getX() * screenCoord.getXScale());
+            int y = (int) (screenCoord.getY() + offset.getY() * screenCoord.getYScale());
             int width = (int) (screenCoord.getXScale() * cropR.getWidth());
             int height = (int) (screenCoord.getYScale() * cropR.getHeight());
 
@@ -123,6 +124,10 @@ public class UiImage extends GuiComponent {
             }
 
         }
+    }
+
+    public void setOffset(Vector2 f) {
+        this.offset = f;
     }
 
     public void setAnchor(Anchor anchor) {

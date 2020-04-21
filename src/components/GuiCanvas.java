@@ -43,8 +43,11 @@ public class GuiCanvas extends JPanel implements MouseListener, MouseMotionListe
     }
 
     public void addGuiComponent(GuiComponent component) {
-        component.setParentGUI(this);
-        components.add(component);
+        this.components.add(component);
+    }
+
+    public void addGuiComponents(ArrayList<GuiComponent> components) {
+        this.components.addAll(components);
     }
 
     public void removeGuiComponent(GuiComponent component) {

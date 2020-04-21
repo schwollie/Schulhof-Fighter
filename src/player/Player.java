@@ -15,7 +15,7 @@ public abstract class Player extends GameObject implements CollissionListener {
     public static final double maxHealth = 10;
 
     protected VisualPlayer visualPlayer;
-    protected PlayerTypes type;
+    protected PlayerType type;
     protected PlayerState playerState = PlayerState.Default;
     protected boolean isOnGround = false;
 
@@ -24,7 +24,7 @@ public abstract class Player extends GameObject implements CollissionListener {
     protected AttackManager attackManager;
 
 
-    public Player(Scene world, Vector2 pos, PlayerTypes type, String tag) {
+    public Player(Scene world, Vector2 pos, PlayerType type, String tag) {
         super(tag, world);
         this.transform = new Transform(pos);
         this.physicsComponent = new PhysicsGameComponent(this);
@@ -131,5 +131,13 @@ public abstract class Player extends GameObject implements CollissionListener {
 
     public Transform getTransform() {
         return this.transform;
+    }
+
+    public AttackManager getAttackManager() {
+        return attackManager;
+    }
+
+    public HealthManager getHealthManager() {
+        return healthManager;
     }
 }

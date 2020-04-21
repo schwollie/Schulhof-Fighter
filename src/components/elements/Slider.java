@@ -4,6 +4,7 @@ import components.GuiCanvas;
 import components.GuiComponent;
 import components.ScreenTransform;
 import display.Camera;
+import logic.Vector2;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -14,6 +15,8 @@ public class Slider extends GuiComponent {
     protected UiImage handle;
 
     protected double progress = 1;
+
+    protected boolean reverse = false;
 
     public Slider(GuiCanvas parent, ScreenTransform screenTransform) {
         super(parent, screenTransform);
@@ -45,7 +48,13 @@ public class Slider extends GuiComponent {
 
     public void setCropFactor() {
         if (bar != null) {
-            bar.setCropR(new Rectangle2D.Double(1-progress,0,progress,1));
+            if (reverse) {
+                bar.setCropR(new Rectangle2D.Double(1-progress,0,progress,1));
+                bar.setOffset(new Vector2((1-progress), 0));
+            } else {
+                bar.setCropR(new Rectangle2D.Double(1-progress,0,progress,1));
+            }
+
         }
     }
 
@@ -56,7 +65,12 @@ public class Slider extends GuiComponent {
         if (handle != null) { handle.addTransform(other); }
     }
 
-    // region not import interface methods:
+    public void setReverse(boolean reverse) {
+        this.reverse = reverse;
+        setCropFactor();
+    }
+
+    // region not important interface methods:
     @Override
     public void onClick() {
 

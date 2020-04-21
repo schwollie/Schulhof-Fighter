@@ -4,6 +4,8 @@ import components.GuiCanvas;
 import components.GuiComponent;
 import components.ScreenTransform;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 
@@ -27,6 +29,11 @@ public class Panel {
     public void addComponent(GuiComponent e) {
         components.add(e);
         parentGui.addGuiComponent(e);
+    }
+
+    public void addComponents(GuiComponent[] es) {
+        components.addAll(new ArrayList<>(Arrays.asList(es)));
+        parentGui.addGuiComponents(new ArrayList<>(Arrays.asList(es)));
     }
 
     public void removeComponent(GuiComponent e, boolean removeFromParent) {

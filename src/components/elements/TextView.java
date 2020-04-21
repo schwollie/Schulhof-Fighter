@@ -14,7 +14,7 @@ import java.awt.font.GlyphVector;
 public class TextView extends GuiComponent {
 
     private Font font = loadFont("FjallaOne");
-    private float fontSize = 20;
+    private float fontSize = 11;
     private TextAlign textAlign = TextAlign.CENTER;
     private int fontType = Font.BOLD;
     private String text;

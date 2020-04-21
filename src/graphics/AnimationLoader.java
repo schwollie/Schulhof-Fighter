@@ -3,7 +3,7 @@ package graphics;
 import game.Consts;
 import game.GameObject;
 import logic.Dimension2D;
-import logic.PlayerTypes;
+import logic.PlayerType;
 import particle.ParticleType;
 import player.PlayerState;
 
@@ -11,7 +11,7 @@ import java.io.File;
 
 public abstract class AnimationLoader {
 
-    public static Animation loadPlayerAnimation(PlayerTypes type, PlayerState animType, GameObject ref, boolean loopAnim, int priority) {
+    public static Animation loadPlayerAnimation(PlayerType type, PlayerState animType, GameObject ref, boolean loopAnim, int priority) {
         AnimSpecs animSpec = getAnimSpecs(animType, type);
         String path = AnimationLoader.getPath(type, animSpec);
 
@@ -47,12 +47,12 @@ public abstract class AnimationLoader {
         return Animation.loadAnim(path, animSpec, ref);
     }
 
-    private static String getPath(PlayerTypes type, AnimSpecs a) {
+    private static String getPath(PlayerType type, AnimSpecs a) {
         return Consts.imageSrc + type.name() + "/" + a.getAnimSheet();
     }
 
 
-    private static AnimSpecs getAnimSpecs(PlayerState type, PlayerTypes pType) {
+    private static AnimSpecs getAnimSpecs(PlayerState type, PlayerType pType) {
         AnimSpecs specs = null;
         switch (type) {
             case Default:
@@ -82,8 +82,8 @@ public abstract class AnimationLoader {
         return specs;
     }
 
-    private static Dimension2D getSpriteSize(PlayerTypes type) {
-        if (type == PlayerTypes.Hausperger) {
+    private static Dimension2D getSpriteSize(PlayerType type) {
+        if (type == PlayerType.Hausperger) {
             return Consts.hauspergerCharacterSize;
         }
         throw new Error("NO SHEET FOUND: " + type);

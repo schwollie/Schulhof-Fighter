@@ -2,14 +2,9 @@ package game;
 
 import display.Camera;
 import display.Window;
-import logic.PlayerTypes;
-import logic.Vector2;
+import logic.PlayerType;
 import mainmenu.graphics.MenuCanvas;
-import player.HumanPlayer;
-import prefabs.gameobjects.Background;
-import prefabs.gameobjects.Ground;
 import prefabs.scenes.StandardSceneLoader;
-import time.TimeManager;
 
 import java.awt.*;
 
@@ -23,11 +18,11 @@ public class Game {
     public SceneManager sceneManager;
 
     //MAIN MENU
-    private MenuCanvas mainmenu;
+    //private MenuCanvas mainmenu;
 
     public void initScene() {
         sceneManager = new SceneManager();
-        scene = StandardSceneLoader.getStandardScene();
+        scene = StandardSceneLoader.getStandardScene(PlayerType.Hausperger, PlayerType.Hausperger);
     }
 
     public void initDisplay() {

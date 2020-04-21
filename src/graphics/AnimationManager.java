@@ -3,7 +3,7 @@ package graphics;
 import game.ComponentType;
 import game.GameComponent;
 import game.GameObject;
-import logic.PlayerTypes;
+import logic.PlayerType;
 import player.PlayerState;
 
 import java.util.HashMap;
@@ -12,11 +12,11 @@ public class AnimationManager extends GameComponent {
 
     private Animation currentAnim;
     private Animation lastAnim;
-    private PlayerTypes playerType;
+    private PlayerType playerType;
 
     private HashMap<PlayerState, Animation> animations;
 
-    public AnimationManager(PlayerTypes type, GameObject ref) {
+    public AnimationManager(PlayerType type, GameObject ref) {
         super(ref, ComponentType.AnimationController);
         animations = new HashMap<>();
         playerType = type;
