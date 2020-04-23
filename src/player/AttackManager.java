@@ -4,10 +4,7 @@ import game.ComponentType;
 import game.GameComponent;
 import game.GameObject;
 import logic.Dimension2D;
-import logic.Transform;
 import logic.Vector2;
-import logic.XRange;
-import particle.ParticleSystem;
 import physics.Collider;
 import physics.CollissionListener;
 import physics.RectCollider;
@@ -18,12 +15,12 @@ public class AttackManager extends GameComponent implements CollissionListener, 
 
     // flags:
     private final boolean isBlocking = false;
+    private final Timer coolDownTimer = new Timer(this.reference, "coolDownTimer", 0.2);
 
     // timers
     private final Timer punchTimer = new Timer(this.reference, "punchTimer", 0.25);
     private final Timer kickTimer = new Timer(this.reference, "kickTimer", 0.25);
-
-    private final Timer coolDownTimer = new Timer(this.reference, "coolDownTimer", 0.5);
+    private boolean hasReloaded = true;
 
 
     public AttackManager(GameObject ref) {
@@ -35,12 +32,23 @@ public class AttackManager extends GameComponent implements CollissionListener, 
 
         punchTimer.addListener(this);
         kickTimer.addListener(this);
+        coolDownTimer.addListener(this);
         punchTimer.pause();
         kickTimer.pause();
+        coolDownTimer.pause();
     }
 
     public void block() {
 
+    }
+
+    public void shootProjectile() {
+        if (hasReloaded) {
+            Projectile p = new Projectile("p1", reference.getScene(), reference.getTransform().getPosition(), getDirection() * 1.5);
+            reference.getScene().addGameObjectNow(p);
+            hasReloaded = false;
+            coolDownTimer.resume();
+        }
     }
 
     public void doKick() {
@@ -112,7 +120,6 @@ public class AttackManager extends GameComponent implements CollissionListener, 
 
     @Override
     public void onTimerStops(String timerName) {
-
         if (timerName.equals("punchTimer")) {
             doPunchHit();
             punchTimer.resetTimer();
@@ -121,6 +128,10 @@ public class AttackManager extends GameComponent implements CollissionListener, 
             doKickHit();
             kickTimer.resetTimer();
             kickTimer.pause();
+        } else if (timerName.equals("coolDownTimer")) {
+            hasReloaded = true;
+            coolDownTimer.resetTimer();
+            coolDownTimer.pause();
         }
     }
 }

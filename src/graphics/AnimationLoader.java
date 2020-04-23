@@ -30,11 +30,11 @@ public abstract class AnimationLoader {
     }
 
     public static Animation loadParticleAnimation(ParticleType type, int picCount, float animationSpeed, Dimension2D size, GameObject ref, boolean loopAnim) {
-        return loadAnimation(Consts.imageParticlesSrc, type.toString(), picCount, animationSpeed, size, ref, loopAnim, 1);
+        return loadAnimation(Consts.imageParticlesSrc + type.toString(), picCount, animationSpeed, size, ref, loopAnim, 1);
     }
 
-    public static Animation loadAnimation(String path, String sheetName, int picCount, float animationSpeed, Dimension2D size, GameObject ref, boolean loopAnim, int priority) {
-        AnimSpecs animSpec = new AnimSpecs(sheetName, picCount, animationSpeed, size);
+    public static Animation loadAnimation(String path, int picCount, float animationSpeed, Dimension2D size, GameObject ref, boolean loopAnim, int priority) {
+        AnimSpecs animSpec = new AnimSpecs(path, picCount, animationSpeed, size);
 
         File f = new File(path);
         if (!f.exists()) {
@@ -45,6 +45,15 @@ public abstract class AnimationLoader {
         animSpec.priority = priority;
 
         return Animation.loadAnim(path, animSpec, ref);
+    }
+
+    public static Animation loadAnimation(ImageSprite[] animImages, float animationSpeed, GameObject ref, boolean loopAnim, int priority) {
+        AnimSpecs animSpec = new AnimSpecs(null, 0, animationSpeed, null);
+
+        animSpec.loopAnim = loopAnim;
+        animSpec.priority = priority;
+
+        return Animation.loadAnim(animImages, animSpec, ref);
     }
 
     private static String getPath(PlayerType type, AnimSpecs a) {

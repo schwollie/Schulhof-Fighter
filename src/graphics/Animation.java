@@ -100,6 +100,26 @@ public class Animation extends GameComponent {
         return anim;
     }
 
+    public static Animation loadAnim(ImageSprite[] images, AnimSpecs specs, GameObject ref) {
+        int pictureCount = specs.getAnimPicCount();
+        int priority = specs.priority;
+        boolean loopAnim = specs.loopAnim;
+
+        ImageSprite[] animImages = new ImageSprite[images.length];
+        for (int i = 0; i < images.length; i++) {
+            animImages[i] = new ImageSprite(ref, images[i].getImg());
+        }
+
+        // setup Animation
+        Animation anim = new Animation(animImages, ref);
+        anim.setSpeed(specs.getAnimSpeed());
+        anim.setAnimType(specs.animType);
+        anim.setPriority(specs.priority);
+        anim.setLoopAnim(specs.loopAnim);
+
+        return anim;
+    }
+
     public int getPriority() {
         return priority;
     }
@@ -118,6 +138,10 @@ public class Animation extends GameComponent {
 
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    public ImageSprite[] getImages() {
+        return images;
     }
 
     @Override

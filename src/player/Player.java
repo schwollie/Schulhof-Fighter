@@ -3,13 +3,14 @@ package player;
 import game.GameObject;
 import game.Scene;
 import graphics.RenderManager;
-import logic.*;
+import logic.Dimension2D;
+import logic.PlayerType;
+import logic.Transform;
+import logic.Vector2;
 import physics.Collider;
 import physics.CollissionListener;
 import physics.PhysicsGameComponent;
 import physics.RectCollider;
-
-import java.util.Random;
 
 
 public abstract class Player extends GameObject implements CollissionListener {
@@ -101,6 +102,11 @@ public abstract class Player extends GameObject implements CollissionListener {
     }
 
     protected void block() {
+    }
+
+    protected void shootProjectile() {
+        attackManager.shootProjectile();
+
     }
 
     protected void setPlayerState() {

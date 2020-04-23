@@ -18,6 +18,7 @@ public class InputManager implements KeyListener, MouseMotionListener, Serializa
     boolean kickPressed1 = false; // Q
     boolean punchPressed1 = false; // E
     boolean blockPressed1 = false; // Left Shift
+    boolean projectilePressed1 = false; // SPACE
 
     boolean upPressed2 = false; // up arrow key
     boolean rightPressed2 = false; // right arrow key
@@ -72,6 +73,11 @@ public class InputManager implements KeyListener, MouseMotionListener, Serializa
             // Q = kick
             if (e.getKeyCode() == KeyEvent.VK_Q) {
                 kickPressed1 = false;
+            }
+
+            // SPACE = shoot
+            if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                projectilePressed1 = false;
             }
 
         }
@@ -152,6 +158,11 @@ public class InputManager implements KeyListener, MouseMotionListener, Serializa
                 kickPressed1 = true;
             }
 
+            // SPACE = shoot
+            if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                projectilePressed1 = true;
+            }
+
         }
         //endregion
 
@@ -216,6 +227,9 @@ public class InputManager implements KeyListener, MouseMotionListener, Serializa
         }
         if (blockPressed1) {
             inputMapping1.keyBlock();
+        }
+        if (projectilePressed1) {
+            inputMapping1.keyProjectile();
         }
     }
 

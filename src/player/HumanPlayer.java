@@ -42,4 +42,9 @@ public class HumanPlayer extends Player implements PlayerKeyListener {
     public void keyBlock() {
         System.out.println("block");
     }
+
+    @Override
+    public void keyProjectile() {
+        this.shootProjectile();
+    }
 }

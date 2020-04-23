@@ -1,16 +1,10 @@
 package components;
 
-import components.elements.Panel;
-import components.elements.Slider;
-import components.elements.TextAlign;
-import components.elements.TextView;
-import components.elements.UiImage;
 import components.event.GuiEvent;
 import components.event.GuiEventType;
 import components.event.GuiListener;
 import display.Camera;
 import logic.Dimension2D;
-import logic.Vector2;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +12,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class GuiCanvas extends JPanel implements MouseListener, MouseMotionListener {
 
@@ -85,7 +78,6 @@ public class GuiCanvas extends JPanel implements MouseListener, MouseMotionListe
         for (GuiComponent component : components) {
             if (isPointOnComponent(e.getX(), e.getY(), component)) {
                 component.onPress();
-                //component.setPressed(true);
                 evokeComponentAction(component, GuiEventType.PRESS);
             }
         }
@@ -98,7 +90,6 @@ public class GuiCanvas extends JPanel implements MouseListener, MouseMotionListe
                 component.onRelease();
                 evokeComponentAction(component, GuiEventType.RELEASE);
             }
-            //component.setPressed(false);
         }
     }
 
@@ -115,10 +106,8 @@ public class GuiCanvas extends JPanel implements MouseListener, MouseMotionListe
         for (GuiComponent component : components) {
             if (isPointOnComponent(e.getX(), e.getY(), component)) {
                 component.onDrag();
-                //component.setHovered(true);
                 evokeComponentAction(component, GuiEventType.DRAG);
             } else {
-                //component.setHovered(false);
             }
         }
     }
@@ -128,10 +117,8 @@ public class GuiCanvas extends JPanel implements MouseListener, MouseMotionListe
         for (GuiComponent component : components) {
             if (isPointOnComponent(e.getX(), e.getY(), component)) {
                 component.onHover();
-                //component.setHovered(true);
                 evokeComponentAction(component, GuiEventType.MOVE);
             } else {
-                //component.setHovered(false);
             }
         }
     }

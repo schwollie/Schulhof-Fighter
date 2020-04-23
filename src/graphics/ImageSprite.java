@@ -47,6 +47,13 @@ public class ImageSprite extends Sprite {
         this.boundaries = boundaries;
     }
 
+    public ImageSprite(GameObject reference, BufferedImage image) {
+        super(reference);
+        this.visible = true;
+        img = image;
+        this.boundaries = new Dimension2D(img.getWidth(), img.getHeight());
+    }
+
     public ImageSprite(GameObject reference, Dimension2D boundaries, BufferedImage image, String filename) {
         super(reference);
         img = image;
@@ -73,7 +80,7 @@ public class ImageSprite extends Sprite {
         }
     }
 
-    private BufferedImage rescaleImage(int width, int height) {
+    public BufferedImage rescaleImage(int width, int height) {
         Image tmp = img.getScaledInstance(width, height, Image.SCALE_FAST);
         BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = resized.createGraphics();
@@ -106,15 +113,34 @@ public class ImageSprite extends Sprite {
 
             // center of image is on x, y
             switch (anchor) {
-                case Center -> g.drawImage(img, x - width / 2, y - height / 2, width, height, null);
-                case BottomLeft -> g.drawImage(img, x, y - height, width, height, null);
-                case BottomRight -> g.drawImage(img, x - width, y - height, width, height, null);
-                case TopLeft -> g.drawImage(img, x, y, width, height, null);
-                case TopRight -> g.drawImage(img, x - width, y, width, height, null);
-                default -> throw new Error("No Anchor on ImageSprite is specified!");
+                case Center:
+                    g.drawImage(img, x - width / 2, y - height / 2, width, height, null);
+                    break;
+                case BottomLeft:
+                    g.drawImage(img, x, y - height, width, height, null);
+                    break;
+                case BottomRight:
+                    g.drawImage(img, x - width, y - height, width, height, null);
+                    break;
+                case TopLeft:
+                    g.drawImage(img, x, y, width, height, null);
+                    break;
+                case TopRight:
+                    g.drawImage(img, x - width, y, width, height, null);
+                    break;
+                default:
+                    throw new Error("No Anchor on ImageSprite is specified!");
             }
 
         }
+    }
+
+    public BufferedImage getImg() {
+        return img;
+    }
+
+    public void setImg(BufferedImage img) {
+        this.img = img;
     }
 
     public void setAnchor(Anchor anchor) {

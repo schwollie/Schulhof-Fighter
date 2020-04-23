@@ -92,7 +92,7 @@ public abstract class GuiComponent implements ComponentMethods {
         this.parentGUI = parentGUI;
     }
 
-    protected String testStringLength(String text, FontMetrics fontMetrics) {
+    protected String getAdaptedStringLength(String text, FontMetrics fontMetrics) {
         String result = text;
         while (fontMetrics.stringWidth(result) > getWidth()) {
             result = result.substring(0, result.length() - 1);

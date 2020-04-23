@@ -10,13 +10,15 @@ import components.elements.UiImage;
 import logic.Dimension2D;
 import logic.Vector2;
 
+import java.awt.*;
+
 public class GameHUD extends GuiCanvas {
 
     private static final ScreenTransform backT = new ScreenTransform(new Vector2(0, 0), new Vector2(0.4, 0));
-    private static final ScreenTransform staminaT =  new ScreenTransform(new Vector2(0.041, 0.0106), new Vector2(0.3236, 0));
+    private static final ScreenTransform staminaT = new ScreenTransform(new Vector2(0.041, 0.0106), new Vector2(0.3236, 0));
     private static final ScreenTransform healthT = new ScreenTransform(new Vector2(0.2145, 0.031), new Vector2(.149, 0));
-    private static final ScreenTransform textT = new ScreenTransform(new Vector2(.11,.067), new Vector2(.1,.1));
-    private static final ScreenTransform overlayT = new ScreenTransform(new Vector2(0.038,0.01062), new Vector2(.329,.1));
+    private static final ScreenTransform textT = new ScreenTransform(new Vector2(.11, .067), new Vector2(.1, .1));
+    private static final ScreenTransform overlayT = new ScreenTransform(new Vector2(0.038, 0.01062), new Vector2(.329, .1));
 
     private final Panel p1Panel = new Panel(this);
     private UiImage p1Back;
@@ -56,7 +58,9 @@ public class GameHUD extends GuiCanvas {
         p2StaminaSlider.setReverse(true);
 
         p1Text = new TextView(this, textT, "");
+        p1Text.setColor(Color.WHITE);
         p2Text = new TextView(this, textT, "");
+        p2Text.setColor(Color.WHITE);
 
         p1Overlay = new UiImage(this, overlayT, "images/Gui/overlay1.png");
         p2Overlay = new UiImage(this, overlayT, "images/Gui/overlay1.png");

@@ -6,7 +6,7 @@ import logic.Vector2;
 
 public class PhysicsGameComponent extends GameComponent {
 
-    private boolean isStatic = false;
+    private boolean isStatic, hasGravity = true;
     private double mass = 1;
     private double massInverse = 1 / mass;  // for calculations
     private Vector2 velocity = new Vector2(0, 0);
@@ -27,9 +27,11 @@ public class PhysicsGameComponent extends GameComponent {
         if (isStatic) {
             return;
         }
-        this.calcPhysics(deltaTime, reference.getScene());
-        this.applyForce(deltaTime);
-        this.force = new Vector2(0, 0);  // reset all forces
+        if (hasGravity) {
+            this.calcPhysics(deltaTime, reference.getScene());
+            this.applyForce(deltaTime);
+        }
+        this.force = new Vector2(0, 0); // reset all forces
 
         updatePos(deltaTime);
     }
@@ -49,7 +51,9 @@ public class PhysicsGameComponent extends GameComponent {
 
     private void calcPhysics(double dt, Scene scene) {
         this.calcCollisionForce(scene);
-        this.addGravity();
+        if (hasGravity) {
+            this.addGravity();
+        }
         this.addDrag();
         //this.getForce().print();
     }
@@ -129,6 +133,14 @@ public class PhysicsGameComponent extends GameComponent {
 
     public void setCollider(Collider c) {
         this.collider = c;
+    }
+
+    public boolean hasGravity() {
+        return hasGravity;
+    }
+
+    public void setGravity(boolean hasGravity) {
+        this.hasGravity = hasGravity;
     }
 
     public void setStatic(boolean aStatic) {
