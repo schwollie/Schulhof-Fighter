@@ -23,7 +23,7 @@ public class TimeManager {
     }
 
     public void waitForTargetFPS() {
-        /*if (currentFPS < targetFPS) {
+        if (currentFPS < targetFPS) {
             return;
         }
 
@@ -32,11 +32,6 @@ public class TimeManager {
 
         try {
             Thread.sleep((long) waitTime);
-        } catch (InterruptedException e) {
-        }*/
-
-        try {
-            Thread.sleep(1);
         } catch (InterruptedException e) {
         }
 
@@ -56,7 +51,7 @@ public class TimeManager {
     }
 
     public double getDeltaTime() {
-        // Min of 5 fps -> to prevent weired physics
+        // Min of 5 fps -> to prevent weired physics due to lags
         return Math.min(deltaTime / 1000, 0.2);
     }
 
