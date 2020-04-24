@@ -1,12 +1,12 @@
 package prefabs.scenes;
 
 import display.Camera;
-import scenes.Scene;
 import logic.PlayerType;
 import logic.Vector2;
 import player.HumanPlayer;
 import prefabs.gameobjects.Background;
 import prefabs.gameobjects.Ground;
+import scenes.Scene;
 
 public abstract class StandardSceneLoader {
 

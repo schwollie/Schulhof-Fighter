@@ -3,7 +3,6 @@ package animation;
 import gameobjects.ComponentType;
 import gameobjects.GameComponent;
 import gameobjects.GameObject;
-import graphics.ImageSprite;
 import graphics.RenderManager;
 import loading.AnimationLoader;
 import logic.Dimension2D;
@@ -26,20 +25,9 @@ public class SimpleAnimationManager extends GameComponent {
         loadAnimation();
     }
 
-    public SimpleAnimationManager(ImageSprite[] images, float animationSpeed, GameObject ref) {
-        super(ref, ComponentType.AnimationController);
-        this.animationSpeed = animationSpeed;
-        loadAnimation(images);
-    }
-
     private void loadAnimation() {
         animation = AnimationLoader.loadAnimation(path, picCount, animationSpeed, size, reference, true, 100);
     }
-
-    private void loadAnimation(ImageSprite[] animImages) {
-        animation = AnimationLoader.loadAnimation(animImages, animationSpeed, reference, true, 100);
-    }
-
 
     @Override
     public void tick() {

@@ -1,49 +1,37 @@
 package player;
 
-import game.Consts;
-import gameobjects.GameObject;
-import scenes.Scene;
-import graphics.ImageSprite;
 import animation.SimpleAnimationManager;
+import gameobjects.GameObject;
 import logic.Dimension2D;
 import logic.Transform;
 import logic.Vector2;
 import physics.Collider;
 import physics.CollissionListener;
 import physics.PhysicsGameComponent;
+import scenes.Scene;
 
 public class Projectile extends GameObject implements CollissionListener {
 
-    private static ImageSprite[] sprites;
     private SimpleAnimationManager animationManager;
     private PhysicsGameComponent physics;
     private double speed;
 
-    public Projectile(String tag, Scene world, Vector2 pos, double speed) {
+    public Projectile(String tag, Scene world, Vector2 pos, double speed, double dir) {
         super(tag, world);
         this.speed = speed;
         this.transform = new Transform(pos);
         this.transform.setPosition(pos);
         this.transform.setScale(new Vector2(.2, .2));
 
+        this.transform.setScale(new Vector2(Math.abs(transform.getXScale()) * dir, transform.getYScale()));
 
         physics = new PhysicsGameComponent(this);
         this.setPhysicsComponent(physics);
-        physics.setVelocityY(2);
-        physics.setMass(.000001);
+        physics.setVelocityY(1);
+        physics.setMass(0.2);
 
-        if (sprites == null) {
-            animationManager = new SimpleAnimationManager("images/Hausperger/runSheet.png", 8, 8, new Dimension2D(50, 50), this);
-            sprites = animationManager.getAnimation().getImages();
-        } else {
-            animationManager = new SimpleAnimationManager(sprites, 8, this);
-        }
+        animationManager = new SimpleAnimationManager("images/Hausperger/projectileSheet.png", 2, 8, new Dimension2D(500, 250), this);
         this.addComponent(animationManager);
-    }
-
-    public Projectile(String tag, Scene world) {
-        super(tag, world);
-        animationManager = new SimpleAnimationManager("images/Hausperger/runSheet.png", 8, 8, Consts.hauspergerCharacterSize, this);
     }
 
     @Override

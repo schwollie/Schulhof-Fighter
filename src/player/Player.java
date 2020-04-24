@@ -1,7 +1,6 @@
 package player;
 
 import gameobjects.GameObject;
-import scenes.Scene;
 import graphics.RenderManager;
 import logic.Dimension2D;
 import logic.PlayerType;
@@ -11,6 +10,7 @@ import physics.Collider;
 import physics.CollissionListener;
 import physics.PhysicsGameComponent;
 import physics.RectCollider;
+import scenes.Scene;
 
 
 public abstract class Player extends GameObject implements CollissionListener {
@@ -21,6 +21,7 @@ public abstract class Player extends GameObject implements CollissionListener {
     protected PlayerType type;
     protected PlayerState playerState = PlayerState.Default;
     protected boolean isOnGround = false;
+    protected boolean canMove = true;
 
 
     protected HealthManager healthManager;
@@ -58,7 +59,7 @@ public abstract class Player extends GameObject implements CollissionListener {
     }
 
     // region action Handling:
-    public void takeDamage(double damage, Vector2 force) {
+    public void takeDamage(double damage, Vector2 force, GameObject damager) {
         this.healthManager.takeDamage(damage);
         this.physicsComponent.addForce(force);
 
@@ -67,8 +68,10 @@ public abstract class Player extends GameObject implements CollissionListener {
         } else {
             this.playerState = PlayerState.GotHit2;
         }
-
         this.visualPlayer.setState(playerState);
+        if (damager instanceof Player) {
+            attackManager.gotHit();
+        }
     }
 
     protected void Jump() {
@@ -89,15 +92,13 @@ public abstract class Player extends GameObject implements CollissionListener {
     }
 
     protected void kick() {
-        this.playerState = PlayerState.Kick;
-        visualPlayer.setState(playerState);
+        changePlayerState(PlayerState.Kick);
         attackManager.doKick();
         //System.out.println(this.healthManager.getHealth());
     }
 
     protected void punch() {
-        this.playerState = PlayerState.Punch;
-        visualPlayer.setState(playerState);
+        changePlayerState(PlayerState.Punch);
         attackManager.doPunch();
     }
 
@@ -105,8 +106,13 @@ public abstract class Player extends GameObject implements CollissionListener {
     }
 
     protected void shootProjectile() {
-        attackManager.shootProjectile();
+        changePlayerState(PlayerState.SpecialAttack);
+        attackManager.shoot();
+    }
 
+    private void changePlayerState(PlayerState state) {
+        this.playerState = state;
+        visualPlayer.setState(state);
     }
 
     protected void setPlayerState() {
@@ -155,5 +161,13 @@ public abstract class Player extends GameObject implements CollissionListener {
 
     public HealthManager getHealthManager() {
         return healthManager;
+    }
+
+    public boolean canMove() {
+        return canMove;
+    }
+
+    public void setCanMove(boolean canMove) {
+        this.canMove = canMove;
     }
 }

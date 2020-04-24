@@ -8,7 +8,7 @@ public class Main {
         game.initDisplay();
         game.initScene();
         game.initSceneGraphics();
-        game.loadMusic();
+        //game.loadMusic();
 
         game.start();
     }

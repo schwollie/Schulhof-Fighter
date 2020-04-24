@@ -15,13 +15,16 @@ public class AttackManager extends GameComponent implements CollissionListener, 
 
     // flags:
     private final boolean isBlocking = false;
-    private final Timer coolDownTimer = new Timer(this.reference, "coolDownTimer", 0.2);
 
     // timers
+    private final Timer coolDownTimer = new Timer(this.reference, "coolDownTimer", 1);
+    private final Timer shootTimer = new Timer(this.reference, "shootTimer", 0.35);
     private final Timer punchTimer = new Timer(this.reference, "punchTimer", 0.25);
     private final Timer kickTimer = new Timer(this.reference, "kickTimer", 0.25);
-    private boolean hasReloaded = true;
+    private final Timer hitComboTimer = new Timer(this.reference, "hitCombo", 1.5);
 
+    private boolean hasReloaded = true;
+    private int hitCombo = 0;
 
     public AttackManager(GameObject ref) {
         super(ref, ComponentType.Logic);
@@ -30,29 +33,47 @@ public class AttackManager extends GameComponent implements CollissionListener, 
             throw new Error("GameObject has to be of type Player");
         }
 
+        initTimers();
+    }
+
+    private void initTimers() {
         punchTimer.addListener(this);
         kickTimer.addListener(this);
         coolDownTimer.addListener(this);
+        hitComboTimer.addListener(this);
+        shootTimer.addListener(this);
         punchTimer.pause();
         kickTimer.pause();
         coolDownTimer.pause();
+        hitComboTimer.pause();
+        shootTimer.pause();
     }
 
     public void block() {
 
     }
 
-    public void shootProjectile() {
+    public void gotHit() {
+    }
+
+    public void shoot() {
         if (hasReloaded) {
-            Projectile p = new Projectile("p1", reference.getScene(), reference.getTransform().getPosition(), getDirection() * 1.5);
-            reference.getScene().addGameObjectNow(p);
             hasReloaded = false;
             coolDownTimer.resume();
+            shootTimer.resume();
+            ((Player) reference).setCanMove(false);
         }
+    }
+
+    public void shootProjectile() {
+        Projectile p = new Projectile("p1", reference.getScene(), reference.getTransform().getPosition(), getDirection() * 1.5, getDirection());
+        reference.getScene().addGameObject(p);
+        ((Player) reference).setCanMove(true);
     }
 
     public void doKick() {
         kickTimer.resume();
+        ((Player) reference).setCanMove(false);
     }
 
     public void doKickHit() {
@@ -61,6 +82,7 @@ public class AttackManager extends GameComponent implements CollissionListener, 
 
     public void doPunch() {
         punchTimer.resume();
+        ((Player) reference).setCanMove(false);
     }
 
     public void doPunchHit() {
@@ -69,13 +91,9 @@ public class AttackManager extends GameComponent implements CollissionListener, 
 
     private void doAttack(Vector2 range, Vector2 offset, double damage, Vector2 force) {
         Collider[] cs = getCollidersInRange(range, offset);
-
-        for (Collider c : cs) {
-            if (c.getGameObject() instanceof Player && !c.getGameObject().equals(reference)) {
-                Player other = (Player) c.getGameObject();
-                other.takeDamage(damage, new Vector2(getDirection() * force.getX(), force.getY()));
-            }
-        }
+        force = testForComboHits(force);
+        dealDamageToColliders(cs, damage, force);
+        ((Player) reference).setCanMove(true);
 
         /*ParticleSystem p = new ParticleSystem(reference, new XRange(0.5, 2), 1, new XRange(100, 100));
         p.setRelativeTransform(new Transform(new Vector2(.5*getDirection(),0)));
@@ -85,6 +103,26 @@ public class AttackManager extends GameComponent implements CollissionListener, 
         p.setGravityFactor(new XRange(0.1, 0.2));
         p.start();
         reference.addComponent(p);*/
+    }
+
+    private void dealDamageToColliders(Collider[] cs, double damage, Vector2 force) {
+        for (Collider c : cs) {
+            if (c.getGameObject() instanceof Player && !c.getGameObject().equals(reference)) {
+                Player other = (Player) c.getGameObject();
+                other.takeDamage(damage, new Vector2(getDirection() * force.getX(), force.getY()), reference);
+                hitCombo++;
+            }
+        }
+    }
+
+    private Vector2 testForComboHits(Vector2 force) {
+        if (hitCombo >= 2) { //3 hits
+            hitCombo = 0;
+            force = force.scalarMult(50);
+        } else {
+            hitComboTimer.resetTimer();
+        }
+        return force;
     }
 
     private Collider[] getCollidersInRange(Vector2 range, Vector2 _offset) {
@@ -109,9 +147,15 @@ public class AttackManager extends GameComponent implements CollissionListener, 
 
     @Override
     public void tick() {
+        updateTimers();
+    }
+
+    public void updateTimers() {
         punchTimer.tick();
         kickTimer.tick();
         coolDownTimer.tick();
+        hitComboTimer.tick();
+        shootTimer.tick();
     }
 
     @Override
@@ -121,18 +165,31 @@ public class AttackManager extends GameComponent implements CollissionListener, 
 
     @Override
     public void onTimerStops(String timerName) {
-        if (timerName.equals("punchTimer")) {
-            doPunchHit();
-            punchTimer.resetTimer();
-            punchTimer.pause();
-        } else if (timerName.equals("kickTimer")) {
-            doKickHit();
-            kickTimer.resetTimer();
-            kickTimer.pause();
-        } else if (timerName.equals("coolDownTimer")) {
-            hasReloaded = true;
-            coolDownTimer.resetTimer();
-            coolDownTimer.pause();
+        switch (timerName) {
+            case "punchTimer":
+                doPunchHit();
+                handleTimer(punchTimer);
+                break;
+            case "kickTimer":
+                doKickHit();
+                handleTimer(kickTimer);
+                break;
+            case "coolDownTimer":
+                handleTimer(coolDownTimer);
+                hasReloaded = true;
+                break;
+            case "shootTimer":
+                shootProjectile();
+                handleTimer(shootTimer);
+                break;
+            case "hitCombo":
+                hitCombo = 0;
+                break;
         }
+    }
+
+    private void handleTimer(Timer timer) {
+        timer.resetTimer();
+        timer.pause();
     }
 }

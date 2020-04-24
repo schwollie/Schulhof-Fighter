@@ -1,9 +1,9 @@
 package player;
 
-import scenes.Scene;
 import input.PlayerKeyListener;
 import logic.PlayerType;
 import logic.Vector2;
+import scenes.Scene;
 
 public class HumanPlayer extends Player implements PlayerKeyListener {
 
@@ -13,18 +13,24 @@ public class HumanPlayer extends Player implements PlayerKeyListener {
 
     @Override
     public void keyRight() {
-        this.walk(1);
+        if (canMove) {
+            this.walk(1);
+        }
     }
 
     @Override
     public void keyLeft() {
-        this.walk(-1);
+        if (canMove) {
+            this.walk(-1);
+        }
     }
 
     // jumping
     @Override
     public void keyUp() {
-        this.Jump();
+        if (canMove) {
+            this.Jump();
+        }
     }
 
     @Override

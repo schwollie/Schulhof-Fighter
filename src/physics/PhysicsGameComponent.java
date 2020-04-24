@@ -1,6 +1,6 @@
 package physics;
 
-import game.*;
+import game.Consts;
 import gameobjects.ComponentType;
 import gameobjects.GameComponent;
 import gameobjects.GameObject;
@@ -99,7 +99,9 @@ public class PhysicsGameComponent extends GameComponent {
     }
 
     private void applyForce(double dt) {
-        this.velocity = velocity.add(this.force.scalarMult((1 / this.mass)).scalarMult(dt));
+        double m = (1.0 / this.mass);
+        Vector2 f = this.force.scalarMult(dt);
+        this.velocity = velocity.add(f);
     }
 
     private void updateTransform(double dt) {

@@ -1,9 +1,9 @@
 package loading;
 
 import animation.AnimSpecs;
+import animation.Animation;
 import game.Consts;
 import gameobjects.GameObject;
-import animation.Animation;
 import graphics.ImageSprite;
 import logic.Dimension2D;
 import logic.PlayerType;
@@ -20,7 +20,7 @@ public abstract class AnimationLoader {
 
         File f = new File(path);
         if (!f.exists()) {
-            System.out.println("File does not exist : " + path + " -> using default path instead");
+            System.err.println("File does not exist : " + path + " -> using default path instead");
             animSpec = getAnimSpecs(PlayerState.Default, type);
             path = AnimationLoader.getPath(type, animSpec);
         }
@@ -41,7 +41,7 @@ public abstract class AnimationLoader {
 
         File f = new File(path);
         if (!f.exists()) {
-            System.out.println("File does not exist : " + path + " -> TODO : using default path instead");
+            System.err.println("File does not exist : " + path + " -> TODO : using default path instead");
         }
 
         animSpec.loopAnim = loopAnim;
