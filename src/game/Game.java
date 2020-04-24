@@ -4,7 +4,6 @@ import display.Camera;
 import display.Window;
 import loading.SpriteLoader;
 import logic.PlayerType;
-import mainmenu.graphics.MenuCanvas;
 import prefabs.scenes.StandardSceneLoader;
 
 import java.awt.*;
@@ -17,6 +16,9 @@ public class Game {
     // World
     public Scene scene;
     public SceneManager sceneManager;
+
+    //music
+    private AudioManager audioManager;
 
     //MAIN MENU
     //private MenuCanvas mainmenu;
@@ -61,10 +63,15 @@ public class Game {
             scene.tick();
 
             //redraw scene
-            EventQueue.invokeLater(((Camera)scene.getCam()).getCanvas()::repaint);
+            EventQueue.invokeLater(((Camera) scene.getCam()).getCanvas()::repaint);
 
             //System.out.println(scene.getTimeManager().getCurrentFPS());
             //mainmenu.tick(fpsTracker.getDeltaTime(), inputManager.getMousePosition());
         }
+    }
+
+    public void loadMusic() {
+        audioManager = new AudioManager("test.wav");
+        audioManager.play();
     }
 }
