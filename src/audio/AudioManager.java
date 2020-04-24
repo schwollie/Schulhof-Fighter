@@ -1,4 +1,6 @@
-package game;
+package audio;
+
+import game.Consts;
 
 import javax.sound.sampled.*;
 import java.io.File;

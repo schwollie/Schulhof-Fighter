@@ -1,5 +1,6 @@
 package game;
 
+import audio.AudioManager;
 import display.Camera;
 import display.Window;
 import loading.SpriteLoader;
