@@ -28,6 +28,9 @@ public abstract class Consts {
     // image constants and file paths
     public static final String imageSrc = "images/", imageParticlesSrc = imageSrc + "particles/";
 
+    //default music path
+    public static final String defaultMusicPath = "music/";
+
     // animation sheet paths:
     public static final String defaultSheet = "defaultSheet.png";
     public static final int defaultPicCount = 1;
