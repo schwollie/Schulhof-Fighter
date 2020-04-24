@@ -1,8 +1,8 @@
 package animation;
 
-import game.ComponentType;
-import game.GameComponent;
-import game.GameObject;
+import gameobjects.ComponentType;
+import gameobjects.GameComponent;
+import gameobjects.GameObject;
 import graphics.ImageSprite;
 import graphics.RenderManager;
 import loading.AnimationLoader;

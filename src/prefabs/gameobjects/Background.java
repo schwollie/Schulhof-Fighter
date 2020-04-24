@@ -1,7 +1,7 @@
 package prefabs.gameobjects;
 
-import game.GameObject;
-import game.Scene;
+import gameobjects.GameObject;
+import scenes.Scene;
 import graphics.Anchor;
 import graphics.ImageSprite;
 import logic.Vector2;

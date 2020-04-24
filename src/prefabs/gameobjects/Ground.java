@@ -1,8 +1,7 @@
 package prefabs.gameobjects;
 
-import game.GameObject;
-import game.Scene;
-import graphics.RectSprite;
+import gameobjects.GameObject;
+import scenes.Scene;
 import logic.Dimension2D;
 import logic.Vector2;
 import physics.PhysicsGameComponent;

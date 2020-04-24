@@ -1,16 +1,13 @@
 package graphics;
 
 import display.Camera;
-import game.GameObject;
+import gameobjects.GameObject;
 import loading.SpriteLoader;
 import logic.Dimension2D;
 import logic.Transform;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 
 public class ImageSprite extends Sprite {

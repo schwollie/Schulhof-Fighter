@@ -3,8 +3,8 @@ package display;
 import components.GuiCanvas;
 import components.ScreenTransform;
 import game.Consts;
-import game.GameObject;
-import game.Scene;
+import gameobjects.GameObject;
+import scenes.Scene;
 import logic.Dimension2D;
 import logic.Transform;
 import logic.Vector2;
@@ -12,7 +12,6 @@ import settings.Settings;
 
 import java.awt.*;
 import java.io.Serializable;
-import java.util.HashMap;
 
 public class Camera extends GameObject implements Serializable {
 

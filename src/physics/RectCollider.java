@@ -1,6 +1,6 @@
 package physics;
 
-import game.GameObject;
+import gameobjects.GameObject;
 import graphics.RectSprite;
 import graphics.RenderManager;
 import logic.Dimension2D;

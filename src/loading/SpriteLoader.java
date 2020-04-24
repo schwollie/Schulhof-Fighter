@@ -1,5 +1,8 @@
 package loading;
 
+import game.Consts;
+import logic.ListChopper;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,13 +19,28 @@ public class SpriteLoader {
         File[] files = new File("images/").listFiles();
         ArrayList<File> allFiles = getAllFiles(files);
 
-        for (File f: allFiles) {
+        int threadNum = Consts.cores;
+        ArrayList<ArrayList<File>> threadFiles = ListChopper.chopIntoParts(allFiles, threadNum);
+
+        ArrayList<LoadingThread> threads = new ArrayList<LoadingThread>();
+
+        for (int i = 0; i < threadNum; i++) {
+            LoadingThread t = new LoadingThread(threadFiles.get(i));
+            threads.add(t);
+            t.start();
+        }
+
+
+        for (int i = 0; i < threadNum; i++) {
+            LoadingThread t = threads.get(i);
+
             try {
-                BufferedImage img = ImageIO.read(f);
-                images.put(f.getPath(), img);
-            } catch (IOException e) {
-                System.out.println("Loading Error");
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+
+            images.putAll(t.getOutputImgs());
         }
     }
 
@@ -44,7 +62,31 @@ public class SpriteLoader {
 
         return SpriteLoader.images.get(filepath);
     }
+}
 
+class LoadingThread extends Thread {
 
+    ArrayList<File> files;
+    HashMap<String, BufferedImage> outputImgs = new HashMap<>();
 
+    public LoadingThread(ArrayList<File> files) {
+        this.files = files;
+    }
+
+    @Override
+    public void run() {
+        for (File f: this.files) {
+            try {
+                BufferedImage img = ImageIO.read(f);
+                outputImgs.put(f.getPath(), img);
+            } catch (IOException e) {
+                System.out.println("Loading Error");
+            }
+        }
+
+    }
+
+    public HashMap<String, BufferedImage> getOutputImgs() {
+        return outputImgs;
+    }
 }

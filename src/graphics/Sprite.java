@@ -1,9 +1,9 @@
 package graphics;
 
 import display.Camera;
-import game.ComponentType;
-import game.GameComponent;
-import game.GameObject;
+import gameobjects.ComponentType;
+import gameobjects.GameComponent;
+import gameobjects.GameObject;
 import logic.Vector2;
 
 import java.awt.*;

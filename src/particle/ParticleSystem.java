@@ -1,9 +1,9 @@
 package particle;
 
 import display.Camera;
-import game.ComponentType;
-import game.GameComponent;
-import game.GameObject;
+import gameobjects.ComponentType;
+import gameobjects.GameComponent;
+import gameobjects.GameObject;
 import graphics.Drawable;
 import graphics.ImageSprite;
 import graphics.RenderManager;

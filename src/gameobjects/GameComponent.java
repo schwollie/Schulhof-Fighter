@@ -1,4 +1,4 @@
-package game;
+package gameobjects;
 
 import graphics.RenderManager;
 import logic.Transform;

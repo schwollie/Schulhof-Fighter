@@ -1,7 +1,7 @@
 package player;
 
-import game.GameObject;
-import game.Scene;
+import gameobjects.GameObject;
+import scenes.Scene;
 import graphics.RenderManager;
 import logic.Dimension2D;
 import logic.PlayerType;

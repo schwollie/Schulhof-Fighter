@@ -1,8 +1,8 @@
 package player;
 
-import game.ComponentType;
-import game.GameComponent;
-import game.GameObject;
+import gameobjects.ComponentType;
+import gameobjects.GameComponent;
+import gameobjects.GameObject;
 
 public class HealthManager extends GameComponent {
 

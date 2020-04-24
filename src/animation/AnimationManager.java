@@ -1,8 +1,8 @@
 package animation;
 
-import game.ComponentType;
-import game.GameComponent;
-import game.GameObject;
+import gameobjects.ComponentType;
+import gameobjects.GameComponent;
+import gameobjects.GameObject;
 import graphics.RenderManager;
 import loading.AnimationLoader;
 import logic.PlayerType;
@@ -56,6 +56,9 @@ public class AnimationManager extends GameComponent {
 
         Animation jumpAnim = AnimationLoader.loadPlayerAnimation(playerType, PlayerState.Jump, reference, true, 2);
         animations.put(PlayerState.Jump, jumpAnim);
+
+        Animation deathAnim = AnimationLoader.loadPlayerAnimation(playerType, PlayerState.Death, reference, true, 10);
+        animations.put(PlayerState.Death, deathAnim);
 
         currentAnim = defaultAnim;
         lastAnim = defaultAnim;

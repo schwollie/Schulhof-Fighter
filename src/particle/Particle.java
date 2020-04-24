@@ -2,6 +2,8 @@ package particle;
 
 import display.Camera;
 import game.*;
+import gameobjects.ComponentType;
+import gameobjects.GameComponent;
 import graphics.Drawable;
 import logic.Transform;
 import logic.Vector2;

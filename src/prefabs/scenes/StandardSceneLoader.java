@@ -1,7 +1,7 @@
 package prefabs.scenes;
 
 import display.Camera;
-import game.Scene;
+import scenes.Scene;
 import logic.PlayerType;
 import logic.Vector2;
 import player.HumanPlayer;

@@ -1,5 +1,6 @@
-package game;
+package gameobjects;
 
+import scenes.Scene;
 import graphics.RenderManager;
 import logic.Transform;
 import physics.PhysicsGameComponent;

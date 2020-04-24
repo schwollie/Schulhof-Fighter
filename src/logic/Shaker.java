@@ -3,9 +3,9 @@ package logic;
 
 // The Shaker gives an offset for the current Time -> can be used for Camera Shaking
 
-import game.ComponentType;
-import game.GameComponent;
-import game.GameObject;
+import gameobjects.ComponentType;
+import gameobjects.GameComponent;
+import gameobjects.GameObject;
 import time.TimeEventListener;
 import time.Timer;
 

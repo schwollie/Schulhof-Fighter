@@ -1,13 +1,10 @@
 package player;
 
-import game.ComponentType;
-import game.GameComponent;
-import game.GameObject;
+import gameobjects.ComponentType;
+import gameobjects.GameComponent;
+import gameobjects.GameObject;
 import logic.Dimension2D;
-import logic.Transform;
 import logic.Vector2;
-import logic.XRange;
-import particle.ParticleSystem;
 import physics.Collider;
 import physics.CollissionListener;
 import physics.RectCollider;

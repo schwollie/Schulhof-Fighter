@@ -1,6 +1,6 @@
 package player;
 
-import game.Scene;
+import scenes.Scene;
 import logic.PlayerType;
 import logic.Vector2;
 

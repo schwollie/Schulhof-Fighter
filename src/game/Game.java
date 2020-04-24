@@ -4,8 +4,9 @@ import display.Camera;
 import display.Window;
 import loading.SpriteLoader;
 import logic.PlayerType;
-import mainmenu.graphics.MenuCanvas;
 import prefabs.scenes.StandardSceneLoader;
+import scenes.Scene;
+import scenes.SceneManager;
 
 import java.awt.*;
 

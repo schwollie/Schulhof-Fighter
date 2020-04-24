@@ -1,8 +1,8 @@
 package player;
 
 import game.Consts;
-import game.GameObject;
-import game.Scene;
+import gameobjects.GameObject;
+import scenes.Scene;
 import graphics.ImageSprite;
 import animation.SimpleAnimationManager;
 import logic.Dimension2D;

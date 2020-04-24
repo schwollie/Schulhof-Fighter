@@ -1,8 +1,12 @@
 package physics;
 
 import game.*;
+import gameobjects.ComponentType;
+import gameobjects.GameComponent;
+import gameobjects.GameObject;
 import graphics.RenderManager;
 import logic.Vector2;
+import scenes.Scene;
 
 public class PhysicsGameComponent extends GameComponent {
 

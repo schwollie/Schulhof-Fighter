@@ -1,11 +1,12 @@
-package game;
+package scenes;
 
 import components.GuiCanvas;
 import display.Camera;
+import game.Consts;
+import gameobjects.GameObject;
 import graphics.RenderManager;
 import input.InputManager;
 import logic.Dimension2D;
-import physics.Collider;
 import physics.PhysicsGameComponent;
 import player.Player;
 import prefabs.HUD.GameHUD;
@@ -60,8 +61,8 @@ public class Scene implements Serializable {
         physicsComponents.clear();
 
         for (GameObject g : gameObjects) {
-            if (g.physicsComponent != null) {
-                physicsComponents.add(g.physicsComponent);
+            if (g.getPhysicsComponent() != null) {
+                physicsComponents.add(g.getPhysicsComponent());
             }
         }
 
@@ -72,8 +73,8 @@ public class Scene implements Serializable {
         physicsComponents.clear();
 
         for (GameObject g : gameObjects) {
-            if (g.physicsComponent != null && g instanceof Player) {
-                physicsComponents.add(g.physicsComponent);
+            if (g.getPhysicsComponent() != null && g instanceof Player) {
+                physicsComponents.add(g.getPhysicsComponent());
             }
         }
 
@@ -82,7 +83,7 @@ public class Scene implements Serializable {
 
     public GameObject getCam() {
         for (GameObject g : gameObjects) {
-            if (g.tag.equals("Camera")) {
+            if (g.getTag().equals("Camera")) {
                 return g;
             }
         }

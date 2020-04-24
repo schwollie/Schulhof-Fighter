@@ -1,8 +1,8 @@
 package time;
 
-import game.ComponentType;
-import game.GameComponent;
-import game.GameObject;
+import gameobjects.ComponentType;
+import gameobjects.GameComponent;
+import gameobjects.GameObject;
 
 import java.util.ArrayList;
 

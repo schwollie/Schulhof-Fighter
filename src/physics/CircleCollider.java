@@ -1,6 +1,6 @@
 package physics;
 
-import game.GameObject;
+import gameobjects.GameObject;
 import graphics.CircleSprite;
 import graphics.RenderManager;
 import logic.Vector2;

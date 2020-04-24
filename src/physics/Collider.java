@@ -1,8 +1,8 @@
 package physics;
 
-import game.ComponentType;
-import game.GameComponent;
-import game.GameObject;
+import gameobjects.ComponentType;
+import gameobjects.GameComponent;
+import gameobjects.GameObject;
 import graphics.Sprite;
 import graphics.RenderManager;
 import logic.Transform;

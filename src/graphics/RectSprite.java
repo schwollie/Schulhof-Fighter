@@ -1,7 +1,7 @@
 package graphics;
 
 import display.Camera;
-import game.GameObject;
+import gameobjects.GameObject;
 import logic.Dimension2D;
 import logic.Transform;
 import logic.Vector2;

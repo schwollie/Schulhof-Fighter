@@ -2,7 +2,7 @@ package loading;
 
 import animation.AnimSpecs;
 import game.Consts;
-import game.GameObject;
+import gameobjects.GameObject;
 import animation.Animation;
 import graphics.ImageSprite;
 import logic.Dimension2D;
@@ -65,7 +65,7 @@ public abstract class AnimationLoader {
 
 
     private static AnimSpecs getAnimSpecs(PlayerState type, PlayerType pType) {
-        AnimSpecs specs = null;
+        AnimSpecs specs;
         switch (type) {
             case Default:
                 specs = new AnimSpecs(Consts.defaultSheet, Consts.defaultPicCount, Consts.defaultAnimSpeed, getSpriteSize(pType));
@@ -96,6 +96,9 @@ public abstract class AnimationLoader {
                 break;
             case GotHit2:
                 specs = new AnimSpecs(Consts.gotHit2Sheet, Consts.gotHit2PicCount, Consts.gotHit2AnimSpeed, getSpriteSize(pType));
+                break;
+            case Death:
+                specs = new AnimSpecs(Consts.defaultSheet, Consts.deathSheetCount, Consts.deathSheetSpeed, getSpriteSize(pType));
                 break;
             default:
                 throw new Error("NO SHEET FOUND: " + type);

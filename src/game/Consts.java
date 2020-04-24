@@ -7,6 +7,10 @@ import java.awt.*;
 
 public abstract class Consts {
 
+    // System
+    public static int cores = Runtime.getRuntime().availableProcessors();
+
+    // Window
     public static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     public static final int windowWidth = (int) (screenSize.getWidth() / 2);
     public static final int windowHeight = (int) (screenSize.getHeight() / 2);
@@ -28,6 +32,14 @@ public abstract class Consts {
     public static final String defaultSheet = "defaultSheet.png";
     public static final int defaultPicCount = 1;
     public static final float defaultAnimSpeed = 1f; // in fps
+
+    public static final String runSheet = "runSheet.png";
+    public static final int runPicCount = 8;
+    public static final float runAnimSpeed = 8f; // in fps
+
+    public static final String jumpSheet = "jumpSheet.png";
+    public static final int jumpSheetPicCount = 1;
+    public static final float jumpAnimSpeed = 1f; // in fps
 
     public static final String kickSheet = "kickSheet.png";
     public static final int kickSheetPicCount = 5;
@@ -57,13 +69,9 @@ public abstract class Consts {
     public static final int gotHit2PicCount = 1;
     public static final float gotHit2AnimSpeed = 4f; // in fps
 
-    public static final String runSheet = "runSheet.png";
-    public static final int runPicCount = 8;
-    public static final float runAnimSpeed = 8f; // in fps
-
-    public static final String jumpSheet = "jumpSheet.png";
-    public static final int jumpSheetPicCount = 1;
-    public static final float jumpAnimSpeed = 1f; // in fps
+    public static final String deathSheet = "deathSheet.png";
+    public static final int deathSheetCount = 2;
+    public static final float deathSheetSpeed = 2f; // in fps
 
     // default Character:
     public static final String defaultCharacter = "defaultCharacter/";

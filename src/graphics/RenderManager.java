@@ -9,7 +9,7 @@ public class RenderManager {
 
     private static final int maxLayers = 100;
 
-    private HashSet<Drawable>[] spriteLayers = new HashSet[maxLayers];
+    private final HashSet<Drawable>[] spriteLayers = new HashSet[maxLayers];
 
     public RenderManager() {
         for (int l = 0; l < maxLayers; l++) {
