@@ -1,8 +1,11 @@
-package graphics;
+package animation;
 
 import game.ComponentType;
 import game.GameComponent;
 import game.GameObject;
+import graphics.ImageSprite;
+import graphics.RenderManager;
+import loading.AnimationLoader;
 import logic.Dimension2D;
 import player.PlayerState;
 

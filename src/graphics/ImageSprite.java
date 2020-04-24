@@ -2,6 +2,7 @@ package graphics;
 
 import display.Camera;
 import game.GameObject;
+import loading.SpriteLoader;
 import logic.Dimension2D;
 import logic.Transform;
 
@@ -64,12 +65,8 @@ public class ImageSprite extends Sprite {
 
     public void loadImage() {
         if (!visible) {
-            try {
-                img = ImageIO.read(new File(filename));
-                visible = true;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            img = SpriteLoader.getFromFilePath(filename);
+            visible = true;
         }
     }
 

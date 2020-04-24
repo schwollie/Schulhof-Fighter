@@ -5,6 +5,7 @@ import components.GuiComponent;
 import components.ScreenTransform;
 import display.Camera;
 import graphics.Anchor;
+import loading.SpriteLoader;
 import logic.Dimension2D;
 import logic.Transform;
 import logic.Vector2;
@@ -84,11 +85,7 @@ public class UiImage extends GuiComponent {
     }
 
     public void loadImage() {
-        try {
-            srcImg = ImageIO.read(new File(filename));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        srcImg = SpriteLoader.getFromFilePath(filename);
     }
 
     private BufferedImage rescaleImage(int width, int height) {

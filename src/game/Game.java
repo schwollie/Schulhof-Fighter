@@ -2,6 +2,7 @@ package game;
 
 import display.Camera;
 import display.Window;
+import loading.SpriteLoader;
 import logic.PlayerType;
 import mainmenu.graphics.MenuCanvas;
 import prefabs.scenes.StandardSceneLoader;
@@ -21,6 +22,9 @@ public class Game {
     //private MenuCanvas mainmenu;
 
     public void initScene() {
+        // load all into ram
+        SpriteLoader.loadAll();
+
         sceneManager = new SceneManager();
         scene = StandardSceneLoader.getStandardScene(PlayerType.Hausperger, PlayerType.Hausperger);
     }

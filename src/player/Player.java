@@ -15,7 +15,7 @@ import physics.RectCollider;
 
 public abstract class Player extends GameObject implements CollissionListener {
 
-    public static final double maxHealth = 10;
+    public static final double maxHealth = 100;
 
     protected VisualPlayer visualPlayer;
     protected PlayerType type;

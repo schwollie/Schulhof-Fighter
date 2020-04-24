@@ -7,7 +7,7 @@ import components.elements.UiImage;
 import game.ComponentType;
 import game.GameComponent;
 import game.GameObject;
-import graphics.AnimationManager;
+import animation.AnimationManager;
 import graphics.RenderManager;
 import logic.PlayerType;
 import prefabs.HUD.GameHUD;

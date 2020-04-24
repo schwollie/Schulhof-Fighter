@@ -114,6 +114,7 @@ public class AttackManager extends GameComponent implements CollissionListener, 
     public void tick() {
         punchTimer.tick();
         kickTimer.tick();
+        coolDownTimer.tick();
     }
 
     @Override

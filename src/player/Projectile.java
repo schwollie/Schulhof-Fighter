@@ -4,7 +4,7 @@ import game.Consts;
 import game.GameObject;
 import game.Scene;
 import graphics.ImageSprite;
-import graphics.SimpleAnimationManager;
+import animation.SimpleAnimationManager;
 import logic.Dimension2D;
 import logic.Transform;
 import logic.Vector2;
