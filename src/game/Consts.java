@@ -12,10 +12,10 @@ public abstract class Consts {
 
     // Window
     public static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public static final int windowWidth = (int) (screenSize.getWidth() / 2);
-    public static final int windowHeight = (int) (screenSize.getHeight() / 2);
-    public static final boolean Fullscreen = false;
-    public static final double ratio = (double) windowWidth / windowHeight;
+    public static int windowWidth = (int) (screenSize.getWidth() / 2);
+    public static int windowHeight = (int) (screenSize.getHeight() / 2);
+    public static boolean Fullscreen = false;
+    public static double ratio = (double) windowWidth / windowHeight;
 
     // main menu
     public static int bubblesAmount = 100;
@@ -82,6 +82,9 @@ public abstract class Consts {
 
     // Hausperger
     public static final Dimension2D hauspergerCharacterSize = new Dimension2D(500, 500);
+
+    // Sippl
+    public static final Dimension2D sipplCharacterSize = new Dimension2D(500, 500);
 
     // -- Particles --
     // Punch

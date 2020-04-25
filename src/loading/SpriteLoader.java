@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SpriteLoader {
+public abstract class SpriteLoader {
 
 
     private static HashMap<String, BufferedImage> images = new HashMap<>();

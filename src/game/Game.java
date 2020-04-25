@@ -26,10 +26,11 @@ public class Game {
     //MAIN MENU
     //private MenuCanvas mainmenu;
 
-    public void initScene() {
-        // load all into ram
+    public void loadSprites() {
         SpriteLoader.loadAll();
+    }
 
+    public void initScene() {
         sceneManager = new SceneManager();
         scene = StandardSceneLoader.getStandardScene(PlayerType.Hausperger, PlayerType.Hausperger);
     }
