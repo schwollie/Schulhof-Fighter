@@ -123,20 +123,17 @@ public class UiImage extends GuiComponent {
             y = y-yOffset;
 
 
-
-            //set rotation
-            g.translate(-x, -y);
-            g.rotate(rot);
-            g.translate(x, y);
-
-
+            // rot
+            AffineTransform t = new AffineTransform();
+            t.setToRotation(rot, x+xOffset, y+yOffset);
+            g.setTransform(t);
 
             g.drawImage(croppedImg, x, y, width, height, null);
 
+            t = new AffineTransform();
+            t.setToRotation(0, x, y);
+            g.setTransform(t);
 
-            g.translate(-x, -y);
-            g.rotate(-rot);
-            g.translate(x, y);
         }
     }
 
@@ -146,6 +143,10 @@ public class UiImage extends GuiComponent {
 
     public void setRot(double rot) {
         this.rot = rot;
+    }
+
+    public void setAnchor(Anchor anchor) {
+        this.anchor = anchor;
     }
 
     // region not used interface methods:

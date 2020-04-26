@@ -68,7 +68,8 @@ public class GameHUD extends GuiCanvas {
 
         p2Panel.addTransform(new ScreenTransform(new Vector2(1,0), new Vector2(-1,1)));
 
-        //this.addGuiComponent(new ClockPointer(this, staminaT, "images/Gui/pointer.png"));
+        ScreenTransform t = new ScreenTransform(new Vector2(0.287,0.055), new Vector2(.02,0));
+        this.addGuiComponent(new ClockPointer(this, t, "images/Gui/pointer.png"));
 
     }
 

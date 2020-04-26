@@ -26,12 +26,15 @@ public class ClockPointer extends GuiComponent {
     public ClockPointer(GuiCanvas parent, ScreenTransform screenTransform, String image) {
         super(parent, screenTransform);
         img = new UiImage(parent, this.screenTransform, image);
-        setRot(10);
+
+        img.setAnchor(new Anchor(0.5, 0.15));
     }
 
 
     @Override
     public void Render(Graphics2D g, Camera cam) {
+        setRot(progress);
+        progress += 0.001;
         img.Render(g, cam);
     }
 
@@ -62,7 +65,6 @@ public class ClockPointer extends GuiComponent {
 
     @Override
     public void onHover() {
-
     }
     // endregion
 }
