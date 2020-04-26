@@ -4,18 +4,18 @@ import components.GuiCanvas;
 import components.GuiComponent;
 import components.ScreenTransform;
 import display.Camera;
-import graphics.Anchor;
+import graphics.SpecifiedAnchor;
 import loading.SpriteLoader;
+import logic.Anchor;
 import logic.Dimension2D;
 import logic.Transform;
 import logic.Vector2;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class UiImage extends GuiComponent {
 
@@ -23,10 +23,14 @@ public class UiImage extends GuiComponent {
     private BufferedImage croppedImg;
     private String filename;
     private Dimension2D boundaries;
-    private Anchor anchor = Anchor.TopLeft;
+
+    private Anchor anchor = new Anchor(SpecifiedAnchor.TopLeft);
+
     private double ratio;
     private Rectangle2D.Double cropR = new Rectangle2D.Double(0,0,1,1);
     private Vector2 offset = new Vector2(0,0);
+
+    private double rot = 0;
 
     public UiImage(GuiCanvas parent, ScreenTransform s, String filename) {
         super(parent, s);
@@ -64,6 +68,8 @@ public class UiImage extends GuiComponent {
     }
 
     private void updateCroppedImg() {
+        if (rot!=0) { }
+
         if (cropR!=null) {
             int x = (int)(cropR.getX() * boundaries.getWidth());
             int y = (int)(cropR.getY() * boundaries.getHeight());
@@ -110,16 +116,27 @@ public class UiImage extends GuiComponent {
 
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this.transparentColor.getAlpha()));
 
-            // center of image is on x, y
-            switch (anchor) {
-                case Center -> g.drawImage(croppedImg, x - width / 2, y - height / 2, width, height, null);
-                case BottomLeft -> g.drawImage(croppedImg, x, y - height, width, height, null);
-                case BottomRight -> g.drawImage(croppedImg, x - width, y - height, width, height, null);
-                case TopLeft -> g.drawImage(croppedImg, x, y, width, height, null);
-                case TopRight -> g.drawImage(croppedImg, x - width, y, width, height, null);
-                default -> throw new Error("No Anchor on ImageSprite is specified!");
-            }
+            int xOffset = (int) this.anchor.getXOffset(width);
+            int yOffset = (int) this.anchor.getYOffset(height);
 
+            x = x-xOffset;
+            y = y-yOffset;
+
+
+
+            //set rotation
+            g.translate(-x, -y);
+            g.rotate(rot);
+            g.translate(x, y);
+
+
+
+            g.drawImage(croppedImg, x, y, width, height, null);
+
+
+            g.translate(-x, -y);
+            g.rotate(-rot);
+            g.translate(x, y);
         }
     }
 
@@ -127,8 +144,8 @@ public class UiImage extends GuiComponent {
         this.offset = f;
     }
 
-    public void setAnchor(Anchor anchor) {
-        this.anchor = anchor;
+    public void setRot(double rot) {
+        this.rot = rot;
     }
 
     // region not used interface methods:
@@ -155,6 +172,10 @@ public class UiImage extends GuiComponent {
     @Override
     public void onHover() {
 
+    }
+
+    public double getRot() {
+        return rot;
     }
     // endregion
 }

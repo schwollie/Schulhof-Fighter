@@ -1,5 +1,5 @@
 package graphics;
 
-public enum Anchor {
+public enum SpecifiedAnchor {
     TopLeft, BottomLeft, TopRight, BottomRight, Center
 }

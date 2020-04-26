@@ -3,6 +3,7 @@ package graphics;
 import display.Camera;
 import gameobjects.GameObject;
 import loading.SpriteLoader;
+import logic.Anchor;
 import logic.Dimension2D;
 import logic.Transform;
 
@@ -15,7 +16,6 @@ public class ImageSprite extends Sprite {
     private BufferedImage img;
     private String filename;
     private Dimension2D boundaries;  // array with length 2 [width, height]
-    private Anchor anchor = Anchor.Center;
 
     public ImageSprite(GameObject reference, double resolution, String filename) {
         super(reference);
@@ -24,6 +24,7 @@ public class ImageSprite extends Sprite {
         loadImage();
         img = rescaleImage((int)(img.getWidth()*resolution), (int)(img.getHeight()*resolution));
         this.boundaries = new Dimension2D(img.getWidth(), img.getHeight());
+        this.anchor = new Anchor(SpecifiedAnchor.Center);
     }
 
     public ImageSprite(GameObject reference, double resolution, String filename, Anchor anchor) {
@@ -43,6 +44,7 @@ public class ImageSprite extends Sprite {
         loadImage();
         img = rescaleImage((int) boundaries.getWidth(), (int) boundaries.getHeight());
         this.boundaries = boundaries;
+        this.anchor = new Anchor(SpecifiedAnchor.Center);
     }
 
     public ImageSprite(GameObject reference, BufferedImage image) {
@@ -50,6 +52,7 @@ public class ImageSprite extends Sprite {
         this.visible = true;
         img = image;
         this.boundaries = new Dimension2D(img.getWidth(), img.getHeight());
+        this.anchor = new Anchor(SpecifiedAnchor.Center);
     }
 
     public ImageSprite(GameObject reference, Dimension2D boundaries, BufferedImage image, String filename) {
@@ -58,6 +61,7 @@ public class ImageSprite extends Sprite {
         this.filename = filename;
         this.boundaries = boundaries;
         img = rescaleImage((int) boundaries.getWidth(), (int) boundaries.getHeight());
+        this.anchor = new Anchor(SpecifiedAnchor.Center);
     }
 
     public void loadImage() {
@@ -105,26 +109,10 @@ public class ImageSprite extends Sprite {
 
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this.alpha));
 
-            // center of image is on x, y
-            switch (anchor) {
-                case Center:
-                    g.drawImage(img, x - width / 2, y - height / 2, width, height, null);
-                    break;
-                case BottomLeft:
-                    g.drawImage(img, x, y - height, width, height, null);
-                    break;
-                case BottomRight:
-                    g.drawImage(img, x - width, y - height, width, height, null);
-                    break;
-                case TopLeft:
-                    g.drawImage(img, x, y, width, height, null);
-                    break;
-                case TopRight:
-                    g.drawImage(img, x - width, y, width, height, null);
-                    break;
-                default:
-                    throw new Error("No Anchor on ImageSprite is specified!");
-            }
+            int xOffset = (int) this.anchor.getXOffset(width);
+            int yOffset = (int) this.anchor.getYOffset(height);
+
+            g.drawImage(img, x-xOffset, y-yOffset, width, height, null);
 
         }
     }
@@ -135,9 +123,5 @@ public class ImageSprite extends Sprite {
 
     public void setImg(BufferedImage img) {
         this.img = img;
-    }
-
-    public void setAnchor(Anchor anchor) {
-        this.anchor = anchor;
     }
 }

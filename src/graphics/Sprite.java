@@ -4,6 +4,7 @@ import display.Camera;
 import gameobjects.ComponentType;
 import gameobjects.GameComponent;
 import gameobjects.GameObject;
+import logic.Anchor;
 import logic.Vector2;
 
 import java.awt.*;
@@ -14,6 +15,8 @@ public abstract class Sprite extends GameComponent implements Drawable {
     protected Vector2 offset = new Vector2(0, 0);
     protected int layer;
     protected float alpha = 1f;
+
+    protected Anchor anchor = new Anchor(SpecifiedAnchor.TopLeft);
 
     public Sprite(GameObject ref) {
         super(ref, ComponentType.Sprite);
@@ -52,6 +55,10 @@ public abstract class Sprite extends GameComponent implements Drawable {
     @Override
     public void setRenderLayer(int layer) {
         this.layer = layer;
+    }
+
+    public void setAnchor(Anchor a) {
+        this.anchor = a;
     }
 
 }
