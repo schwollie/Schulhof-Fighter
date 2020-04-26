@@ -19,16 +19,24 @@ public class ClockPointer extends GuiComponent {
 
     private Anchor anchor = new Anchor(0.5, 0.1);
 
-    public ClockPointer(GuiCanvas parent, ScreenTransform screenTransform) {
+    private double progress = 0;
+
+    private UiImage img;
+
+    public ClockPointer(GuiCanvas parent, ScreenTransform screenTransform, String image) {
         super(parent, screenTransform);
+        img = new UiImage(parent, this.screenTransform, image);
+        setRot(10);
     }
 
 
     @Override
     public void Render(Graphics2D g, Camera cam) {
+        img.Render(g, cam);
+    }
 
-
-
+    public void setRot(double angle) {
+        img.setRot(angle);
     }
 
     // region not needed super methods:

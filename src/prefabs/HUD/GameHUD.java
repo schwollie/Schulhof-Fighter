@@ -3,10 +3,8 @@ package prefabs.HUD;
 import components.GuiCanvas;
 import components.GuiComponent;
 import components.ScreenTransform;
+import components.elements.*;
 import components.elements.Panel;
-import components.elements.Slider;
-import components.elements.TextView;
-import components.elements.UiImage;
 import logic.Dimension2D;
 import logic.Vector2;
 
@@ -69,6 +67,8 @@ public class GameHUD extends GuiCanvas {
         p2Panel.addComponents(new GuiComponent[] { p2Back, p2HealthSlider, p2StaminaSlider, p2Text, p2Overlay});
 
         p2Panel.addTransform(new ScreenTransform(new Vector2(1,0), new Vector2(-1,1)));
+
+        //this.addGuiComponent(new ClockPointer(this, staminaT, "images/Gui/pointer.png"));
 
     }
 

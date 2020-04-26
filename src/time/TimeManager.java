@@ -9,6 +9,8 @@ public class TimeManager {
     private double deltaTime = 0;
     private double currentFPS = 0;
 
+    private double timeScale = 1;
+
     public TimeManager(int targetFPS) {
         this.targetFPS = targetFPS;
         stepForward();
@@ -52,6 +54,11 @@ public class TimeManager {
 
     public double getDeltaTime() {
         // Min of 5 fps -> to prevent weired physics due to lags
+        return Math.min(deltaTime / 1000 * timeScale, 0.2);
+    }
+
+    public double getAbsDeltaTime() {
+        // Min of 5 fps -> to prevent weired physics due to lags
         return Math.min(deltaTime / 1000, 0.2);
     }
 
@@ -61,5 +68,9 @@ public class TimeManager {
                 "deltaTime=" + deltaTime +
                 ", currentFPS=" + currentFPS +
                 '}';
+    }
+
+    public void setTimeScale(double timeScale) {
+        this.timeScale = timeScale;
     }
 }
