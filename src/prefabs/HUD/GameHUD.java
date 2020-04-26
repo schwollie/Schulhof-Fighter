@@ -17,7 +17,7 @@ public class GameHUD extends GuiCanvas {
     private static final ScreenTransform backT = new ScreenTransform(new Vector2(0, 0), new Vector2(0.4, 0));
     private static final ScreenTransform staminaT = new ScreenTransform(new Vector2(0.041, 0.0106), new Vector2(0.3236, 0));
     private static final ScreenTransform healthT = new ScreenTransform(new Vector2(0.2145, 0.031), new Vector2(.149, 0));
-    private static final ScreenTransform textT = new ScreenTransform(new Vector2(.11, .067), new Vector2(.1, .1));
+    private static final ScreenTransform textT = new ScreenTransform(new Vector2(.11, .055), new Vector2(.1, .1));
     private static final ScreenTransform overlayT = new ScreenTransform(new Vector2(0.038, 0.01062), new Vector2(.329, .1));
 
     private final Panel p1Panel = new Panel(this);

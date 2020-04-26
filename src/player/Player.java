@@ -2,45 +2,70 @@ package player;
 
 import gameobjects.GameObject;
 import graphics.RenderManager;
-import logic.Dimension2D;
-import logic.PlayerType;
-import logic.Transform;
-import logic.Vector2;
+import logic.*;
 import physics.Collider;
 import physics.CollissionListener;
 import physics.PhysicsGameComponent;
 import physics.RectCollider;
+import player.controller.ControllerType;
+import player.controller.HumanController;
+import player.controller.PlayerController;
+import player.utils.AttackManager;
+import player.utils.HealthManager;
+import player.utils.VisualPlayer;
 import scenes.Scene;
 
 
-public abstract class Player extends GameObject implements CollissionListener {
+public class Player extends GameObject implements CollissionListener {
 
     public static final double maxHealth = 100;
 
-    protected VisualPlayer visualPlayer;
-    protected PlayerType type;
-    protected PlayerState playerState = PlayerState.Default;
-    protected boolean isOnGround = false;
-    protected boolean canMove = true;
+    private PlayerSide side;
+    private PlayerController controller;
+    private VisualPlayer visualPlayer;
+    private PlayerType type;
+    private PlayerState playerState = PlayerState.Default;
 
+    private boolean isOnGround = false;
+    private boolean canMove = true;
 
-    protected HealthManager healthManager;
-    protected AttackManager attackManager;
+    private HealthManager healthManager;
+    private AttackManager attackManager;
 
-
-    public Player(Scene world, Vector2 pos, PlayerType type, String tag) {
+    //region Constructor and init methods:
+    public Player(Scene world, Vector2 pos, PlayerType type, String tag, ControllerType cType, PlayerSide side) {
         super(tag, world);
+
+        this.side = side;
         this.transform = new Transform(pos);
+        setupController(cType);
+        setupPhysics();
+        setupStats(type);
+    }
+
+    private void setupController(ControllerType controllerType) {
+        switch (controllerType) {
+            case HumanController -> this.controller = new HumanController(this, side);
+            default -> throw new Error("Controller has not been implemented yet!");
+        }
+    }
+
+    private void setupPhysics() {
         this.physicsComponent = new PhysicsGameComponent(this);
         this.physicsComponent.setCollider(new RectCollider(this, new Vector2(-0.2, -0.5), new Dimension2D(0.4, 0.9)));
         this.physicsComponent.getCollider().addListener(this);
+    }
 
+    private void setupStats(PlayerType type) {
         this.type = type;
         this.visualPlayer = new VisualPlayer(type, this);
         this.attackManager = new AttackManager(this);
         this.healthManager = new HealthManager(this, maxHealth);
     }
 
+    //endregion
+
+    // region tick + update Sprites:
     @Override
     public void Tick() {
         super.Tick();
@@ -57,8 +82,9 @@ public abstract class Player extends GameObject implements CollissionListener {
 
         this.visualPlayer.UpdateDrawables(renderManager);
     }
+    //endregion
 
-    // region action Handling:
+    // region damage Handling:
     public void takeDamage(double damage, Vector2 force, GameObject damager) {
         this.healthManager.takeDamage(damage);
         this.physicsComponent.addForce(force);
@@ -73,10 +99,12 @@ public abstract class Player extends GameObject implements CollissionListener {
             attackManager.gotHit();
         }
     }
+    // endregion
 
-    protected void Jump() {
+    // region  action Handling
+    public void Jump() {
 
-        if (isOnGround) {
+        if (isOnGround && canMove()) {
             physicsComponent.setVelocityY(3);
             isOnGround = false;
             //if (!hasComponent(Shaker.class))
@@ -85,31 +113,36 @@ public abstract class Player extends GameObject implements CollissionListener {
     }
 
     // -1 = left, 1 = right
-    protected void walk(int dir) {
-        physicsComponent.addForce(new Vector2(dir * 10, 0));
-        setDir(dir);
-        setState2Walk();
+    public void walk(int dir) {
+        if (canMove()) {
+            physicsComponent.addForce(new Vector2(dir * 10, 0));
+            setDir(dir);
+            setState2Walk();
+        }
     }
 
-    protected void kick() {
+    public void kick() {
         changePlayerState(PlayerState.Kick);
         attackManager.doKick();
         //System.out.println(this.healthManager.getHealth());
     }
 
-    protected void punch() {
+    public void punch() {
         changePlayerState(PlayerState.Punch);
         attackManager.doPunch();
     }
 
-    protected void block() {
+    public void block() {
     }
 
-    protected void shootProjectile() {
+    public void shootProjectile() {
         changePlayerState(PlayerState.SpecialAttack);
         attackManager.shoot();
     }
 
+    // endregion
+
+    // region state Handling:
     private void changePlayerState(PlayerState state) {
         this.playerState = state;
         visualPlayer.setState(state);
@@ -133,6 +166,8 @@ public abstract class Player extends GameObject implements CollissionListener {
         }
     }
 
+    // endregion
+
 
     @Override
     public void onCollision(Collider c1, Collider c2) {
@@ -145,8 +180,7 @@ public abstract class Player extends GameObject implements CollissionListener {
         this.destroy(1);
     }
 
-    // endregion
-
+    // region getters + setters
     public PhysicsGameComponent getPlayerPhysics() {
         return this.physicsComponent;
     }
@@ -170,4 +204,14 @@ public abstract class Player extends GameObject implements CollissionListener {
     public void setCanMove(boolean canMove) {
         this.canMove = canMove;
     }
+
+    public PlayerController getController() {
+        return controller;
+    }
+
+    public PlayerType getType() {
+        return type;
+    }
+
+    // endregion
 }

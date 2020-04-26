@@ -1,4 +1,4 @@
-package player;
+package player.utils;
 
 import gameobjects.ComponentType;
 import gameobjects.GameComponent;
@@ -8,6 +8,7 @@ import logic.Vector2;
 import physics.Collider;
 import physics.CollissionListener;
 import physics.RectCollider;
+import player.Player;
 import time.TimeEventListener;
 import time.Timer;
 

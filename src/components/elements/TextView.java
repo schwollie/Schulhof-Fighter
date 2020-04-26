@@ -4,17 +4,17 @@ import components.GuiCanvas;
 import components.GuiComponent;
 import components.ScreenTransform;
 import display.Camera;
-import logic.Dimension2D;
+import game.Consts;
 import logic.Transform;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;
-import java.awt.font.GlyphVector;
+import java.awt.geom.Rectangle2D;
 
 public class TextView extends GuiComponent {
 
-    private Font font = loadFont("FjallaOne");
-    private float fontSize = 11;
+    private Font font = loadFont(Consts.font1);
+    private float fontSize = 15;
     private TextAlign textAlign = TextAlign.CENTER;
     private int fontType = Font.BOLD;
     private String text;
@@ -22,15 +22,6 @@ public class TextView extends GuiComponent {
     public TextView(GuiCanvas parent, ScreenTransform s, String text) {
         super(parent, s);
         this.text = text;
-    }
-
-    private Dimension2D getStringBounds(Graphics2D g2, String str,
-                                      float x, float y)
-    {
-        FontRenderContext frc = g2.getFontRenderContext();
-        GlyphVector gv = g2.getFont().createGlyphVector(frc, str);
-        Rectangle r = gv.getPixelBounds(null, x, y);
-        return new Dimension2D(r.getWidth(), r.getHeight());
     }
 
     @Override
@@ -51,12 +42,12 @@ public class TextView extends GuiComponent {
             g.setFont(font.deriveFont(fSize).deriveFont(fontType));
 
             int width = g.getFontMetrics().stringWidth(text);
-            int height = (int)(getStringBounds(g, text, x, y).getHeight() * 1/parentGUI.getRatio());
+            int height = g.getFontMetrics().getHeight();
 
             switch (textAlign) {
-                case CENTER -> g.drawString(text, x - width/2, y - height/2);
-                case LEFT -> g.drawString(text, x - width, y- height/2);
-                case RIGHT -> g.drawString(text, x, y- height/2);
+                case CENTER -> g.drawString(text, x - width/2, y + height/4);
+                case LEFT -> g.drawString(text, x, y + height/4);
+                case RIGHT -> g.drawString(text, x - width, y + height/4);
                 default -> throw new Error("No TextAlign on TextView is specified!");
             }
         }
@@ -92,6 +83,10 @@ public class TextView extends GuiComponent {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public void setFont(String font) {
+        this.font = loadFont(font);
     }
 
     // region not used interface methods:

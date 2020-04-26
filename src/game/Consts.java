@@ -93,4 +93,8 @@ public abstract class Consts {
     public static final float punchParticleAnimSpeed = 1f; // in fps
     public static final float punchParticleLivingTime = 50f; // in fps
     public static final Dimension2D punchParticleSize = new Dimension2D(500, 500);
+
+    // Fonts
+    public static final String font1 = "Schulhoffighter-Regular";
+    public static final String font2 = "FjallaOne";
 }

@@ -1,4 +1,4 @@
-package player;
+package logic;
 
 import java.util.Random;
 

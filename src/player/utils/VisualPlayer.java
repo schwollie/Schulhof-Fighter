@@ -1,4 +1,4 @@
-package player;
+package player.utils;
 
 import components.elements.Panel;
 import components.elements.Slider;
@@ -10,6 +10,8 @@ import gameobjects.GameObject;
 import animation.AnimationManager;
 import graphics.RenderManager;
 import logic.PlayerType;
+import player.Player;
+import player.PlayerState;
 import prefabs.HUD.GameHUD;
 
 
@@ -55,7 +57,7 @@ public class VisualPlayer extends GameComponent {
             throw new Error("Wrong Tag for Players");
         }
 
-        text.setText(player.type.toString());
+        text.setText(player.getType().toString());
     }
 
     @Override

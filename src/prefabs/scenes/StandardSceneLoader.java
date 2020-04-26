@@ -3,7 +3,9 @@ package prefabs.scenes;
 import display.Camera;
 import logic.PlayerType;
 import logic.Vector2;
-import player.HumanPlayer;
+import player.Player;
+import player.PlayerSide;
+import player.controller.ControllerType;
 import prefabs.gameobjects.Background;
 import prefabs.gameobjects.Ground;
 import scenes.Scene;
@@ -13,11 +15,8 @@ public abstract class StandardSceneLoader {
     public static Scene getStandardScene(PlayerType p1, PlayerType p2) {
         Scene scene = new Scene();
 
-        HumanPlayer a = new HumanPlayer(scene, new Vector2(0, 2), p1, "Player1");
-        HumanPlayer b = new HumanPlayer(scene, new Vector2(2, 2), p2, "Player2");
-
-        scene.getInputManager().setListenerMapping1(a);
-        scene.getInputManager().setListenerMapping2(b);
+        Player a = new Player(scene, new Vector2(0, 2), p1, "Player1", ControllerType.HumanController, PlayerSide.LEFT);
+        Player b = new Player(scene, new Vector2(2, 2), p2, "Player2", ControllerType.HumanController, PlayerSide.RIGHT);
 
         scene.addGameObjectNow(a);
         scene.addGameObjectNow(b);

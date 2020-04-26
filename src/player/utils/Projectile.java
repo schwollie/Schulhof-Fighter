@@ -1,4 +1,4 @@
-package player;
+package player.utils;
 
 import animation.SimpleAnimationManager;
 import gameobjects.GameObject;
