@@ -77,8 +77,8 @@ public class Game {
     }
 
     public void loadMusic() {
-        audioManager = new AudioManager("test.wav");
-        audioManager.play();
+        //audioManager = new AudioManager("test.wav");
+        //audioManager.play();
     }
 
     public InputManager getInputManager() { return this.inputManager; }

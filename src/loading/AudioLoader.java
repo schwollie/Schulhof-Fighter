@@ -4,35 +4,38 @@ import game.Consts;
 import logic.ListChopper;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class SpriteLoader {
+public abstract class AudioLoader {
 
 
-    private static HashMap<String, BufferedImage> images = new HashMap<>();
+    private static HashMap<String, Clip> music = new HashMap<>();
 
     public static void loadAll() {
-        File[] files = new File("images/").listFiles();
+        File[] files = new File("music/").listFiles();
         ArrayList<File> allFiles = getAllFiles(files);
+
 
         ArrayList<ArrayList<File>> threadFiles = ListChopper.chopIntoParts(allFiles, Consts.cores);
         int threadNum = threadFiles.size();
 
-        ArrayList<LoadingThreadImg> threads = new ArrayList<LoadingThreadImg>();
+        ArrayList<LoadingThreadSound> threads = new ArrayList<LoadingThreadSound>();
 
         for (int i = 0; i < threadNum; i++) {
-            LoadingThreadImg t = new LoadingThreadImg(threadFiles.get(i));
+            LoadingThreadSound t = new LoadingThreadSound(threadFiles.get(i));
             threads.add(t);
             t.start();
         }
 
 
         for (int i = 0; i < threadNum; i++) {
-            LoadingThreadImg t = threads.get(i);
+            LoadingThreadSound t = threads.get(i);
 
             try {
                 t.join();
@@ -40,7 +43,7 @@ public abstract class SpriteLoader {
                 e.printStackTrace();
             }
 
-            images.putAll(t.getOutputImgs());
+            music.putAll(t.getOutputSound());
         }
     }
 
@@ -57,21 +60,21 @@ public abstract class SpriteLoader {
         return files;
     }
 
-    public static BufferedImage getFromFilePath(String filepath) {
+    public static Clip getFromFilePath(String filepath) {
         filepath = filepath.replaceAll("/", "\\\\");
 
-        if (!images.containsKey(filepath)) { System.out.println("Could not load File"); }
+        if (!music.containsKey(filepath)) { System.out.println("Could not load File"); }
 
-        return SpriteLoader.images.get(filepath);
+        return AudioLoader.music.get(filepath);
     }
 }
 
-class LoadingThreadImg extends Thread {
+class LoadingThreadSound extends Thread {
 
     ArrayList<File> files;
-    HashMap<String, BufferedImage> outputImgs = new HashMap<>();
+    HashMap<String, Clip> outputSound = new HashMap<>();
 
-    public LoadingThreadImg(ArrayList<File> files) {
+    public LoadingThreadSound(ArrayList<File> files) {
         this.files = files;
     }
 
@@ -79,18 +82,20 @@ class LoadingThreadImg extends Thread {
     public void run() {
         for (File f: this.files) {
             try {
-                BufferedImage img = ImageIO.read(f);
-                outputImgs.put(f.getPath(), img);
-            } catch (IOException e) {
+                AudioInputStream inputStream = AudioSystem.getAudioInputStream(f);
+                Clip clip = AudioSystem.getClip();
+                clip.open(inputStream);
+                outputSound.put(f.getPath(), clip);
+
+            } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
+                e.printStackTrace();
                 System.out.println("Loading Error");
             }
         }
 
     }
 
-    public HashMap<String, BufferedImage> getOutputImgs() {
-        return outputImgs;
+    public HashMap<String, Clip> getOutputSound() {
+        return outputSound;
     }
 }
-
-
