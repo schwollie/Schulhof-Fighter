@@ -8,8 +8,6 @@ import game.Consts;
 import logic.Transform;
 
 import java.awt.*;
-import java.awt.font.FontRenderContext;
-import java.awt.geom.Rectangle2D;
 
 public class TextView extends GuiComponent {
 
@@ -18,6 +16,7 @@ public class TextView extends GuiComponent {
     private TextAlign textAlign = TextAlign.CENTER;
     private int fontType = Font.BOLD;
     private String text;
+    private Color textColor = Color.WHITE;
 
     public TextView(GuiCanvas parent, ScreenTransform s, String text) {
         super(parent, s);
@@ -33,9 +32,9 @@ public class TextView extends GuiComponent {
             int x = (int) screenCoord.getX();
             int y = (int) screenCoord.getY();
 
-            g.setColor(this.color);
+            g.setColor(this.textColor);
             //set alpha
-            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this.transparentColor.getAlpha()));
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this.alpha));
 
             // set Font style and size (size must be dependent on screen size)
             float fSize = this.fontSize*(float)cam.getResolution().getWidth()/500;
@@ -44,13 +43,29 @@ public class TextView extends GuiComponent {
             int width = g.getFontMetrics().stringWidth(text);
             int height = g.getFontMetrics().getHeight();
 
+
+
             switch (textAlign) {
-                case CENTER -> g.drawString(text, x - width/2, y + height/4);
-                case LEFT -> g.drawString(text, x, y + height/4);
-                case RIGHT -> g.drawString(text, x - width, y + height/4);
+                case CENTER -> {
+                    x = x - width/2;
+                    y = y + height/4;
+                }
+                case LEFT -> y = y + height/4;
+                case RIGHT ->{
+                    x = x - width;
+                    y = y + height/4;
+                }
                 default -> throw new Error("No TextAlign on TextView is specified!");
             }
+
+            this.lastRenderPos.setValues(x, y);
+            this.lastRenderWidth.setValues(width, height);
+            g.drawString(text, x, y);
         }
+    }
+
+    public void setTextColor(Color c) {
+        this.textColor = c;
     }
 
     public void setTextAlign(TextAlign textAlign) {
@@ -88,32 +103,5 @@ public class TextView extends GuiComponent {
     public void setFont(String font) {
         this.font = loadFont(font);
     }
-
-    // region not used interface methods:
-    @Override
-    public void onClick() {
-
-    }
-
-    @Override
-    public void onPress() {
-
-    }
-
-    @Override
-    public void onRelease() {
-
-    }
-
-    @Override
-    public void onDrag() {
-
-    }
-
-    @Override
-    public void onHover() {
-
-    }
-    // endregion
 
 }

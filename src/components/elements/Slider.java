@@ -70,30 +70,4 @@ public class Slider extends GuiComponent {
         setCropFactor();
     }
 
-    // region not important interface methods:
-    @Override
-    public void onClick() {
-
-    }
-
-    @Override
-    public void onPress() {
-
-    }
-
-    @Override
-    public void onRelease() {
-
-    }
-
-    @Override
-    public void onDrag() {
-
-    }
-
-    @Override
-    public void onHover() {
-
-    }
-    // endregion
 }

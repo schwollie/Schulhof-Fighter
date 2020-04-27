@@ -5,6 +5,7 @@ import components.GuiComponent;
 import components.ScreenTransform;
 import components.elements.*;
 import components.elements.Panel;
+import game.Game;
 import logic.Dimension2D;
 import logic.Vector2;
 
@@ -32,8 +33,8 @@ public class GameHUD extends GuiCanvas {
     private TextView p2Text;
     private UiImage p2Overlay;
 
-    public GameHUD(Dimension2D resolution) {
-        super(resolution);
+    public GameHUD(Game game, Dimension2D resolution) {
+        super(game, resolution);
         createHud();
     }
 
@@ -56,9 +57,9 @@ public class GameHUD extends GuiCanvas {
         p2StaminaSlider.setReverse(true);
 
         p1Text = new TextView(this, textT, "");
-        p1Text.setColor(Color.WHITE);
+        p1Text.setTextColor(new Color(1, 1, 1, 1));
         p2Text = new TextView(this, textT, "");
-        p2Text.setColor(Color.WHITE);
+        p2Text.setTextColor(new Color(1,1,1,1));
 
         p1Overlay = new UiImage(this, overlayT, "images/Gui/overlay1.png");
         p2Overlay = new UiImage(this, overlayT, "images/Gui/overlay1.png");
@@ -70,7 +71,6 @@ public class GameHUD extends GuiCanvas {
 
         ScreenTransform t = new ScreenTransform(new Vector2(0.287,0.055), new Vector2(.02,0));
         this.addGuiComponent(new ClockPointer(this, t, "images/Gui/pointer.png"));
-
     }
 
     public Panel getP1Panel() {

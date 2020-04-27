@@ -4,7 +4,6 @@ import components.GuiCanvas;
 import components.GuiComponent;
 import components.ScreenTransform;
 import display.Camera;
-import graphics.SpecifiedAnchor;
 import loading.SpriteLoader;
 import logic.Anchor;
 import logic.Dimension2D;
@@ -14,7 +13,6 @@ import logic.Vector2;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 public class UiImage extends GuiComponent {
@@ -23,8 +21,6 @@ public class UiImage extends GuiComponent {
     private BufferedImage croppedImg;
     private String filename;
     private Dimension2D boundaries;
-
-    private Anchor anchor = new Anchor(SpecifiedAnchor.TopLeft);
 
     private double ratio;
     private Rectangle2D.Double cropR = new Rectangle2D.Double(0,0,1,1);
@@ -114,13 +110,16 @@ public class UiImage extends GuiComponent {
             int width = (int) (screenCoord.getXScale() * cropR.getWidth());
             int height = (int) (screenCoord.getYScale() * cropR.getHeight());
 
-            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this.transparentColor.getAlpha()));
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this.alpha));
 
             int xOffset = (int) this.anchor.getXOffset(width);
             int yOffset = (int) this.anchor.getYOffset(height);
 
             x = x-xOffset;
             y = y-yOffset;
+
+            this.lastRenderPos.setValues(x, y);
+            this.lastRenderWidth.setValues(width, height);
 
 
             // rot
@@ -149,34 +148,17 @@ public class UiImage extends GuiComponent {
         this.anchor = anchor;
     }
 
-    // region not used interface methods:
-    @Override
-    public void onClick() {
-
+    public UiImage(GuiCanvas parent, ScreenTransform screenTransform) {
+        super(parent, screenTransform);
     }
 
     @Override
-    public void onPress() {
-
+    public void onHoverEnter() {
+        setAlpha(.5f);
     }
 
     @Override
-    public void onRelease() {
-
+    public void onHoverExit() {
+        setAlpha(1f);
     }
-
-    @Override
-    public void onDrag() {
-
-    }
-
-    @Override
-    public void onHover() {
-
-    }
-
-    public double getRot() {
-        return rot;
-    }
-    // endregion
 }

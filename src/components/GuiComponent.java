@@ -1,7 +1,10 @@
 package components;
 
 
+import graphics.SpecifiedAnchor;
+import logic.Anchor;
 import logic.Dimension2D;
+import logic.Vector2;
 
 import java.awt.*;
 import java.io.File;
@@ -11,33 +14,23 @@ import java.io.InputStream;
 
 public abstract class GuiComponent implements ComponentMethods {
     private final int UNUSED = -Integer.MAX_VALUE;
-    protected final Color transparentColor = new Color(0, 0, 0, 1);
-    protected Color color, textColor;
+    protected float alpha = 1f;
     protected GuiCanvas parentGUI;
     protected boolean visible = true;
     protected boolean preserveAspect = true;
     protected ScreenTransform screenTransform;
+    protected Anchor anchor = new Anchor(SpecifiedAnchor.TopLeft);
+
+    protected Vector2 lastRenderPos = new Vector2(0,0);
+    protected Dimension2D lastRenderWidth = new Dimension2D(0,0);
 
     public GuiComponent(GuiCanvas parent, ScreenTransform screenTransform) {
         this.screenTransform = screenTransform;
         this.parentGUI = parent;
     }
 
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    public Color getTextColor() {
-        return textColor;
-    }
-
-    public void setTextColor(Color textColor) {
-        this.textColor = textColor;
+    public void setAlpha(float a) {
+        this.alpha = Math.min(Math.max(0, a), 1);
     }
 
     public double getX() {
@@ -56,20 +49,25 @@ public abstract class GuiComponent implements ComponentMethods {
         return this.screenTransform.getScale().getY();
     }
 
+    //TODO: dont do that with the last render position!!
     public int getInPixelX(Dimension2D resolution) {
-        return (int)(this.screenTransform.getPos().getX() * resolution.getWidth());
+        //double x = this.screenTransform.getPos().getX() * resolution.getWidth() + this.anchor.getXOffset( getInPixelWidth(resolution) );
+        return (int)lastRenderPos.getX();
     }
 
     public int getInPixelY(Dimension2D resolution) {
-        return (int)(this.screenTransform.getPos().getY() * resolution.getHeight());
+        //double x = this.screenTransform.getPos().getY() * resolution.getHeight() - this.anchor.getYOffset( getInPixelHeight(resolution) );
+        return (int)lastRenderPos.getY();
     }
 
     public int getInPixelWidth(Dimension2D resolution) {
-        return (int)(this.screenTransform.getScale().getX()*resolution.getWidth());
+        //return (int)(this.screenTransform.getScale().getX()*resolution.getWidth());
+        return (int)lastRenderWidth.getWidth();
     }
 
     public int getInPixelHeight(Dimension2D resolution) {
-        return (int)(this.screenTransform.getScale().getY()*resolution.getHeight());
+        //return (int)(this.screenTransform.getScale().getY()*resolution.getWidth()*1/parentGUI.getRatio());
+        return (int)lastRenderWidth.getHeight();
     }
 
     public ScreenTransform getScreenTransform() {

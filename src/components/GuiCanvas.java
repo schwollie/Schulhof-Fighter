@@ -4,6 +4,8 @@ import components.event.GuiEvent;
 import components.event.GuiEventType;
 import components.event.GuiListener;
 import display.Camera;
+import game.Game;
+import input.ExpandedMouseListener;
 import logic.Dimension2D;
 
 import javax.swing.*;
@@ -13,26 +15,29 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
-public class GuiCanvas extends JPanel implements MouseListener, MouseMotionListener {
+public class GuiCanvas implements ExpandedMouseListener {
 
     public static final double defaultRatio = 1.77777777777777777777777;
+
+    protected Game game;
 
     private Dimension2D resolution;
     private final ArrayList<GuiComponent> components = new ArrayList<>();
     private final ArrayList<GuiListener> listeners = new ArrayList<>();
 
-    public GuiCanvas(Dimension2D resolution) {
+    public GuiCanvas(Game game, Dimension2D resolution) {
         super();
+        this.game = game;
         this.resolution = resolution;
-        addMouseMotionListener(this);
-        addMouseListener(this);
+
+        game.getInputManager().mouseListeners.add(this);
     }
 
     public void Render(Graphics2D g, Camera cam) {
         for (GuiComponent guiComponent : components) {
             guiComponent.Render(g, cam);
         }
-        repaint();
+        //repaint();
     }
 
     public void addGuiComponent(GuiComponent component) {
@@ -116,9 +121,10 @@ public class GuiCanvas extends JPanel implements MouseListener, MouseMotionListe
     public void mouseMoved(MouseEvent e) {
         for (GuiComponent component : components) {
             if (isPointOnComponent(e.getX(), e.getY(), component)) {
-                component.onHover();
+                component.onHoverEnter();
                 evokeComponentAction(component, GuiEventType.MOVE);
             } else {
+                component.onHoverExit();
             }
         }
     }

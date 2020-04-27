@@ -49,4 +49,9 @@ public class Dimension2D implements Serializable {
     public void setHeight(double height) {
         this.height = height;
     }
+
+    public void setValues(double width, double height) {
+        this.setWidth(width);
+        this.setHeight(height);
+    }
 }

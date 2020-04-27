@@ -1,17 +1,20 @@
 package player.controller;
 
+import gameobjects.GameComponent;
+import gameobjects.GameObject;
+import input.PlayerInputManager;
 import input.PlayerKeyListener;
 import player.Player;
 import player.PlayerSide;
 
 public class HumanController extends PlayerController implements PlayerKeyListener {
 
-    public HumanController(Player p, PlayerSide side) {
+    public HumanController(Player p, PlayerSide side, GameObject gameHandler) {
         super(p);
 
         switch (side) {
-            case LEFT -> this.player.getScene().getInputManager().setListenerMapping1(this);
-            case RIGHT -> this.player.getScene().getInputManager().setListenerMapping2(this);
+            case LEFT -> ((PlayerInputManager)gameHandler.getComponent(PlayerInputManager.class)).setListenerMapping1(this);
+            case RIGHT -> ((PlayerInputManager)gameHandler.getComponent(PlayerInputManager.class)).setListenerMapping2(this);
         }
 
     }

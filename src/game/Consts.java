@@ -12,9 +12,9 @@ public abstract class Consts {
 
     // Window
     public static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    public static int windowWidth = (int) (screenSize.getWidth() / 2);
-    public static int windowHeight = (int) (screenSize.getHeight() / 2);
-    public static boolean Fullscreen = false;
+    public static int windowWidth = (int) (screenSize.getWidth() / 1);
+    public static int windowHeight = (int) (screenSize.getHeight() / 1);
+    public static boolean Fullscreen = true;
     public static double ratio = (double) windowWidth / windowHeight;
 
     // main menu

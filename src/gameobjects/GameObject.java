@@ -10,6 +10,7 @@ import time.Timer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 public class GameObject implements Serializable, TimeEventListener {
 
@@ -70,13 +71,22 @@ public class GameObject implements Serializable, TimeEventListener {
     public void addComponent(GameComponent c) {
         // concurrentModificationError could occur if we call this inside tick:
         //gameComponents.add(c);
-        components2Add.add(c);
+        try {
+            gameComponents.add(c) ;
+        } catch (ConcurrentModificationException e) {
+            components2Add.add(c);
+        }
+
     }
 
     public void removeComponent(GameComponent c) {
         // concurrentModificationError could occur if we call this inside tick:
         // gameComponents.remove(c);
-        components2Remove.add(c);
+        try {
+            gameComponents.remove(c) ;
+        } catch (ConcurrentModificationException e) {
+            components2Remove.add(c);
+        }
     }
 
     // region getters and setters:
@@ -136,7 +146,7 @@ public class GameObject implements Serializable, TimeEventListener {
         return false;
     }
 
-    public GameComponent getComponent(Class<GameComponent> component) {
+    public GameComponent getComponent(Class<? extends GameComponent> component) {
         for (GameComponent c : gameComponents) {
             if (c.getClass() == component) {
                 return c;

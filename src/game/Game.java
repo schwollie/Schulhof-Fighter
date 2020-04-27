@@ -3,6 +3,7 @@ package game;
 import audio.AudioManager;
 import display.Camera;
 import display.Window;
+import input.InputManager;
 import loading.SpriteLoader;
 import logic.PlayerType;
 import prefabs.scenes.StandardSceneLoader;
@@ -17,11 +18,14 @@ public class Game {
     public Window window;
 
     // World
-    public Scene scene;
+    public Scene currentScene;
     public SceneManager sceneManager;
 
     //music
     private AudioManager audioManager;
+
+    //input
+    private InputManager inputManager = new InputManager();
 
     //MAIN MENU
     //private MenuCanvas mainmenu;
@@ -32,7 +36,7 @@ public class Game {
 
     public void initScene() {
         sceneManager = new SceneManager();
-        scene = StandardSceneLoader.getStandardScene(PlayerType.Hausperger, PlayerType.Hausperger);
+        currentScene = StandardSceneLoader.getStandardScene(this, PlayerType.Hausperger, PlayerType.Hausperger);
     }
 
     public void initDisplay() {
@@ -41,15 +45,13 @@ public class Game {
 
     // has to be called on every scene change
     public void initSceneGraphics() {
-        window.addMouseMotionListener(scene.getInputManager());
-        window.addKeyListener(scene.getInputManager());
-        window.add(((Camera)scene.getCam()).getCanvas());
+        window.addMouseMotionListener(inputManager);
+        window.addMouseListener(inputManager);
+        window.addKeyListener(inputManager);
+
+
+        window.add(((Camera) currentScene.getCam()).getCanvas());
         window.setVisible(true);
-
-        //mainmenu = new MenuCanvas();
-        //window.add(mainmenu);
-        //mainmenu.createStandardBubbles(Consts.bubblesAmount);
-
     }
 
     public void start() {
@@ -60,14 +62,14 @@ public class Game {
         while (true) {
 
             //wait for target FPS
-            scene.getTimeManager().stepForward();
-            scene.getTimeManager().waitForTargetFPS();
+            currentScene.getTimeManager().stepForward();
+            currentScene.getTimeManager().waitForTargetFPS();
 
             // update physics and scripts
-            scene.tick();
+            currentScene.tick();
 
             //redraw scene
-            EventQueue.invokeLater(((Camera) scene.getCam()).getCanvas()::repaint);
+            EventQueue.invokeLater(((Camera) currentScene.getCam()).getCanvas()::repaint);
 
             //System.out.println(scene.getTimeManager().getCurrentFPS());
             //mainmenu.tick(fpsTracker.getDeltaTime(), inputManager.getMousePosition());
@@ -78,4 +80,6 @@ public class Game {
         audioManager = new AudioManager("test.wav");
         audioManager.play();
     }
+
+    public InputManager getInputManager() { return this.inputManager; }
 }

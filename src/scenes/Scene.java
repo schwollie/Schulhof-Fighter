@@ -3,6 +3,7 @@ package scenes;
 import components.GuiCanvas;
 import display.Camera;
 import game.Consts;
+import game.Game;
 import gameobjects.GameObject;
 import graphics.RenderManager;
 import input.InputManager;
@@ -20,15 +21,17 @@ import java.util.LinkedList;
 
 public class Scene implements Serializable {
 
-    private final InputManager inputManager;
+    private Game game;
     private final TimeManager timeManager;
     private final RenderManager renderManager;
-    private GuiCanvas guiCanvas = new GameHUD(new Dimension2D(Consts.windowWidth, Consts.windowHeight));
+    private GuiCanvas guiCanvas;
 
-    public Scene() {
-        inputManager = new InputManager();
+    public Scene(Game game) {
+        this.game = game;
         timeManager = new TimeManager(1000);
         renderManager = new RenderManager();
+
+        guiCanvas = new GameHUD(this.game, new Dimension2D(Consts.windowWidth, Consts.windowHeight));
     }
 
     private final LinkedList<GameObject> gameObjects2add = new LinkedList<>();
@@ -54,7 +57,7 @@ public class Scene implements Serializable {
     }
 
     public InputManager getInputManager() {
-        return inputManager;
+        return game.getInputManager();
     }
 
     public ArrayList<PhysicsGameComponent> getPhysicsComponents() {
@@ -93,8 +96,6 @@ public class Scene implements Serializable {
     public TimeManager getTimeManager() { return timeManager; }
 
     public synchronized void tick() {
-        inputManager.sendKeyStates();
-
         for (GameObject g : gameObjects) {
             g.Tick();
         }
@@ -150,6 +151,10 @@ public class Scene implements Serializable {
 
     public GuiCanvas getGuiCanvas() {
         return guiCanvas;
+    }
+
+    public Game getGame() {
+        return game;
     }
 
     public void setGuiCanvas(GuiCanvas guiCanvas) {

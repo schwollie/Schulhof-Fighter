@@ -11,17 +11,18 @@ public class Button extends GuiComponent {
     private static final Font buttonFont = loadFont("FjallaOne");
 
     private final Color hoverTextColor;
-    private final Color hoverColor;
+    //private final Color hoverColor;
     private Color pressedColor;
     private Color pressedTextColor;
     private final boolean pressActivated;
+    private Color textColor;
 
     public Button(GuiCanvas parent, String text, ScreenTransform transform) {
         super(parent, transform);
         //this.text = text;
-        color = transparentColor;
+        //color = color;
         textColor = new Color(255, 255, 255, 180);
-        hoverColor = transparentColor;
+        //hoverColor = color;
         hoverTextColor = new Color(255, 255, 255);
         //textSize = 25;
         pressActivated = false;
@@ -82,7 +83,7 @@ public class Button extends GuiComponent {
     }
 
     @Override
-    public void onHover() {
+    public void onHoverEnter() {
 
     }
 

@@ -5,15 +5,18 @@ import display.Camera;
 import java.awt.*;
 
 public interface ComponentMethods {
+
     void Render(Graphics2D g, Camera cam);
 
-    void onClick();
+    default void onClick() {}
 
-    void onPress();
+    default void onPress() {}
 
-    void onRelease();
+    default void onRelease() {}
 
-    void onDrag();
+    default void onDrag() {}
 
-    void onHover();
+    default void onHoverEnter() {}
+
+    default void onHoverExit() {}
 }

@@ -33,19 +33,19 @@ public class Player extends GameObject implements CollissionListener {
     private AttackManager attackManager;
 
     //region Constructor and init methods:
-    public Player(Scene world, Vector2 pos, PlayerType type, String tag, ControllerType cType, PlayerSide side) {
+    public Player(Scene world, Vector2 pos, PlayerType type, String tag, ControllerType cType, PlayerSide side, GameObject gameHandler) {
         super(tag, world);
 
         this.side = side;
         this.transform = new Transform(pos);
-        setupController(cType);
+        setupController(cType, gameHandler);
         setupPhysics();
         setupStats(type);
     }
 
-    private void setupController(ControllerType controllerType) {
+    private void setupController(ControllerType controllerType, GameObject gameHandler) {
         switch (controllerType) {
-            case HumanController -> this.controller = new HumanController(this, side);
+            case HumanController -> this.controller = new HumanController(this, side, gameHandler);
             default -> throw new Error("Controller has not been implemented yet!");
         }
     }

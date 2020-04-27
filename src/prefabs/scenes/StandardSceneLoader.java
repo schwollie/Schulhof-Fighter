@@ -1,6 +1,10 @@
 package prefabs.scenes;
 
 import display.Camera;
+import game.Game;
+import gameobjects.ComponentType;
+import gameobjects.GameObject;
+import input.PlayerInputManager;
 import logic.PlayerType;
 import logic.Vector2;
 import player.Player;
@@ -12,11 +16,15 @@ import scenes.Scene;
 
 public abstract class StandardSceneLoader {
 
-    public static Scene getStandardScene(PlayerType p1, PlayerType p2) {
-        Scene scene = new Scene();
+    public static Scene getStandardScene(Game m, PlayerType p1, PlayerType p2) {
+        Scene scene = new Scene(m);
 
-        Player a = new Player(scene, new Vector2(0, 2), p1, "Player1", ControllerType.HumanController, PlayerSide.LEFT);
-        Player b = new Player(scene, new Vector2(2, 2), p2, "Player2", ControllerType.HumanController, PlayerSide.RIGHT);
+        GameObject gameHandler = new GameObject("GameHandler", scene);
+        gameHandler.addComponent(new PlayerInputManager(gameHandler, ComponentType.Input));
+        scene.addGameObjectNow(gameHandler);
+
+        Player a = new Player(scene, new Vector2(0, 2), p1, "Player1", ControllerType.HumanController, PlayerSide.LEFT, gameHandler);
+        Player b = new Player(scene, new Vector2(2, 2), p2, "Player2", ControllerType.HumanController, PlayerSide.RIGHT, gameHandler);
 
         scene.addGameObjectNow(a);
         scene.addGameObjectNow(b);
