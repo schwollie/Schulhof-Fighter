@@ -71,7 +71,7 @@ public class GuiCanvas implements ExpandedMouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         for (GuiComponent component : components) {
-            if (isPointOnComponent(e.getX(), e.getY(), component)) {
+            if (component.isPointOnComponent(e.getX(), e.getY())) {
                 component.onClick();
                 evokeComponentAction(component, GuiEventType.CLICK);
             }
@@ -81,7 +81,7 @@ public class GuiCanvas implements ExpandedMouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         for (GuiComponent component : components) {
-            if (isPointOnComponent(e.getX(), e.getY(), component)) {
+            if (component.isPointOnComponent(e.getX(), e.getY())) {
                 component.onPress();
                 evokeComponentAction(component, GuiEventType.PRESS);
             }
@@ -91,7 +91,7 @@ public class GuiCanvas implements ExpandedMouseListener {
     @Override
     public void mouseReleased(MouseEvent e) {
         for (GuiComponent component : components) {
-            if (isPointOnComponent(e.getX(), e.getY(), component)) {
+            if (component.isPointOnComponent(e.getX(), e.getY())) {
                 component.onRelease();
                 evokeComponentAction(component, GuiEventType.RELEASE);
             }
@@ -109,7 +109,7 @@ public class GuiCanvas implements ExpandedMouseListener {
     @Override
     public void mouseDragged(MouseEvent e) {
         for (GuiComponent component : components) {
-            if (isPointOnComponent(e.getX(), e.getY(), component)) {
+            if (component.isPointOnComponent(e.getX(), e.getY())) {
                 component.onDrag();
                 evokeComponentAction(component, GuiEventType.DRAG);
             } else {
@@ -120,7 +120,7 @@ public class GuiCanvas implements ExpandedMouseListener {
     @Override
     public void mouseMoved(MouseEvent e) {
         for (GuiComponent component : components) {
-            if (isPointOnComponent(e.getX(), e.getY(), component)) {
+            if (component.isPointOnComponent(e.getX(), e.getY())) {
                 component.onHoverEnter();
                 evokeComponentAction(component, GuiEventType.MOVE);
             } else {
@@ -129,17 +129,14 @@ public class GuiCanvas implements ExpandedMouseListener {
         }
     }
 
-    protected boolean isPointOnComponent(int x, int y, GuiComponent component) {
-        int maxX = component.getInPixelX(resolution) + component.getInPixelWidth(resolution);
-        int maxY = component.getInPixelY(resolution) + component.getInPixelHeight(resolution);
-        return x >= component.getInPixelX(resolution) && x <= maxX &&
-                y >= component.getInPixelY(resolution) && y <= maxY;
-    }
-
     private void evokeComponentAction(GuiComponent component, GuiEventType type) {
         GuiEvent event = new GuiEvent(component, type);
         for (GuiListener listener : listeners) {
             listener.onAction(event);
         }
+    }
+
+    public Game getGame() {
+        return game;
     }
 }

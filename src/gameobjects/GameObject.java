@@ -71,22 +71,17 @@ public class GameObject implements Serializable, TimeEventListener {
     public void addComponent(GameComponent c) {
         // concurrentModificationError could occur if we call this inside tick:
         //gameComponents.add(c);
-        try {
-            gameComponents.add(c) ;
-        } catch (ConcurrentModificationException e) {
-            components2Add.add(c);
-        }
+        components2Add.add(c);
+    }
 
+    public void addInstantComponent(GameComponent c) {
+        gameComponents.add(c);
     }
 
     public void removeComponent(GameComponent c) {
         // concurrentModificationError could occur if we call this inside tick:
         // gameComponents.remove(c);
-        try {
-            gameComponents.remove(c) ;
-        } catch (ConcurrentModificationException e) {
-            components2Remove.add(c);
-        }
+        components2Remove.add(c);
     }
 
     // region getters and setters:

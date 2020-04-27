@@ -82,4 +82,8 @@ public class Game {
     }
 
     public InputManager getInputManager() { return this.inputManager; }
+
+    public Scene getCurrentScene() {
+        return currentScene;
+    }
 }

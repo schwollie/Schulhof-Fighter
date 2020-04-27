@@ -1,9 +1,12 @@
 package components;
 
 
+import display.Camera;
+import game.Consts;
 import graphics.SpecifiedAnchor;
 import logic.Anchor;
 import logic.Dimension2D;
+import logic.Transform;
 import logic.Vector2;
 
 import java.awt.*;
@@ -20,6 +23,7 @@ public abstract class GuiComponent implements ComponentMethods {
     protected boolean preserveAspect = true;
     protected ScreenTransform screenTransform;
     protected Anchor anchor = new Anchor(SpecifiedAnchor.TopLeft);
+    protected Rectangle bounds = new Rectangle(0,0,0,0);
 
     protected Vector2 lastRenderPos = new Vector2(0,0);
     protected Dimension2D lastRenderWidth = new Dimension2D(0,0);
@@ -27,6 +31,8 @@ public abstract class GuiComponent implements ComponentMethods {
     public GuiComponent(GuiCanvas parent, ScreenTransform screenTransform) {
         this.screenTransform = screenTransform;
         this.parentGUI = parent;
+
+        setRectFromTransform();
     }
 
     public void setAlpha(float a) {
@@ -49,25 +55,30 @@ public abstract class GuiComponent implements ComponentMethods {
         return this.screenTransform.getScale().getY();
     }
 
-    //TODO: dont do that with the last render position!!
-    public int getInPixelX(Dimension2D resolution) {
-        //double x = this.screenTransform.getPos().getX() * resolution.getWidth() + this.anchor.getXOffset( getInPixelWidth(resolution) );
-        return (int)lastRenderPos.getX();
+    public void setRectFromTransform() {
+
+        ScreenTransform ownTrans = this.getScreenTransform();
+        Transform screenCoord = Camera.gui2Screen(ownTrans, new Dimension2D(Consts.windowWidth, Consts.windowHeight));
+
+        int x = (int) (screenCoord.getX());
+        int y = (int) (screenCoord.getY());
+        int width = (int) (screenCoord.getXScale());
+        int height = (int) (screenCoord.getYScale());
+
+        int xOffset = (int) this.anchor.getXOffset(width);
+        int yOffset = (int) this.anchor.getYOffset(height);
+
+        x = x-xOffset;
+        y = y-yOffset;
+
+        Rectangle r = new Rectangle(Math.min(x, x+width), Math.min(y, y+height), Math.max(x, x+width), Math.max(y, y+height) );
+        bounds = r;
+        System.out.println(r);
     }
 
-    public int getInPixelY(Dimension2D resolution) {
-        //double x = this.screenTransform.getPos().getY() * resolution.getHeight() - this.anchor.getYOffset( getInPixelHeight(resolution) );
-        return (int)lastRenderPos.getY();
-    }
-
-    public int getInPixelWidth(Dimension2D resolution) {
-        //return (int)(this.screenTransform.getScale().getX()*resolution.getWidth());
-        return (int)lastRenderWidth.getWidth();
-    }
-
-    public int getInPixelHeight(Dimension2D resolution) {
-        //return (int)(this.screenTransform.getScale().getY()*resolution.getWidth()*1/parentGUI.getRatio());
-        return (int)lastRenderWidth.getHeight();
+    public boolean isPointOnComponent(int x, int y) {
+        return x >= bounds.getX() && x <= bounds.getMaxX() &&
+                y >= bounds.getY() && y <= bounds.getMaxY();
     }
 
     public ScreenTransform getScreenTransform() {
@@ -76,6 +87,7 @@ public abstract class GuiComponent implements ComponentMethods {
 
     public void addTransform(ScreenTransform other) {
         this.screenTransform = screenTransform.add(other);
+        setRectFromTransform();
     }
 
     public void setVisible() { this.visible = true; }

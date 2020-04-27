@@ -1,5 +1,6 @@
 package player.utils;
 
+import display.Camera;
 import gameobjects.ComponentType;
 import gameobjects.GameComponent;
 import gameobjects.GameObject;
@@ -91,6 +92,8 @@ public class AttackManager extends GameComponent implements CollissionListener, 
     }
 
     private void doAttack(Vector2 range, Vector2 offset, double damage, Vector2 force) {
+        ((Camera)reference.getScene().getCam()).shake(new Vector2(0.02, 0), new Vector2(2*damage, 2), .4);
+
         Collider[] cs = getCollidersInRange(range, offset);
         force = testForComboHits(force);
         dealDamageToColliders(cs, damage, force);

@@ -56,6 +56,7 @@ public class UiImage extends GuiComponent {
     private void updateTransform() {
         if (preserveAspect) {
             this.screenTransform.setScale(new Vector2(screenTransform.getScale().getX(), screenTransform.getScale().getX()*1/ratio));
+            this.setRectFromTransform();
         }
     }
 

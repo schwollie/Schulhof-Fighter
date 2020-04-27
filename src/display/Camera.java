@@ -4,6 +4,7 @@ import components.GuiCanvas;
 import components.ScreenTransform;
 import game.Consts;
 import gameobjects.GameObject;
+import logic.Shaker;
 import scenes.Scene;
 import logic.Dimension2D;
 import logic.Transform;
@@ -18,8 +19,8 @@ public class Camera extends GameObject implements Serializable {
     private final Canvas canvas;
 
     private final double ratio = Consts.ratio;
-    private final double scale = 4;
     private final Dimension2D resolution = new Dimension2D(Consts.windowWidth, Consts.windowHeight);
+    private double scale = 4;
 
     public Camera(Scene scene, Vector2 pos) {
         super("Camera", scene);
@@ -53,6 +54,11 @@ public class Camera extends GameObject implements Serializable {
         return clipShape;
     }
 
+    public void shake(Vector2 maxDeviation, Vector2 speed, double maxTime) {
+        Shaker s = new Shaker(this, maxDeviation, speed, maxTime);
+        this.addComponent(s);
+    }
+
     public Transform world2Screen(Transform trans) {
         Transform screen = new Transform();
 
@@ -75,6 +81,27 @@ public class Camera extends GameObject implements Serializable {
     }
 
     public Transform gui2Screen(ScreenTransform trans) {
+        Transform screen = new Transform();
+
+        double xFactor = resolution.getWidth();
+        double yFactor = resolution.getHeight() * GuiCanvas.defaultRatio;
+
+        // new position
+        Vector2 newPos = new Vector2(trans.getPos());
+        newPos.setX(newPos.getX() * xFactor);
+        newPos.setY(newPos.getY() * yFactor);
+        screen.setPosition(newPos);
+
+        // new Scale
+        Vector2 newScale = new Vector2(trans.getScale());
+        newScale.setX(newScale.getX() * xFactor);
+        newScale.setY(newScale.getY() * yFactor);
+        screen.setScale(newScale);
+
+        return screen;
+    }
+
+    public static Transform gui2Screen(ScreenTransform trans, Dimension2D resolution) {
         Transform screen = new Transform();
 
         double xFactor = resolution.getWidth();

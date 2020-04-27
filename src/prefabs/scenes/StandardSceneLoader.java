@@ -20,7 +20,7 @@ public abstract class StandardSceneLoader {
         Scene scene = new Scene(m);
 
         GameObject gameHandler = new GameObject("GameHandler", scene);
-        gameHandler.addComponent(new PlayerInputManager(gameHandler, ComponentType.Input));
+        gameHandler.addInstantComponent(new PlayerInputManager(gameHandler, ComponentType.Input));
         scene.addGameObjectNow(gameHandler);
 
         Player a = new Player(scene, new Vector2(0, 2), p1, "Player1", ControllerType.HumanController, PlayerSide.LEFT, gameHandler);
@@ -38,7 +38,7 @@ public abstract class StandardSceneLoader {
         scene.addGameObjectNow(background);
 
         //Camera
-        Camera cam = new Camera(scene, new Vector2(0, 2.2));
+        Camera cam = new Camera(scene, new Vector2(.15, 2.2));
         scene.addGameObjectNow(cam);
 
         return scene;
