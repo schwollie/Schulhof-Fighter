@@ -49,7 +49,7 @@ public abstract class SpriteLoader {
         for (File file : dir) {
             if (file.isDirectory()) {
                 files.addAll(getAllFiles(file.listFiles())); // Calls same method again.
-            } else {
+            } else if (file.getPath().endsWith(".png") || file.getPath().endsWith(".jpg")) {
                 files.add(file);
             }
         }
