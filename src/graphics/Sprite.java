@@ -39,6 +39,7 @@ public abstract class Sprite extends GameComponent implements Drawable {
         this.offset = offset;
     }
 
+
     @Override
     public final void UpdateDrawables(RenderManager renderManager) {
         renderManager.addDrawable(this);

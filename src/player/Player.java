@@ -136,8 +136,10 @@ public class Player extends GameObject implements CollissionListener {
     }
 
     public void shootProjectile() {
-        changePlayerState(PlayerState.SpecialAttack);
-        attackManager.shoot();
+        if (attackManager.hasReloaded()) {
+            changePlayerState(PlayerState.SpecialAttack);
+            attackManager.shoot();
+        }
     }
 
     // endregion

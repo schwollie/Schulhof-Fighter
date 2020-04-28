@@ -23,7 +23,7 @@ public class AttackManager extends GameComponent implements CollissionListener, 
 
     // timers
     private final Timer coolDownTimer = new Timer(this.reference, "coolDownTimer", 1);
-    private final Timer shootTimer = new Timer(this.reference, "shootTimer", 0.35);
+    private final Timer shootTimer = new Timer(this.reference, "shootTimer", 0.3);
     private final Timer punchTimer = new Timer(this.reference, "punchTimer", 0.25);
     private final Timer kickTimer = new Timer(this.reference, "kickTimer", 0.25);
     private final Timer hitComboTimer = new Timer(this.reference, "hitCombo", 1.5);
@@ -126,7 +126,7 @@ public class AttackManager extends GameComponent implements CollissionListener, 
     private Vector2 testForComboHits(Vector2 force) {
         if (hitCombo >= 2) { //3 hits
             hitCombo = 0;
-            force = force.scalarMult(50);
+            force = force.scalarMult(10);
         } else {
             hitComboTimer.resetTimer();
         }
@@ -199,5 +199,9 @@ public class AttackManager extends GameComponent implements CollissionListener, 
     private void handleTimer(Timer timer) {
         timer.resetTimer();
         timer.pause();
+    }
+
+    public boolean hasReloaded() {
+        return hasReloaded;
     }
 }
