@@ -16,15 +16,15 @@ import scenes.Scene;
 
 public abstract class StandardSceneLoader {
 
-    public static Scene getStandardScene(Game m, PlayerType p1, PlayerType p2) {
-        Scene scene = new Scene(m);
+    public static Scene getStandardScene(Game game, PlayerType playerType1, PlayerType playerType2) {
+        Scene scene = new Scene(game);
 
         GameObject gameHandler = new GameObject("GameHandler", scene);
         gameHandler.addInstantComponent(new PlayerInputManager(gameHandler, ComponentType.Input));
         scene.addGameObjectNow(gameHandler);
 
-        Player a = new Player(scene, new Vector2(0, 2), p1, "Player1", ControllerType.HumanController, PlayerSide.LEFT, gameHandler);
-        Player b = new Player(scene, new Vector2(2, 2), p2, "Player2", ControllerType.HumanController, PlayerSide.RIGHT, gameHandler);
+        Player a = new Player(scene, new Vector2(0, 2), playerType1, "Player1", ControllerType.HumanController, PlayerSide.LEFT, gameHandler);
+        Player b = new Player(scene, new Vector2(2, 2), playerType2, "Player2", ControllerType.HumanController, PlayerSide.RIGHT, gameHandler);
 
         scene.addGameObjectNow(a);
         scene.addGameObjectNow(b);

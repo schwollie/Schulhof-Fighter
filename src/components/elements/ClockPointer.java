@@ -11,10 +11,8 @@ import java.awt.*;
 
 public class ClockPointer extends GuiComponent {
 
-    // 360 degrees = 1
-
     private double rotOffset = 0;
-    private double rotLimit = 1;
+    private double rotLimit = 180;
     private boolean invertDir = false;
 
     private double progress = 0;
@@ -35,15 +33,40 @@ public class ClockPointer extends GuiComponent {
         img.Render(g, cam);
     }
 
-    public void setRot(double angle) {
-        img.setRot(angle);
+    private void setRotation(double angle) {
+        img.setRotation(angle + rotOffset);
+    }
+
+    public double getRotOffset() {
+        return rotOffset;
+    }
+
+    public void setRotOffset(double rotOffset) {
+        this.rotOffset = rotOffset;
+    }
+
+    public double getProgress() {
+        return progress;
+    }
+
+    public void setProgress(double progress) {
+        this.progress = progress;
+        setRotation(progress * rotLimit * (invertDir ? -1 : 1));
+    }
+
+    public boolean isInvertDir() {
+        return invertDir;
+    }
+
+    public void setInvertDir(boolean invertDir) {
+        this.invertDir = invertDir;
     }
 
     @Override
     public void onHoverEnter() {
         //System.out.println("Hover");
         //setRot(progress);
-        //progress += 0.001;
+        //progress += 0.1;
     }
 
     @Override

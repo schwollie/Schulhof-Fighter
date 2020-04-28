@@ -125,7 +125,7 @@ public class UiImage extends GuiComponent {
 
             // rot
             AffineTransform t = new AffineTransform();
-            t.setToRotation(rot, x+xOffset, y+yOffset);
+            t.setToRotation(Math.toRadians(rot), x + xOffset, y + yOffset);
             g.setTransform(t);
 
             g.drawImage(croppedImg, x, y, width, height, null);
@@ -141,7 +141,7 @@ public class UiImage extends GuiComponent {
         this.offset = f;
     }
 
-    public void setRot(double rot) {
+    public void setRotation(double rot) {
         this.rot = rot;
     }
 

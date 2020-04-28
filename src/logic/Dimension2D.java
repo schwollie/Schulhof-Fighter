@@ -54,4 +54,8 @@ public class Dimension2D implements Serializable {
         this.setWidth(width);
         this.setHeight(height);
     }
+
+    public static Dimension2D valueOf(Vector2 vector) {
+        return new Dimension2D(vector.getX(), vector.getY());
+    }
 }

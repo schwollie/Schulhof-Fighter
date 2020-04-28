@@ -1,16 +1,12 @@
 package player.utils;
 
-import components.elements.Panel;
-import components.elements.Slider;
-import components.elements.TextView;
-import components.elements.UiImage;
+import animation.AnimationManager;
+import components.elements.*;
 import gameobjects.ComponentType;
 import gameobjects.GameComponent;
 import gameobjects.GameObject;
-import animation.AnimationManager;
 import graphics.RenderManager;
 import logic.PlayerType;
-import logic.Shaker;
 import player.Player;
 import player.PlayerState;
 import prefabs.HUD.GameHUD;
@@ -29,6 +25,7 @@ public class VisualPlayer extends GameComponent {
     private Slider staminaBar;
     private TextView text;
     private UiImage overlay;
+    private ClockPointer clockPointer;
 
     public VisualPlayer(PlayerType type, GameObject ref) {
         super(ref, ComponentType.VisualElement);
@@ -51,6 +48,7 @@ public class VisualPlayer extends GameComponent {
             staminaBar = hud.getP1StaminaSlider();
             text = hud.getP1Text();
             overlay = hud.getP1Overlay();
+            clockPointer = hud.getP1Pointer();
         } else if (this.reference.getTag().equals("Player2")) {
             panel = hud.getP2Panel();
             back = hud.getP2Back();
@@ -58,6 +56,7 @@ public class VisualPlayer extends GameComponent {
             staminaBar = hud.getP2StaminaSlider();
             text = hud.getP2Text();
             overlay = hud.getP2Overlay();
+            clockPointer = hud.getP2Pointer();
         } else {
             throw new Error("Wrong Tag for Players");
         }
@@ -73,6 +72,7 @@ public class VisualPlayer extends GameComponent {
 
     private void updateGui() {
         healthBar.setProgress(player.getHealthManager().getHealthPercentage());
+        clockPointer.setProgress(player.getHealthManager().getStaminaPercentage());
     }
 
     @Override

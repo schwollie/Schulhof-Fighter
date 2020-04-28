@@ -11,14 +11,14 @@ import player.controller.ControllerType;
 import player.controller.HumanController;
 import player.controller.PlayerController;
 import player.utils.AttackManager;
-import player.utils.HealthManager;
+import player.utils.HealthStaminaManager;
 import player.utils.VisualPlayer;
 import scenes.Scene;
 
 
 public class Player extends GameObject implements CollissionListener {
 
-    public static final double maxHealth = 100;
+    public static final double maxHealth = 100, maxStamina = 100;
 
     private PlayerSide side;
     private PlayerController controller;
@@ -29,7 +29,7 @@ public class Player extends GameObject implements CollissionListener {
     private boolean isOnGround = false;
     private boolean canMove = true;
 
-    private HealthManager healthManager;
+    private HealthStaminaManager healthManager;
     private AttackManager attackManager;
 
     //region Constructor and init methods:
@@ -60,7 +60,7 @@ public class Player extends GameObject implements CollissionListener {
         this.type = type;
         this.visualPlayer = new VisualPlayer(type, this);
         this.attackManager = new AttackManager(this);
-        this.healthManager = new HealthManager(this, maxHealth);
+        this.healthManager = new HealthStaminaManager(this, maxHealth, maxStamina);
     }
 
     //endregion
@@ -95,9 +95,6 @@ public class Player extends GameObject implements CollissionListener {
             this.playerState = PlayerState.GotHit2;
         }
         this.visualPlayer.setState(playerState);
-        if (damager instanceof Player) {
-            attackManager.gotHit();
-        }
     }
     // endregion
 
@@ -142,6 +139,9 @@ public class Player extends GameObject implements CollissionListener {
         }
     }
 
+    public void receiveHit(double damage, Vector2 force, GameObject sender) {
+        attackManager.receiveHit(damage, force, sender);
+    }
     // endregion
 
     // region state Handling:
@@ -195,7 +195,7 @@ public class Player extends GameObject implements CollissionListener {
         return attackManager;
     }
 
-    public HealthManager getHealthManager() {
+    public HealthStaminaManager getHealthManager() {
         return healthManager;
     }
 

@@ -2,12 +2,9 @@ package audio;
 
 import game.Consts;
 import loading.AudioLoader;
-import logic.XRange;
 
-import javax.sound.sampled.*;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 
 public class Track {
 
@@ -78,6 +75,5 @@ public class Track {
     private float lin2log(float val) {
         //converts the volume in linear scale to log scale
         return (float) Math.log10((9*val+1));
-
     }
 }

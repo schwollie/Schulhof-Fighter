@@ -28,14 +28,14 @@ public class Game {
     private InputManager inputManager = new InputManager();
 
     //MAIN MENU
-    //private MenuCanvas mainmenu;
+    //private MenuCanvas mainmenu; kann eig gelöscht werden oder?
 
     public void loadSprites() {
         SpriteLoader.loadAll();
     }
 
     public void initScene() {
-        sceneManager = new SceneManager();
+        sceneManager = new SceneManager(this);
         currentScene = StandardSceneLoader.getStandardScene(this, PlayerType.Hausperger, PlayerType.Hausperger);
     }
 

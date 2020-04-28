@@ -48,13 +48,10 @@ public class Slider extends GuiComponent {
 
     public void setCropFactor() {
         if (bar != null) {
+            bar.setCropR(new Rectangle2D.Double(1 - progress, 0, progress, 1));
             if (reverse) {
-                bar.setCropR(new Rectangle2D.Double(1-progress,0,progress,1));
-                bar.setOffset(new Vector2((1-progress), 0));
-            } else {
-                bar.setCropR(new Rectangle2D.Double(1-progress,0,progress,1));
+                bar.setOffset(new Vector2((1 - progress), 0));
             }
-
         }
     }
 
