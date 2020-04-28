@@ -34,7 +34,7 @@ public class Player extends GameObject implements CollissionListener {
 
     //region Constructor and init methods:
     public Player(Scene world, Vector2 pos, PlayerType type, String tag, ControllerType cType, PlayerSide side, GameObject gameHandler) {
-        super(tag, world);
+        super(tag, world, 5);
 
         this.side = side;
         this.transform = new Transform(pos);

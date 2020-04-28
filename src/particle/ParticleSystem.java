@@ -26,6 +26,7 @@ public class ParticleSystem extends GameComponent implements Drawable, TimeEvent
 
     //particle specs
     private Sprite particleSprite;
+    private boolean localSpace = true;
 
     private XRange liveTime;
     private XRange particleCount;
@@ -207,6 +208,14 @@ public class ParticleSystem extends GameComponent implements Drawable, TimeEvent
 
     public XRange getStartForce() {
         return startForce;
+    }
+
+    public boolean isLocalSpace() {
+        return localSpace;
+    }
+
+    public void setLocalSpace(boolean localSpace) {
+        this.localSpace = localSpace;
     }
 
     // endregion

@@ -15,8 +15,9 @@ import java.awt.*;
 public class Particle extends GameComponent implements Drawable, TimeEventListener {
 
     private final ParticleSystem parentSystem;
-    private Vector2 force = new Vector2(0,0);
+    private Vector2 force;
     private Vector2 velocity = new Vector2(0,0);
+    private Vector2 startPos;
     private double mass;
     private double drag;
 
@@ -36,7 +37,10 @@ public class Particle extends GameComponent implements Drawable, TimeEventListen
         super(parentSystem.getReference(), ComponentType.Particle);
         this.parentSystem = parentSystem;
         this.transform = transform;
+        this.transform = this.transform.add(parentSystem.getRelativeTransform());
         this.force = startForce;
+
+        startPos = new Vector2(transform.getX(), transform.getY());
 
         this.setup();
     }
@@ -113,7 +117,11 @@ public class Particle extends GameComponent implements Drawable, TimeEventListen
     public void Render(Graphics2D g, Camera cam) {
         parentSystem.getParticleSprite().setRenderLayer(10);
         parentSystem.getParticleSprite().setAlpha(opacity);
-        parentSystem.getParticleSprite().setRelativeTransform(this.transform.add(parentSystem.getRelativeTransform()));
+        if (parentSystem.isLocalSpace()) {
+            parentSystem.getParticleSprite().setRelativeTransform(this.transform);
+        } else {
+            //
+        }
         parentSystem.getParticleSprite().Render(g, cam);
     }
 

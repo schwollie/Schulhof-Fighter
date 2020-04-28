@@ -63,7 +63,7 @@ public abstract class AudioLoader {
     public static Clip getFromFilePath(String filepath) {
         filepath = filepath.replaceAll("/", "\\\\");
 
-        if (!music.containsKey(filepath)) { System.out.println("Could not load File"); }
+        if (!music.containsKey(filepath)) { System.err.println("Could not load File: " + filepath); }
 
         return AudioLoader.music.get(filepath);
     }

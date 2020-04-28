@@ -38,7 +38,7 @@ public abstract class StandardSceneLoader {
         scene.addGameObjectNow(background);
 
         //Camera
-        Camera cam = new Camera(scene, new Vector2(.15, 2.2));
+        Camera cam = new Camera(scene, new Vector2(.15, 2.1));
         scene.addGameObjectNow(cam);
 
         return scene;

@@ -60,7 +60,7 @@ public abstract class SpriteLoader {
     public static BufferedImage getFromFilePath(String filepath) {
         filepath = filepath.replaceAll("/", "\\\\");
 
-        if (!images.containsKey(filepath)) { System.out.println("Could not load File"); }
+        if (!images.containsKey(filepath)) { System.err.println("Could not load File: " + filepath); }
 
         return SpriteLoader.images.get(filepath);
     }

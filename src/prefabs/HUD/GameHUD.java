@@ -57,9 +57,9 @@ public class GameHUD extends GuiCanvas {
         p2StaminaSlider.setReverse(true);
 
         p1Text = new TextView(this, textT, "");
-        p1Text.setTextColor(new Color(1, 1, 1, 1));
+        p1Text.setTextColor(Color.WHITE);
         p2Text = new TextView(this, textT, "");
-        p2Text.setTextColor(new Color(1,1,1,1));
+        p2Text.setTextColor(Color.WHITE);
 
         p1Overlay = new UiImage(this, overlayT, "images/Gui/overlay1.png");
         p2Overlay = new UiImage(this, overlayT, "images/Gui/overlay1.png");

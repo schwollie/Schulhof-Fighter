@@ -120,7 +120,7 @@ public class AnimationManager extends GameComponent {
         } else if (defaultAnimation != null) {
             defaultAnimation.UpdateDrawables(renderManager);
         } else {
-            System.out.println("Warning: Currently no Animation is Rendered");
+            System.err.println("Warning: Currently no Animation is Rendered");
         }
     }
 

@@ -58,8 +58,6 @@ public class TextView extends GuiComponent {
                 default -> throw new Error("No TextAlign on TextView is specified!");
             }
 
-            this.lastRenderPos.setValues(x, y);
-            this.lastRenderWidth.setValues(width, height);
             g.drawString(text, x, y);
         }
     }

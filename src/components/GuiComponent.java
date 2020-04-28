@@ -73,7 +73,6 @@ public abstract class GuiComponent implements ComponentMethods {
 
         Rectangle r = new Rectangle(Math.min(x, x+width), Math.min(y, y+height), Math.max(x, x+width), Math.max(y, y+height) );
         bounds = r;
-        System.out.println(r);
     }
 
     public boolean isPointOnComponent(int x, int y) {
@@ -111,6 +110,7 @@ public abstract class GuiComponent implements ComponentMethods {
     }
 
     public static Font loadFont(String fontName) {
+
         InputStream stream;
         Font font = null;
         try {

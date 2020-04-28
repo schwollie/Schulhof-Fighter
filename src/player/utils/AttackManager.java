@@ -5,7 +5,10 @@ import gameobjects.ComponentType;
 import gameobjects.GameComponent;
 import gameobjects.GameObject;
 import logic.Dimension2D;
+import logic.Transform;
 import logic.Vector2;
+import logic.XRange;
+import particle.ParticleSystem;
 import physics.Collider;
 import physics.CollissionListener;
 import physics.RectCollider;
@@ -92,7 +95,7 @@ public class AttackManager extends GameComponent implements CollissionListener, 
     }
 
     private void doAttack(Vector2 range, Vector2 offset, double damage, Vector2 force) {
-        ((Camera)reference.getScene().getCam()).shake(new Vector2(0.02, 0), new Vector2(2*damage, 2), .4);
+        ((Camera)reference.getScene().getCam()).shake(new Vector2(0.02, 0.02), new Vector2(2*damage, 2), .4);
 
         Collider[] cs = getCollidersInRange(range, offset);
         force = testForComboHits(force);
@@ -105,6 +108,7 @@ public class AttackManager extends GameComponent implements CollissionListener, 
         p.setLiveTime(new XRange(0.1, 1));
         p.setStartForce(new XRange(1, 5));
         p.setGravityFactor(new XRange(0.1, 0.2));
+        p.setLocalSpace(false);
         p.start();
         reference.addComponent(p);*/
     }

@@ -20,7 +20,7 @@ public class Camera extends GameObject implements Serializable {
 
     private final double ratio = Consts.ratio;
     private final Dimension2D resolution = new Dimension2D(Consts.windowWidth, Consts.windowHeight);
-    private double scale = 4;
+    private double scale = 3.8;
 
     public Camera(Scene scene, Vector2 pos) {
         super("Camera", scene);

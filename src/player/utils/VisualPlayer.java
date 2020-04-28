@@ -10,15 +10,18 @@ import gameobjects.GameObject;
 import animation.AnimationManager;
 import graphics.RenderManager;
 import logic.PlayerType;
+import logic.Shaker;
 import player.Player;
 import player.PlayerState;
 import prefabs.HUD.GameHUD;
+import prefabs.gameobjects.Shadow;
 
 
 public class VisualPlayer extends GameComponent {
 
     private Player player;
     private final AnimationManager animManager;
+    private Shadow shadow;
 
     private Panel panel;
     private UiImage back;
@@ -33,6 +36,8 @@ public class VisualPlayer extends GameComponent {
         player = (Player)ref;
         animManager = new AnimationManager(type, ref);
         setUpGuiReferences();
+
+        shadow = new Shadow("Shadow", ref.getScene(), ref);
     }
 
     public void setUpGuiReferences() {
