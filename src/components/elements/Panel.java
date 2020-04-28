@@ -46,13 +46,13 @@ public class Panel {
 
     public void setVisible() {
         for (GuiComponent g : components) {
-            g.setVisible();
+            g.setVisible(true);
         }
     }
 
     public void hideElements() {
         for (GuiComponent g : components) {
-            g.hideElement();
+            g.setVisible(false);
         }
     }
 

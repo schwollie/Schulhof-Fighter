@@ -1,5 +1,6 @@
 package components;
 
+import components.elements.TextView;
 import components.event.GuiEvent;
 import components.event.GuiEventType;
 import components.event.GuiListener;
@@ -8,11 +9,8 @@ import game.Game;
 import input.ExpandedMouseListener;
 import logic.Dimension2D;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 public class GuiCanvas implements ExpandedMouseListener {
@@ -35,7 +33,14 @@ public class GuiCanvas implements ExpandedMouseListener {
 
     public void Render(Graphics2D g, Camera cam) {
         for (GuiComponent guiComponent : components) {
-            guiComponent.Render(g, cam);
+            if (!(guiComponent instanceof TextView)) {
+                guiComponent.Render(g, cam);
+            }
+        }
+        for (GuiComponent guiComponent : components) {
+            if (guiComponent instanceof TextView) {
+                guiComponent.Render(g, cam);
+            }
         }
         //repaint();
     }

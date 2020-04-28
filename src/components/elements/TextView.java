@@ -38,10 +38,11 @@ public class TextView extends GuiComponent {
 
             // set Font style and size (size must be dependent on screen size)
             float fSize = this.fontSize*(float)cam.getResolution().getWidth()/500;
-            g.setFont(font.deriveFont(fSize).deriveFont(fontType));
+            g.setFont(font.deriveFont(fontType).deriveFont(fSize));
 
             int width = g.getFontMetrics().stringWidth(text);
             int height = g.getFontMetrics().getHeight();
+
 
 
 
@@ -57,8 +58,7 @@ public class TextView extends GuiComponent {
                 }
                 default -> throw new Error("No TextAlign on TextView is specified!");
             }
-
-            g.drawString(text, x, y);
+            g.drawString(text, x, y + g.getFontMetrics().getHeight() / 2);
         }
     }
 

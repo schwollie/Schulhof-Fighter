@@ -89,9 +89,9 @@ public abstract class GuiComponent implements ComponentMethods {
         setRectFromTransform();
     }
 
-    public void setVisible() { this.visible = true; }
-
-    public void hideElement() { this.visible = false; }
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
 
     public GuiCanvas getParentGUI() {
         return parentGUI;

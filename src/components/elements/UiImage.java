@@ -73,7 +73,12 @@ public class UiImage extends GuiComponent {
             int width = (int)(cropR.getWidth() * boundaries.getWidth());
             int height = (int)(cropR.getHeight() * boundaries.getHeight());
 
-            if (width == 0 || height == 0) { this.hideElement(); return; } else { this.setVisible(); }
+            if (width == 0 || height == 0) {
+                this.setVisible(false);
+                return;
+            } else {
+                this.setVisible(true);
+            }
 
             croppedImg = srcImg.getSubimage(x, y, width, height);
             return;
@@ -122,9 +127,9 @@ public class UiImage extends GuiComponent {
             this.lastRenderPos.setValues(x, y);
             this.lastRenderWidth.setValues(width, height);
 
-
             // rot
             AffineTransform t = new AffineTransform();
+            System.out.println(rot);
             t.setToRotation(Math.toRadians(rot), x + xOffset, y + yOffset);
             g.setTransform(t);
 

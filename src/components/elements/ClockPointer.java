@@ -12,7 +12,7 @@ import java.awt.*;
 public class ClockPointer extends GuiComponent {
 
     private double rotOffset = 0;
-    private double rotLimit = 180;
+    private double rotLimit = 360;
     private boolean invertDir = false;
 
     private double progress = 0;
@@ -34,6 +34,7 @@ public class ClockPointer extends GuiComponent {
     }
 
     private void setRotation(double angle) {
+        System.out.println(angle + rotOffset);
         img.setRotation(angle + rotOffset);
     }
 
@@ -51,6 +52,7 @@ public class ClockPointer extends GuiComponent {
 
     public void setProgress(double progress) {
         this.progress = progress;
+        System.out.println(progress * rotLimit * (invertDir ? -1 : 1));
         setRotation(progress * rotLimit * (invertDir ? -1 : 1));
     }
 

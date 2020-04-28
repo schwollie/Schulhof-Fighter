@@ -97,10 +97,10 @@ public class AttackManager extends GameComponent implements CollissionListener, 
 
         Collider[] cs = getCollidersInRange(range, offset);
         force = testForComboHits(force);
-        dealDamageToColliders(cs, damage, force);
         Player player = ((Player) reference);
+        dealDamageToColliders(cs, damage, force, player);
         player.setCanMove(true);
-        player.getHealthManager().increaseStamina(player.getHealthManager().getAttackStamina());
+
 
         /*ParticleSystem p = new ParticleSystem(reference, new XRange(0.5, 2), 1, new XRange(100, 100));
         p.setRelativeTransform(new Transform(new Vector2(.5*getDirection(),0)));
@@ -113,12 +113,13 @@ public class AttackManager extends GameComponent implements CollissionListener, 
         reference.addComponent(p);*/
     }
 
-    private void dealDamageToColliders(Collider[] cs, double damage, Vector2 force) {
+    private void dealDamageToColliders(Collider[] cs, double damage, Vector2 force, Player attacker) {
         for (Collider c : cs) {
             if (c.getGameObject() instanceof Player && !c.getGameObject().equals(reference)) {
                 Player other = (Player) c.getGameObject();
                 other.takeDamage(damage, new Vector2(getDirection() * force.getX(), force.getY()), reference);
                 hitCombo++;
+                attacker.getHealthManager().increaseStamina(attacker.getHealthManager().getAttackStamina());
             }
         }
     }
