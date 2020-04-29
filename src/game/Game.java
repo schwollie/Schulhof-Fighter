@@ -34,6 +34,7 @@ public class Game {
     // Visuals
     public Window window;
 
+
     // World
     public Scene currentScene;
     public SceneManager sceneManager;

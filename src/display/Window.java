@@ -43,4 +43,5 @@ public class Window extends JFrame {
         fullscreen = !fullscreen;
     }
 
+
 }
