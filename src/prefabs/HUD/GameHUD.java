@@ -74,8 +74,8 @@ public class GameHUD extends GuiCanvas {
         p1Overlay = new UiImage(this, overlayT, "images/Gui/overlay1.png");
         p2Overlay = new UiImage(this, overlayT, "images/Gui/overlay1.png");
 
-        p1Panel.addComponents(new GuiComponent[]{p1Back, p1HealthSlider, p1StaminaSlider, p1Text, p1Overlay, p1Pointer});
-        p2Panel.addComponents(new GuiComponent[]{p2Back, p2HealthSlider, p2StaminaSlider, p2Text, p2Overlay, p2Pointer});
+        p1Panel.addComponents(new GuiComponent[]{ p1Back, p1HealthSlider, p1StaminaSlider, p1Text, p1Overlay, p1Pointer} );
+        p2Panel.addComponents(new GuiComponent[]{ p2Back, p2HealthSlider, p2StaminaSlider, p2Text, p2Overlay, p2Pointer} );
 
         p2Panel.addTransform(new ScreenTransform(new Vector2(1, 0), new Vector2(-1, 1)));
     }

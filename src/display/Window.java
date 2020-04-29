@@ -21,8 +21,6 @@ public class Window extends JFrame {
             this.setExtendedState(JFrame.MAXIMIZED_BOTH);
             this.setUndecorated(true);
         }
-
-
     }
 
 }

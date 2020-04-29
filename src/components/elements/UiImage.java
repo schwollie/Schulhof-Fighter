@@ -138,7 +138,6 @@ public class UiImage extends GuiComponent {
             t = new AffineTransform();
             t.setToRotation(0, x, y);
             g.setTransform(t);
-
         }
     }
 
