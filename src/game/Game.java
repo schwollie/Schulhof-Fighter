@@ -9,6 +9,7 @@ import logic.PlayerType;
 import prefabs.scenes.StandardSceneLoader;
 import scenes.Scene;
 import scenes.SceneManager;
+import time.TimeManager;
 
 import java.awt.*;
 
@@ -25,7 +26,10 @@ public class Game {
     private AudioManager audioManager;
 
     //input
-    private InputManager inputManager = new InputManager();
+    private final InputManager inputManager = new InputManager();
+
+    // Time Manager
+    private final TimeManager timeManager = new TimeManager(Consts.targetFPS);
 
     //MAIN MENU
     //private MenuCanvas mainmenu; kann eig gelöscht werden oder?
@@ -62,16 +66,16 @@ public class Game {
         while (true) {
 
             //wait for target FPS
-            currentScene.getTimeManager().stepForward();
-            currentScene.getTimeManager().waitForTargetFPS();
+            timeManager.stepForward();
+            timeManager.waitForTargetFPS();
 
             // update physics and scripts
             currentScene.tick();
 
             //redraw scene
             EventQueue.invokeLater(((Camera) currentScene.getCam()).getCanvas()::repaint);
+            //System.out.println(getTimeManager().getCurrentFPS());
 
-            //System.out.println(scene.getTimeManager().getCurrentFPS());
             //mainmenu.tick(fpsTracker.getDeltaTime(), inputManager.getMousePosition());
         }
     }
@@ -85,5 +89,9 @@ public class Game {
 
     public Scene getCurrentScene() {
         return currentScene;
+    }
+
+    public TimeManager getTimeManager() {
+        return timeManager;
     }
 }

@@ -22,13 +22,11 @@ import java.util.LinkedList;
 public class Scene implements Serializable {
 
     private Game game;
-    private final TimeManager timeManager;
     private final RenderManager renderManager;
     private GuiCanvas guiCanvas;
 
     public Scene(Game game) {
         this.game = game;
-        timeManager = new TimeManager(1000);
         renderManager = new RenderManager();
 
         guiCanvas = new GameHUD(this.game, new Dimension2D(Consts.windowWidth, Consts.windowHeight));
@@ -93,7 +91,7 @@ public class Scene implements Serializable {
         throw new Error("No Camera Found!");
     }
 
-    public TimeManager getTimeManager() { return timeManager; }
+    public TimeManager getTimeManager() { return game.getTimeManager(); }
 
     public synchronized void tick() {
         for (GameObject g : gameObjects) {

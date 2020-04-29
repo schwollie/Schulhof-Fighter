@@ -122,4 +122,8 @@ public abstract class GuiComponent implements ComponentMethods {
         }
         return font;
     }
+
+    public void setScreenTransform(ScreenTransform t) {
+        screenTransform = t;
+    }
 }

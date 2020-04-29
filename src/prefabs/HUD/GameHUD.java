@@ -51,13 +51,13 @@ public class GameHUD extends GuiCanvas {
         p1HealthSlider.loadBar("images/Gui/bar1.png");
         p2HealthSlider = new Slider(this, staminaT);
         p2HealthSlider.loadBar("images/Gui/bar1.png");
-        p2HealthSlider.setReverse(true);
+        //p2HealthSlider.setReverse(true);
 
         p1StaminaSlider = new Slider(this, healthT);
         p1StaminaSlider.loadBar("images/Gui/bar2.png");
         p2StaminaSlider = new Slider(this, healthT);
         p2StaminaSlider.loadBar("images/Gui/bar2.png");
-        p2StaminaSlider.setReverse(true);
+        //p2StaminaSlider.setReverse(true);
 
         p1Text = new TextView(this, textT, "");
         p1Text.setTextColor(Color.WHITE);

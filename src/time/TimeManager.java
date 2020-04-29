@@ -32,8 +32,15 @@ public class TimeManager {
         // FPS: 90 target: 60
         double waitTime = Math.max(1, 1000 / targetFPS - deltaTime);
 
+        long currentTime = System.currentTimeMillis();
+        long targetTime = currentTime + (long) waitTime;
+
+        while (currentTime < targetTime) {
+            currentTime = System.currentTimeMillis();
+        }
+
         try {
-            Thread.sleep((long) waitTime);
+            Thread.sleep(1);
         } catch (InterruptedException e) {
         }
 

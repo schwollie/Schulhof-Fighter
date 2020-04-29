@@ -65,6 +65,12 @@ public class ClockPointer extends GuiComponent {
     }
 
     @Override
+    public void addTransform(ScreenTransform other) {
+        super.addTransform(other);
+        img.setScreenTransform(this.screenTransform);
+    }
+
+    @Override
     public void onHoverEnter() {
         //System.out.println("Hover");
         //setRot(progress);

@@ -3,9 +3,12 @@ package prefabs.gameobjects;
 import gameobjects.GameObject;
 import graphics.ImageSprite;
 import logic.Vector2;
+import physics.Collider;
+import physics.CollissionListener;
+import player.Player;
 import scenes.Scene;
 
-public class Shadow extends GameObject {
+public class Shadow extends GameObject implements CollissionListener {
 
     private GameObject gameObject2Follow;
     private ImageSprite shadowImg;
@@ -21,6 +24,7 @@ public class Shadow extends GameObject {
     public Shadow(String tag, Scene world, GameObject gameObject) {
         super(tag, world, 1);
         this.gameObject2Follow = gameObject;
+        this.gameObject2Follow.getPhysicsComponent().getCollider().addListener(this);
 
         shadowImg = new ImageSprite(this, 1, "images/Others/shadow.png");
         shadowImg.setAlpha(0.5);
@@ -35,7 +39,7 @@ public class Shadow extends GameObject {
 
     private void setScale() {
         double d = distMult();
-        Vector2 scale = new Vector2(maxScale*d, maxScale*d);
+        Vector2 scale = new Vector2(maxScale*d, maxScale*d*0.5);
         this.transform.setScale(scale);
     }
 
@@ -48,16 +52,19 @@ public class Shadow extends GameObject {
     public void Tick() {
         super.Tick();
 
-        if (gameObject2Follow.getTransform().getY() < currentY) {
-            currentY = gameObject2Follow.getTransform().getY();
-        }
-
         currentX = gameObject2Follow.getTransform().getX();
 
-        this.transform.setPosition(new Vector2(currentX, currentY - yOffset + 0.05));
+        this.transform.setPosition(new Vector2(currentX, currentY - yOffset + 0.048));
         setScale();
 
     }
 
 
+    @Override
+    public void onCollision(Collider c1, Collider c2) {
+        if (c1.getGameObject().getTag().equals("ground") || c2.getGameObject().getTag().equals("ground")) {
+            currentY = gameObject2Follow.getTransform().getY();
+        }
+
+    }
 }
