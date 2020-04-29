@@ -15,6 +15,22 @@ import java.awt.*;
 
 public class Game {
 
+    //region Singletion Pattern
+    private static Game game;
+
+    public static Game game()
+    {
+        // To ensure only one instance is created
+        if (game == null)
+        {
+            game = new Game();
+        }
+        return game;
+    }
+
+    private Game() {}
+    // endregion
+
     // Visuals
     public Window window;
 
@@ -23,13 +39,13 @@ public class Game {
     public SceneManager sceneManager;
 
     //music
-    private AudioManager audioManager;
+    public AudioManager audioManager;
 
     //input
     private final InputManager inputManager = new InputManager(this);
 
     // Time Manager
-    private final TimeManager timeManager = new TimeManager(Consts.targetFPS);
+    public final TimeManager timeManager = new TimeManager(Consts.targetFPS);
 
     //MAIN MENU
     //private MenuCanvas mainmenu; kann eig gelöscht werden oder?
