@@ -129,7 +129,6 @@ public class UiImage extends GuiComponent {
 
             // rot
             AffineTransform t = new AffineTransform();
-            System.out.println(rot);
             t.setToRotation(Math.toRadians(rot), x + xOffset, y + yOffset);
             g.setTransform(t);
 

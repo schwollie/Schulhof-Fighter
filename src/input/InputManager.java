@@ -1,9 +1,9 @@
 package input;
 
+import game.Game;
 import logic.Vector2;
 
 import java.awt.event.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class InputManager implements KeyListener, MouseMotionListener, MouseListener {
@@ -14,6 +14,11 @@ public class InputManager implements KeyListener, MouseMotionListener, MouseList
     //mouse location
     private Vector2 mousePosition = new Vector2(0, 0);
 
+    private Game game;
+
+    public InputManager(Game game) {
+        this.game = game;
+    }
 
     // region keys
     @Override
@@ -32,7 +37,12 @@ public class InputManager implements KeyListener, MouseMotionListener, MouseList
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             System.exit(0);
         }
-        keyListeners.forEach(keyListener -> {keyListener.keyPressed(e);});
+        if (e.getKeyCode() == KeyEvent.VK_F11) {
+            game.window.changeScreenSize();
+        }
+        keyListeners.forEach(keyListener -> {
+            keyListener.keyPressed(e);
+        });
     }
     //endregion
 

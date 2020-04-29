@@ -69,7 +69,6 @@ public class Track {
         float gain = (range * volume) + gainControl.getMinimum();
 
         gainControl.setValue(gain);
-
     }
 
     private float lin2log(float val) {

@@ -1,16 +1,15 @@
 package gameobjects;
 
-import scenes.Scene;
 import graphics.RenderManager;
 import logic.Transform;
 import physics.PhysicsGameComponent;
+import scenes.Scene;
 import time.TimeEventListener;
 import time.TimeManager;
 import time.Timer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 
 public class GameObject implements Serializable, TimeEventListener {
 

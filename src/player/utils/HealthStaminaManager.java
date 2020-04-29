@@ -27,7 +27,7 @@ public class HealthStaminaManager extends GameComponent {
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
         this.maxStamina = maxStamina;
-        this.currentStamina = 50;
+        this.currentStamina = 0;
     }
 
     public void takeDamage(double damage) {

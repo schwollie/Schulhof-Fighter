@@ -26,7 +26,7 @@ public class Game {
     private AudioManager audioManager;
 
     //input
-    private final InputManager inputManager = new InputManager();
+    private final InputManager inputManager = new InputManager(this);
 
     // Time Manager
     private final TimeManager timeManager = new TimeManager(Consts.targetFPS);
@@ -44,7 +44,7 @@ public class Game {
     }
 
     public void initDisplay() {
-        window = new Window(Consts.windowWidth, Consts.windowHeight);
+        window = new Window(this, Consts.windowWidth, Consts.windowHeight);
     }
 
     // has to be called on every scene change
@@ -94,4 +94,5 @@ public class Game {
     public TimeManager getTimeManager() {
         return timeManager;
     }
+
 }

@@ -4,11 +4,11 @@ import components.GuiCanvas;
 import components.ScreenTransform;
 import game.Consts;
 import gameobjects.GameObject;
-import logic.Shaker;
-import scenes.Scene;
 import logic.Dimension2D;
+import logic.Shaker;
 import logic.Transform;
 import logic.Vector2;
+import scenes.Scene;
 import settings.Settings;
 
 import java.awt.*;
@@ -19,7 +19,7 @@ public class Camera extends GameObject implements Serializable {
     private final Canvas canvas;
 
     private final double ratio = Consts.ratio;
-    private final Dimension2D resolution = new Dimension2D(Consts.windowWidth, Consts.windowHeight);
+    private Dimension2D resolution = new Dimension2D(Consts.windowWidth, Consts.windowHeight);
     private double scale = 3.8;
 
     public Camera(Scene scene, Vector2 pos) {
@@ -47,6 +47,10 @@ public class Camera extends GameObject implements Serializable {
 
     public Dimension2D getResolution() {
         return resolution;
+    }
+
+    public void setResolution(Dimension2D resolution) {
+        this.resolution = resolution;
     }
 
     public Shape getClip() {

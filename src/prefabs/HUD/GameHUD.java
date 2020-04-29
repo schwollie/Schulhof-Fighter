@@ -65,11 +65,11 @@ public class GameHUD extends GuiCanvas {
         p2Text.setTextColor(Color.WHITE);
 
         p1Pointer = new ClockPointer(this, pointer, "images/Gui/pointer.png");
-        p1Pointer.setRotOffset(270);
+        p1Pointer.setRotOffset(90);
         p1Pointer.setInvertDir(true);
         p2Pointer = new ClockPointer(this, pointer, "images/Gui/pointer.png");
-        p2Pointer.setRotOffset(270);
-        p2Pointer.setInvertDir(true);//muss noch verschoben werden!?
+        p2Pointer.setRotOffset(90);
+        p2Pointer.setInvertDir(true);
 
         p1Overlay = new UiImage(this, overlayT, "images/Gui/overlay1.png");
         p2Overlay = new UiImage(this, overlayT, "images/Gui/overlay1.png");
