@@ -15,9 +15,14 @@ public class Slider extends GuiComponent {
     protected UiImage handle;
     protected TextView textView;
 
-    protected double progress = 1;
+    protected double progress = 10;
 
     protected boolean reverse = false;
+
+    // nice progress effect
+    private double speed = 4;
+    private double targetProgress;
+    private SliderThread sliderThread;
 
     public Slider(GuiCanvas parent, ScreenTransform screenTransform) {
         super(parent, screenTransform);
@@ -43,10 +48,21 @@ public class Slider extends GuiComponent {
         bar = new UiImage(this.parentGUI, this.screenTransform, filename);
     }
 
-    public void setProgress(double p) {
+    public void applyProgress(double p) {
         textView.setText(p + "%");
         this.progress = Math.min(Math.max(p, 0.000001), 1);
         setCropFactor();
+    }
+
+    public void setProgress(double p) {
+        this.targetProgress = Math.min(Math.max(p, 0.000001), 1);
+
+        if (sliderThread != null) {
+            return;
+        }
+
+        sliderThread = new SliderThread(this);
+        sliderThread.start();
     }
 
     public double getProgress() {
@@ -60,6 +76,18 @@ public class Slider extends GuiComponent {
                 bar.setOffset(new Vector2((1 - progress), 0));
             }
         }
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public boolean isReverse() {
+        return reverse;
+    }
+
+    public double getTargetProgress() {
+        return targetProgress;
     }
 
     @Override
@@ -78,6 +106,10 @@ public class Slider extends GuiComponent {
         setCropFactor();
     }
 
+    public void setSliderThread(SliderThread sliderThread) {
+        this.sliderThread = sliderThread;
+    }
+
     @Override
     public void onHoverEnter() {
         super.onHoverEnter();
@@ -88,5 +120,46 @@ public class Slider extends GuiComponent {
     public void onHoverExit() {
         super.onHoverExit();
         textView.setVisible(false);
+    }
+}
+
+class SliderThread extends Thread {
+
+    private static final double tolerance = .01;
+
+    private double speed; // degrees per second
+
+
+    private Slider slider;
+
+    public SliderThread(Slider slider) {
+        this.slider = slider;
+        this.speed = slider.getSpeed();
+    }
+
+    @Override
+    public void run() {
+
+        while (true) {
+
+            try {
+                sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            double delta = slider.getProgress() - slider.getTargetProgress();
+            int dir = delta > 0 ? -1 : 1;
+
+            slider.applyProgress(slider.getProgress() + dir * speed / 1000);
+
+
+            if (Math.abs(slider.getProgress() - slider.getTargetProgress()) < tolerance) {
+                break;
+            }
+        }
+
+        slider.applyProgress(slider.getTargetProgress());
+        slider.setSliderThread(null);
     }
 }

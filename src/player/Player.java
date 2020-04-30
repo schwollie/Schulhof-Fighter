@@ -18,7 +18,7 @@ import scenes.Scene;
 
 public class Player extends GameObject implements CollissionListener {
 
-    public static final double maxHealth = 100, maxStamina = 100;
+    public static final double maxHealth = 20, maxStamina = 100;
 
     private PlayerSide side;
     private PlayerController controller;
