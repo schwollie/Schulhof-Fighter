@@ -1,7 +1,6 @@
 package scenes;
 
 import com.blogspot.debukkitsblog.util.FileStorage;
-import game.Game;
 import logic.PlayerType;
 import prefabs.scenes.StandardSceneLoader;
 
@@ -11,18 +10,13 @@ import java.io.IOException;
 public class SceneManager {
 
     public final String KEY_VALUE = "scene";
-    private Game game;
-
-    public SceneManager(Game game) {
-        this.game = game;
-    }
 
     public Scene loadScene(String name) {
         String path = "scenes/" + name + ".dat";
         File file = new File(path);
         FileStorage fs = null;
         if (!file.exists()) {
-            return StandardSceneLoader.getStandardScene(game, PlayerType.Hausperger, PlayerType.Hausperger);
+            return StandardSceneLoader.getStandardScene(PlayerType.Hausperger, PlayerType.Hausperger);
         }
         try {
             fs = new FileStorage(file);

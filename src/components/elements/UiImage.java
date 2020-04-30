@@ -145,7 +145,14 @@ public class UiImage extends GuiComponent {
     }
 
     public void setRotation(double rot) {
-        this.rot = rot;
+        this.rot = rot - ((int) (rot / 360) * 360);
+        if (this.rot < 0) {
+            this.rot = 360 + this.rot;
+        }
+    }
+
+    public double getRotation() {
+        return rot - ((int) (rot / 360) * 360);
     }
 
     public void setAnchor(Anchor anchor) {

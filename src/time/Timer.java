@@ -1,5 +1,6 @@
 package time;
 
+import game.Game;
 import gameobjects.ComponentType;
 import gameobjects.GameComponent;
 import gameobjects.GameObject;
@@ -44,7 +45,7 @@ public class Timer extends GameComponent {
 
     @Override
     public void tick() {
-        double dt = reference.getTime().getDeltaTime();
+        double dt = Game.timeManager.getDeltaTime();
         elapsedTime += dt;
 
         if (hasStopped || pause) {
@@ -107,7 +108,7 @@ public class Timer extends GameComponent {
 
     @Override
     public String toString() {
-        return "Timer{" +
+        return "Timer {" +
                 "time=" + time +
                 ", elapsedTime=" + elapsedTime +
                 ", hasStopped=" + hasStopped +

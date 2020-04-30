@@ -13,59 +13,42 @@ import time.TimeManager;
 
 import java.awt.*;
 
-public class Game {
-
-    //region Singletion Pattern
-    private static Game game;
-
-    public static Game game()
-    {
-        // To ensure only one instance is created
-        if (game == null)
-        {
-            game = new Game();
-        }
-        return game;
-    }
-
-    private Game() {}
-    // endregion
+public final class Game {
 
     // Visuals
-    public Window window;
+    public static Window window;
 
 
     // World
-    public Scene currentScene;
-    public SceneManager sceneManager;
+    public static Scene currentScene;
+    public static final SceneManager sceneManager = new SceneManager();
 
     //music
-    public AudioManager audioManager;
+    public static final AudioManager audioManager = new AudioManager();
 
     //input
-    private final InputManager inputManager = new InputManager(this);
+    public static final InputManager inputManager = new InputManager();
 
     // Time Manager
-    public final TimeManager timeManager = new TimeManager(Consts.targetFPS);
+    public static final TimeManager timeManager = new TimeManager(Consts.targetFPS);
 
     //MAIN MENU
     //private MenuCanvas mainmenu; kann eig gelöscht werden oder?
 
-    public void loadSprites() {
+    public static void loadSprites() {
         SpriteLoader.loadAll();
     }
 
-    public void initScene() {
-        sceneManager = new SceneManager(this);
-        currentScene = StandardSceneLoader.getStandardScene(this, PlayerType.Hausperger, PlayerType.Hausperger);
+    public static void initScene() {
+        currentScene = StandardSceneLoader.getStandardScene(PlayerType.Hausperger, PlayerType.Hausperger);
     }
 
-    public void initDisplay() {
-        window = new Window(this, Consts.windowWidth, Consts.windowHeight);
+    public static void initDisplay() {
+        window = new Window(Consts.windowWidth, Consts.windowHeight);
     }
 
     // has to be called on every scene change
-    public void initSceneGraphics() {
+    public static void initSceneGraphics() {
         window.addMouseMotionListener(inputManager);
         window.addMouseListener(inputManager);
         window.addKeyListener(inputManager);
@@ -75,11 +58,11 @@ public class Game {
         window.setVisible(true);
     }
 
-    public void start() {
+    public static void start() {
         startGameLoop();
     }
 
-    public void startGameLoop() {
+    public static void startGameLoop() {
         while (true) {
 
             //wait for target FPS
@@ -97,19 +80,8 @@ public class Game {
         }
     }
 
-    public void loadMusic() {
+    public static void loadMusic() {
         //audioManager = new AudioManager("test.wav");
         //audioManager.play();
     }
-
-    public InputManager getInputManager() { return this.inputManager; }
-
-    public Scene getCurrentScene() {
-        return currentScene;
-    }
-
-    public TimeManager getTimeManager() {
-        return timeManager;
-    }
-
 }

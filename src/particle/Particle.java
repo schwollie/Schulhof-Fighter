@@ -1,7 +1,8 @@
 package particle;
 
 import display.Camera;
-import game.*;
+import game.Consts;
+import game.Game;
 import gameobjects.ComponentType;
 import gameobjects.GameComponent;
 import graphics.Drawable;
@@ -60,7 +61,7 @@ public class Particle extends GameComponent implements Drawable, TimeEventListen
 
     @Override
     public void tick() {
-        double dt = reference.getTime().getDeltaTime();
+        double dt = Game.timeManager.getDeltaTime();
         lifeTimer.tick();
         setStats();
         calcPhysics(dt);

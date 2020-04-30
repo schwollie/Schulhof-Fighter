@@ -1,11 +1,6 @@
 package audio;
 
-import game.Consts;
 import loading.AudioLoader;
-
-import javax.sound.sampled.*;
-import java.io.File;
-import java.io.IOException;
 
 public class AudioManager {
 
@@ -15,7 +10,7 @@ public class AudioManager {
     public AudioManager() {
         AudioLoader.loadAll();
 
-        t1 = new Track("test.wav");
+        t1 = new Track("soundtrack.WAV");
         t1.play();
         t1.setVolume(.5f);
     }

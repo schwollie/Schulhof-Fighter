@@ -5,7 +5,6 @@ import graphics.ImageSprite;
 import logic.Vector2;
 import physics.Collider;
 import physics.CollissionListener;
-import player.Player;
 import scenes.Scene;
 
 public class Shadow extends GameObject implements CollissionListener {
@@ -26,7 +25,7 @@ public class Shadow extends GameObject implements CollissionListener {
         this.gameObject2Follow = gameObject;
         this.gameObject2Follow.getPhysicsComponent().getCollider().addListener(this);
 
-        shadowImg = new ImageSprite(this, 1, "images/Others/shadow.png");
+        shadowImg = new ImageSprite(this, 1, "images/Others/shadow2.png");
         shadowImg.setAlpha(0.5);
         this.addComponent(shadowImg);
 
@@ -54,7 +53,7 @@ public class Shadow extends GameObject implements CollissionListener {
 
         currentX = gameObject2Follow.getTransform().getX();
 
-        this.transform.setPosition(new Vector2(currentX, currentY - yOffset + 0.048));
+        this.transform.setPosition(new Vector2(currentX, currentY - yOffset + 0.035));
         setScale();
 
     }

@@ -14,12 +14,6 @@ public class InputManager implements KeyListener, MouseMotionListener, MouseList
     //mouse location
     private Vector2 mousePosition = new Vector2(0, 0);
 
-    private Game game;
-
-    public InputManager(Game game) {
-        this.game = game;
-    }
-
     // region keys
     @Override
     public void keyTyped(KeyEvent e) {
@@ -38,7 +32,7 @@ public class InputManager implements KeyListener, MouseMotionListener, MouseList
             System.exit(0);
         }
         if (e.getKeyCode() == KeyEvent.VK_F11) {
-            game.window.changeScreenSize();
+            Game.window.changeScreenSize();
         }
         keyListeners.forEach(keyListener -> {
             keyListener.keyPressed(e);

@@ -1,5 +1,6 @@
 package input;
 
+import game.Game;
 import gameobjects.ComponentType;
 import gameobjects.GameComponent;
 import gameobjects.GameObject;
@@ -35,7 +36,7 @@ public class PlayerInputManager extends GameComponent implements KeyListener {
         super(ref, type);
 
         // add itself to listeners
-        ref.getScene().getInputManager().keyListeners.add(this);
+        Game.inputManager.keyListeners.add(this);
 
     }
 

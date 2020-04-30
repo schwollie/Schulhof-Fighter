@@ -5,7 +5,6 @@ import logic.Transform;
 import physics.PhysicsGameComponent;
 import scenes.Scene;
 import time.TimeEventListener;
-import time.TimeManager;
 import time.Timer;
 
 import java.io.Serializable;
@@ -119,10 +118,6 @@ public class GameObject implements Serializable, TimeEventListener {
         GameObject p = new GameObject("placeholder", g);
         p.transform = Transform.getIdentity();
         return p;
-    }
-
-    public TimeManager getTime() {
-        return this.scene.getTimeManager();
     }
 
     public int getLayer() {

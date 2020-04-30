@@ -1,6 +1,7 @@
 package physics;
 
 import game.Consts;
+import game.Game;
 import gameobjects.ComponentType;
 import gameobjects.GameComponent;
 import gameobjects.GameObject;
@@ -27,7 +28,7 @@ public class PhysicsGameComponent extends GameComponent {
 
     @Override
     public void tick() {
-        double deltaTime = reference.getTime().getDeltaTime();
+        double deltaTime = Game.timeManager.getDeltaTime();
         if (isStatic) {
             return;
         }

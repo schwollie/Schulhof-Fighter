@@ -3,6 +3,7 @@ package display;
 import components.GuiCanvas;
 import components.ScreenTransform;
 import game.Consts;
+import game.Game;
 import gameobjects.GameObject;
 import logic.Dimension2D;
 import logic.Shaker;
@@ -19,14 +20,37 @@ public class Camera extends GameObject implements Serializable {
     private final Canvas canvas;
 
     private final double ratio = Consts.ratio;
-    private Dimension2D resolution = new Dimension2D(Consts.windowWidth, Consts.windowHeight);
-    private double scale = 3.8;
+    private Dimension2D resolution;
+    private double scale;
 
-    public Camera(Scene scene, Vector2 pos) {
+    public Camera(Scene scene, Vector2 pos, double scale) {
         super("Camera", scene);
+        this.scale = scale;
         this.transform.setPosition(pos);
+        resolution = new Dimension2D(Game.window.getWidth(), Game.window.getHeight());
         canvas = new Canvas();
         canvas.setCam(this);
+    }
+
+    public static Transform gui2Screen(ScreenTransform trans, Dimension2D resolution) {
+        Transform screen = new Transform();
+
+        double xFactor = resolution.getWidth();
+        double yFactor = resolution.getHeight() * GuiCanvas.defaultRatio;
+
+        // new position
+        Vector2 newPos = new Vector2(trans.getPos());
+        newPos.setX(newPos.getX() * xFactor);
+        newPos.setY(newPos.getY() * yFactor);
+        screen.setPosition(newPos);
+
+        // new Scale
+        Vector2 newScale = new Vector2(trans.getScale());
+        newScale.setX(newScale.getX() * xFactor);
+        newScale.setY(newScale.getY() * yFactor);
+        screen.setScale(newScale);
+
+        return screen;
     }
 
     public void RenderScene(Graphics2D g) {
@@ -85,27 +109,6 @@ public class Camera extends GameObject implements Serializable {
     }
 
     public Transform gui2Screen(ScreenTransform trans) {
-        Transform screen = new Transform();
-
-        double xFactor = resolution.getWidth();
-        double yFactor = resolution.getHeight() * GuiCanvas.defaultRatio;
-
-        // new position
-        Vector2 newPos = new Vector2(trans.getPos());
-        newPos.setX(newPos.getX() * xFactor);
-        newPos.setY(newPos.getY() * yFactor);
-        screen.setPosition(newPos);
-
-        // new Scale
-        Vector2 newScale = new Vector2(trans.getScale());
-        newScale.setX(newScale.getX() * xFactor);
-        newScale.setY(newScale.getY() * yFactor);
-        screen.setScale(newScale);
-
-        return screen;
-    }
-
-    public static Transform gui2Screen(ScreenTransform trans, Dimension2D resolution) {
         Transform screen = new Transform();
 
         double xFactor = resolution.getWidth();

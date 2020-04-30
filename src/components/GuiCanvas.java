@@ -17,18 +17,15 @@ public class GuiCanvas implements ExpandedMouseListener {
 
     public static final double defaultRatio = 1.77777777777777777777777;
 
-    protected Game game;
-
     private Dimension2D resolution;
     private final ArrayList<GuiComponent> components = new ArrayList<>();
     private final ArrayList<GuiListener> listeners = new ArrayList<>();
 
-    public GuiCanvas(Game game, Dimension2D resolution) {
+    public GuiCanvas(Dimension2D resolution) {
         super();
-        this.game = game;
         this.resolution = resolution;
 
-        game.getInputManager().mouseListeners.add(this);
+        Game.inputManager.mouseListeners.add(this);
     }
 
     public void Render(Graphics2D g, Camera cam) {
@@ -139,9 +136,5 @@ public class GuiCanvas implements ExpandedMouseListener {
         for (GuiListener listener : listeners) {
             listener.onAction(event);
         }
-    }
-
-    public Game getGame() {
-        return game;
     }
 }

@@ -1,5 +1,6 @@
 package animation;
 
+import game.Game;
 import gameobjects.ComponentType;
 import gameobjects.GameComponent;
 import gameobjects.GameObject;
@@ -31,7 +32,7 @@ public class SimpleAnimationManager extends GameComponent {
 
     @Override
     public void tick() {
-        double dt = reference.getTime().getDeltaTime();
+        double dt = Game.timeManager.getDeltaTime();
         animation.playAnimation(dt);
     }
 

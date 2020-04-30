@@ -1,5 +1,6 @@
 package player.utils;
 
+import game.Game;
 import gameobjects.ComponentType;
 import gameobjects.GameComponent;
 import gameobjects.GameObject;
@@ -45,7 +46,7 @@ public class HealthStaminaManager extends GameComponent {
     }
 
     public void tick() {
-        double deltaTime = reference.getTime().getDeltaTime();
+        double deltaTime = Game.timeManager.getDeltaTime();
         regenerate(deltaTime);
     }
 

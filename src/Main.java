@@ -3,17 +3,15 @@ import game.Game;
 public class Main {
 
     public static void main(String[] args) {
-        Game game = Game.game();
+        Game.initDisplay();
 
-        game.initDisplay();
+        Game.loadSprites();
 
-        game.loadSprites();
+        Game.initScene();
+        Game.initSceneGraphics();
+        //Game.loadMusic();
 
-        game.initScene();
-        game.initSceneGraphics();
-        //game.loadMusic();
-
-        game.start();
+        Game.start();
     }
 }
 
