@@ -58,7 +58,7 @@ public class TextView extends GuiComponent {
                 }
                 default -> throw new Error("No TextAlign on TextView is specified!");
             }
-            g.drawString(text, x, y + g.getFontMetrics().getHeight() / 2);
+            g.drawString(text, x, y);
         }
     }
 
@@ -100,6 +100,9 @@ public class TextView extends GuiComponent {
 
     public void setFont(String font) {
         this.font = loadFont(font);
+    }
+    public void setFont(Font font) {
+        this.font = font;
     }
 
 }
