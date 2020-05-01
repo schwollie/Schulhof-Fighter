@@ -87,7 +87,7 @@ public class Player extends GameObject implements CollissionListener {
     // region damage Handling:
     public void takeDamage(double damage, Vector2 force, GameObject damager) {
         this.healthManager.takeDamage(damage);
-        this.physicsComponent.addForce(force);
+        this.physicsComponent.addForceImpulse(force);
 
         if (RandomClass.chance(0.5)) {
             this.playerState = PlayerState.GotHit1;

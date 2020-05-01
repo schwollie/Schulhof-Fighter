@@ -33,7 +33,7 @@ public class PhysicsGameComponent extends GameComponent {
             return;
         }
         if (hasGravity) {
-            this.calcPhysics(deltaTime, reference.getScene());
+            this.calcPhysics(reference.getScene());
             this.applyForce(deltaTime);
         }
         this.force = new Vector2(0, 0); // reset all forces
@@ -54,7 +54,7 @@ public class PhysicsGameComponent extends GameComponent {
         updateTransform(dt);
     }
 
-    private void calcPhysics(double dt, Scene scene) {
+    private void calcPhysics(Scene scene) {
         this.calcCollisionForce(scene);
         if (hasGravity) {
             this.addGravity();
@@ -114,8 +114,16 @@ public class PhysicsGameComponent extends GameComponent {
 
     //region Getters + Setters:
 
+    /**
+     * Adds a Force to this Object. This force should not be a single impulse use AddForceImpulse() for this purpose!
+     */
+
     public void addForce(Vector2 force) {
         this.force = this.force.add(force);
+    }
+
+    public void addForceImpulse(Vector2 force) {
+        this.force = this.force.add(force.scalarMult(1 / Game.timeManager.getDeltaTime()));
     }
 
     public Collider getCollider() {

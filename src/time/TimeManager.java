@@ -2,6 +2,8 @@ package time;
 
 public class TimeManager {
 
+    private final static double convertFactor = 1000000000;
+
     private final int targetFPS;
 
     private double currentTime = 0;
@@ -17,11 +19,11 @@ public class TimeManager {
     }
 
     public void stepForward() {
-        currentTime = System.currentTimeMillis();
+        currentTime = System.nanoTime();
         deltaTime = currentTime - lastTime;
         lastTime = currentTime;
 
-        currentFPS = 1000 / deltaTime;
+        currentFPS = convertFactor / deltaTime;
     }
 
     public void waitForTargetFPS() {
@@ -30,18 +32,18 @@ public class TimeManager {
         }
 
         // FPS: 90 target: 60
-        double waitTime = Math.max(1, 1000 / targetFPS - deltaTime);
+        double waitTime = Math.max(1, convertFactor / targetFPS - deltaTime);
 
-        long currentTime = System.currentTimeMillis();
-        long targetTime = currentTime + (long) waitTime;
-
-        while (currentTime < targetTime) {
-            currentTime = System.currentTimeMillis();
-        }
+        double currentTime = System.nanoTime();
+        double targetTime = currentTime + waitTime;
 
         try {
             Thread.sleep(1);
         } catch (InterruptedException e) {
+        }
+
+        while (currentTime < targetTime) {
+            currentTime = System.nanoTime();
         }
 
         stepForward();
@@ -61,12 +63,12 @@ public class TimeManager {
 
     public double getDeltaTime() {
         // Min of 5 fps -> to prevent weired physics due to lags
-        return Math.min(deltaTime / 1000 * timeScale, 0.2);
+        return Math.min(deltaTime / convertFactor * timeScale, 0.2);
     }
 
     public double getAbsDeltaTime() {
         // Min of 5 fps -> to prevent weired physics due to lags
-        return Math.min(deltaTime / 1000, 0.2);
+        return Math.min(deltaTime / convertFactor, 0.2);
     }
 
     @Override

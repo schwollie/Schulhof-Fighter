@@ -73,7 +73,7 @@ public final class Game {
 
             //redraw scene
             EventQueue.invokeLater(((Camera) currentScene.getCam()).getCanvas()::repaint);
-            //System.out.println(getTimeManager().getCurrentFPS());
+            //System.out.println(timeManager.getCurrentFPS());
 
             //mainmenu.tick(fpsTracker.getDeltaTime(), inputManager.getMousePosition());
         }

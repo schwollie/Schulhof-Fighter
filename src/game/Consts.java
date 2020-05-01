@@ -18,7 +18,7 @@ public abstract class Consts {
     public static double ratio = (double) windowWidth / windowHeight;
 
     // settings
-    public static int targetFPS = 250;
+    public static int targetFPS = 120;
 
     // main menu
     public static int bubblesAmount = 100;

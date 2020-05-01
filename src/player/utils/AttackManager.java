@@ -80,7 +80,7 @@ public class AttackManager extends GameComponent implements CollissionListener, 
     }
 
     public void doKickHit() {
-        doAttack(new Vector2(0.5, 0.2), Vector2.zero, 1, new Vector2(200, 100));
+        doAttack(new Vector2(0.5, 0.2), Vector2.zero, 1, new Vector2(2, 1));
     }
 
     public void doPunch() {
@@ -89,7 +89,7 @@ public class AttackManager extends GameComponent implements CollissionListener, 
     }
 
     public void doPunchHit() {
-        doAttack(new Vector2(0.5, 0.2), Vector2.zero, 1, new Vector2(200, 100));
+        doAttack(new Vector2(0.5, 0.2), Vector2.zero, 1, new Vector2(2, 1));
     }
 
     private void doAttack(Vector2 range, Vector2 offset, double damage, Vector2 force) {
@@ -127,7 +127,7 @@ public class AttackManager extends GameComponent implements CollissionListener, 
     private Vector2 testForComboHits(Vector2 force) {
         if (hitCombo >= 2) { //3 hits
             hitCombo = 0;
-            force = force.scalarMult(10);
+            force = force.scalarMult(4);
         } else {
             hitComboTimer.resetTimer();
         }
