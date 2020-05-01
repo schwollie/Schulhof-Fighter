@@ -30,8 +30,25 @@ public class Slider extends GuiComponent {
         Vector2 scale = textTransform.getScale();
         textTransform.setPos(textTransform.getPos().add(new Vector2(scale.getX() / 2, scale.getY())));
         textView = new TextView(parent, textTransform, "perc");
+        textView.setFont(new Font("Comic Sans", Font.PLAIN, 15));
+        textView.setVisible(false);
         parent.addGuiComponent(textView);
     }
+
+    @Override
+    public void addTransform(ScreenTransform other) {
+        super.addTransform(other);
+        if (bar != null) {
+            bar.addTransform(other);
+        }
+        if (handle != null) {
+            handle.addTransform(other);
+        }
+        if (textView != null) {
+            textView.addTransform(other);
+        }
+    }
+
 
     @Override
     public void Render(Graphics2D g, Camera cam) {
@@ -49,12 +66,12 @@ public class Slider extends GuiComponent {
     }
 
     public void applyProgress(double p) {
-        textView.setText(p + "%");
         this.progress = Math.min(Math.max(p, 0.000001), 1);
         setCropFactor();
     }
 
     public void setProgress(double p) {
+        textView.setText((Math.round(100*p))+ " %");
         this.targetProgress = Math.min(Math.max(p, 0.000001), 1);
 
         if (sliderThread != null) {
@@ -90,17 +107,6 @@ public class Slider extends GuiComponent {
         return targetProgress;
     }
 
-    @Override
-    public void addTransform(ScreenTransform other) {
-        super.addTransform(other);
-        if (bar != null) {
-            bar.addTransform(other);
-        }
-        if (handle != null) {
-            handle.addTransform(other);
-        }
-    }
-
     public void setReverse(boolean reverse) {
         this.reverse = reverse;
         setCropFactor();
@@ -113,13 +119,13 @@ public class Slider extends GuiComponent {
     @Override
     public void onHoverEnter() {
         super.onHoverEnter();
-        textView.setVisible(true);
+        //textView.setVisible(true);
     }
 
     @Override
     public void onHoverExit() {
         super.onHoverExit();
-        textView.setVisible(false);
+        //textView.setVisible(false);
     }
 }
 

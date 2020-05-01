@@ -3,6 +3,7 @@ package prefabs.scenes;
 import display.Camera;
 import gameobjects.ComponentType;
 import gameobjects.GameObject;
+import graphics.ImageSprite;
 import input.PlayerInputManager;
 import logic.Dimension2D;
 import logic.PlayerType;
