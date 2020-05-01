@@ -107,9 +107,16 @@ public abstract class AnimationLoader {
     }
 
     private static Dimension2D getSpriteSize(PlayerType type) {
-        if (type == PlayerType.Hausperger) {
-            return Consts.hauspergerCharacterSize;
+
+        switch (type) {
+            case Hausperger -> {
+                return Consts.hauspergerCharacterSize;
+            }
+            case Sippl -> {
+                return Consts.sipplCharacterSize;
+            }
         }
+
         throw new Error("NO SHEET FOUND: " + type);
     }
 

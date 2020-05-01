@@ -2,6 +2,6 @@ package logic;
 
 public enum PlayerType {
 
-    Default, Hausperger
+    Default, Hausperger, Sippl
 
 }

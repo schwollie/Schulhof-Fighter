@@ -15,7 +15,7 @@ public class ClockPointer extends GuiComponent {
     private RotatorThread rotator;
 
     // vars
-    private double animSpeed = 20; // degrees pers second
+    private double animSpeed = 100; // degrees pers second
 
     private double rotOffset = 0;
     private double rotLimit = 180;
@@ -52,10 +52,6 @@ public class ClockPointer extends GuiComponent {
         rotator.start();
     }
 
-    public void rotate(double step) {
-
-    }
-
     // region getters and setters
 
     private void setRotation(double angle) {
@@ -68,7 +64,7 @@ public class ClockPointer extends GuiComponent {
 
     public void setRotOffset(double rotOffset) {
         this.rotOffset = rotOffset;
-        img.setRotation(rotOffset);
+        img.setRotation(rotOffset + img.getRotation());
     }
 
     public double getProgress() {
@@ -142,7 +138,7 @@ public class ClockPointer extends GuiComponent {
 
 class RotatorThread extends Thread {
 
-    private static final double tolerance = 1;
+    private double tolerance = 1;
 
     private double speed; // degrees per second
 
@@ -151,18 +147,22 @@ class RotatorThread extends Thread {
 
     public RotatorThread(ClockPointer pointer) {
         this.clockPointer = pointer;
-        this.speed = clockPointer.getAnimSpeed();
+        this.speed = clockPointer.getAnimSpeed() / 100;
+        tolerance = speed * 0.6;
     }
 
     @Override
     public void run() {
 
         while (true) {
-
             try {
                 sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            }
+
+            if (Math.abs(clockPointer.getImg().getRotation() - clockPointer.getTargetRot()) < tolerance) {
+                break;
             }
 
             double delta = clockPointer.getImg().getRotation() - clockPointer.getTargetRot();
@@ -170,13 +170,7 @@ class RotatorThread extends Thread {
             double dir = delta > 0 ? -1 : 1;
             dir *= Math.abs(delta) < 180 ? 1 : -1;
 
-
-            clockPointer.getImg().setRotation(clockPointer.getImg().getRotation() + dir * speed / 100);
-
-            if (Math.abs(clockPointer.getImg().getRotation() - clockPointer.getTargetRot()) < tolerance) {
-                break;
-            }
-
+            clockPointer.getImg().setRotation(clockPointer.getImg().getRotation() + dir * speed);
         }
 
         clockPointer.getImg().setRotation(clockPointer.getTargetRot());

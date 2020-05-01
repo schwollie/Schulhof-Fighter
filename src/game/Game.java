@@ -1,6 +1,5 @@
 package game;
 
-import audio.AudioManager;
 import display.Camera;
 import display.Window;
 import input.InputManager;
@@ -24,7 +23,7 @@ public final class Game {
     public static final SceneManager sceneManager = new SceneManager();
 
     //music
-    public static final AudioManager audioManager = new AudioManager();
+    //public static final AudioManager audioManager = new AudioManager();
 
     //input
     public static final InputManager inputManager = new InputManager();
@@ -40,7 +39,7 @@ public final class Game {
     }
 
     public static void initScene() {
-        currentScene = StandardSceneLoader.getStandardScene(PlayerType.Hausperger, PlayerType.Hausperger);
+        currentScene = StandardSceneLoader.getStandardScene(PlayerType.Sippl, PlayerType.Hausperger);
     }
 
     public static void initDisplay() {

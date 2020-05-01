@@ -15,12 +15,12 @@ public class Slider extends GuiComponent {
     protected UiImage handle;
     protected TextView textView;
 
-    protected double progress = 10;
+    protected double progress = 0;
 
     protected boolean reverse = false;
 
     // nice progress effect
-    private double speed = 4;
+    private double speed = 5;
     private double targetProgress;
     private SliderThread sliderThread;
 
@@ -125,7 +125,7 @@ public class Slider extends GuiComponent {
 
 class SliderThread extends Thread {
 
-    private static final double tolerance = .01;
+    private double tolerance;
 
     private double speed; // degrees per second
 
@@ -134,7 +134,9 @@ class SliderThread extends Thread {
 
     public SliderThread(Slider slider) {
         this.slider = slider;
-        this.speed = slider.getSpeed();
+        this.speed = slider.getSpeed() / 1000;
+
+        tolerance = speed * 0.6;
     }
 
     @Override
@@ -142,21 +144,24 @@ class SliderThread extends Thread {
 
         while (true) {
 
+            // 100 fps is more than enough
             try {
                 sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            double delta = slider.getProgress() - slider.getTargetProgress();
-            int dir = delta > 0 ? -1 : 1;
-
-            slider.applyProgress(slider.getProgress() + dir * speed / 1000);
-
-
+            // test if more sliding is needed
             if (Math.abs(slider.getProgress() - slider.getTargetProgress()) < tolerance) {
                 break;
             }
+
+            // slide
+            double delta = slider.getProgress() - slider.getTargetProgress();
+            int dir = delta > 0 ? -1 : 1;
+
+            slider.applyProgress(slider.getProgress() + dir * speed);
+
         }
 
         slider.applyProgress(slider.getTargetProgress());
