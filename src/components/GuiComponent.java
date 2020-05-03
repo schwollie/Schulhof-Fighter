@@ -79,7 +79,7 @@ public abstract class GuiComponent implements ComponentMethods {
 
     public boolean isPointOnComponent(int x, int y) {
         return x >= bounds.getX() && x <= bounds.getMaxX() &&
-                y >= bounds.getY() && y <= bounds.getMaxY();
+                y >= bounds.getY() && y <= bounds.getMaxY() && visible;
     }
 
     public ScreenTransform getScreenTransform() {
@@ -89,6 +89,10 @@ public abstract class GuiComponent implements ComponentMethods {
     public void addTransform(ScreenTransform other) {
         this.screenTransform = screenTransform.add(other);
         setRectFromTransform();
+    }
+
+    public boolean isVisible() {
+        return visible;
     }
 
     public void setVisible(boolean visible) {
@@ -102,6 +106,7 @@ public abstract class GuiComponent implements ComponentMethods {
     public void setParentGUI(GuiCanvas parentGUI) {
         this.parentGUI = parentGUI;
     }
+
 
     protected String getAdaptedStringLength(String text, FontMetrics fontMetrics) {
         String result = text;

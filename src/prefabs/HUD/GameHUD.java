@@ -19,6 +19,7 @@ public class GameHUD extends GuiCanvas {
     private static final ScreenTransform textT = new ScreenTransform(new Vector2(.11, .055), new Vector2(.1, .1));
     private static final ScreenTransform overlayT = new ScreenTransform(new Vector2(0.038, 0.01062), new Vector2(.329, .1));
     private static final ScreenTransform pointer = new ScreenTransform(new Vector2(0.287, 0.06), new Vector2(.014, 0));
+    private static final ScreenTransform switchT = new ScreenTransform(new Vector2(0.287, 0.16), new Vector2(.1, .015));
 
     private final Panel p1Panel = new Panel(this);
     private UiImage p1Back;
@@ -67,6 +68,8 @@ public class GameHUD extends GuiCanvas {
         p2Text.setTextColor(Color.WHITE);
         p2Text.setAnchor(TextAlign.LEFT);
         p2Text.setAnchorVertical(TextAlignVertical.TOP);
+
+        addGuiComponent(new InputSlider(this, switchT));
 
         p1Pointer = new ClockPointer(this, pointer, new Anchor(0.5, 0.15), "images/Gui/pointer.png");
         p1Pointer.setRotOffset(90);
