@@ -26,11 +26,9 @@ public class Slider extends GuiComponent {
 
     public Slider(GuiCanvas parent, ScreenTransform screenTransform) {
         super(parent, screenTransform);
-        ScreenTransform textTransform = new ScreenTransform(screenTransform.getPos(), screenTransform.getScale());
-        Vector2 scale = textTransform.getScale();
-        textTransform.setPos(textTransform.getPos().add(new Vector2(scale.getX() / 2, scale.getY())));
-        textView = new TextView(parent, textTransform, "perc");
-        textView.setFont(new Font("Comic Sans", Font.PLAIN, 15));
+        textView = new TextView(parent, screenTransform, "perc");
+        textView.setPositionInRect(true);
+        textView.setCustomFont(new Font("Comic Sans", Font.PLAIN, 22));
         textView.setVisible(false);
         parent.addGuiComponent(textView);
     }
@@ -119,13 +117,13 @@ public class Slider extends GuiComponent {
     @Override
     public void onHoverEnter() {
         super.onHoverEnter();
-        //textView.setVisible(true);
+        textView.setVisible(true);
     }
 
     @Override
     public void onHoverExit() {
         super.onHoverExit();
-        //textView.setVisible(false);
+        textView.setVisible(false);
     }
 }
 

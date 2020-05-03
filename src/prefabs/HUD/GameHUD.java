@@ -61,8 +61,12 @@ public class GameHUD extends GuiCanvas {
 
         p1Text = new TextView(this, textT, "");
         p1Text.setTextColor(Color.WHITE);
+        p1Text.setAnchor(TextAlign.LEFT);
+        p1Text.setAnchorVertical(TextAlignVertical.TOP);
         p2Text = new TextView(this, textT, "");
         p2Text.setTextColor(Color.WHITE);
+        p2Text.setAnchor(TextAlign.LEFT);
+        p2Text.setAnchorVertical(TextAlignVertical.TOP);
 
         p1Pointer = new ClockPointer(this, pointer, new Anchor(0.5, 0.15), "images/Gui/pointer.png");
         p1Pointer.setRotOffset(90);

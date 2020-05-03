@@ -1,8 +1,10 @@
 package components;
 
 
+import components.elements.Slider;
 import display.Camera;
 import game.Consts;
+import game.Game;
 import graphics.SpecifiedAnchor;
 import logic.Anchor;
 import logic.Dimension2D;
@@ -58,7 +60,7 @@ public abstract class GuiComponent implements ComponentMethods {
     public void setRectFromTransform() {
 
         ScreenTransform ownTrans = this.getScreenTransform();
-        Transform screenCoord = Camera.gui2Screen(ownTrans, new Dimension2D(Consts.windowWidth, Consts.windowHeight));
+        Transform screenCoord = Camera.gui2Screen(ownTrans, new Dimension2D(Game.window.getWidth(), Game.window.getHeight()));
 
         int x = (int) (screenCoord.getX());
         int y = (int) (screenCoord.getY());
