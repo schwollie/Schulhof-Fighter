@@ -130,6 +130,7 @@ public class Player extends GameObject implements CollissionListener {
     }
 
     public void block() {
+        changePlayerState(PlayerState.Block);
     }
 
     public void shootProjectile() {

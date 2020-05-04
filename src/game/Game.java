@@ -31,9 +31,6 @@ public final class Game {
     // Time Manager
     public static final TimeManager timeManager = new TimeManager(Consts.targetFPS);
 
-    //MAIN MENU
-    //private MenuCanvas mainmenu; kann eig gelöscht werden oder?
-
     public static void loadSprites() {
         SpriteLoader.loadAll();
     }

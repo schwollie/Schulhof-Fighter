@@ -57,7 +57,7 @@ public abstract class Consts {
 
     public static final String blockSheet = "blockSheet.png";
     public static final int blockSheetPicCount = 2;
-    public static final float blockAnimSpeed = 7f; // in fps
+    public static final float blockAnimSpeed = 2f; // in fps
 
     public static final String specialAttackSheet = "specialSheet.png";
     public static final int specialAttackPicCount = 3;

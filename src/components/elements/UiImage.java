@@ -165,11 +165,13 @@ public class UiImage extends GuiComponent {
 
     @Override
     public void onHoverEnter() {
-        setAlpha(.5f);
+
+        //setAlpha(.5f);
     }
 
     @Override
     public void onHoverExit() {
-        setAlpha(1f);
+
+        //setAlpha(1f);
     }
 }

@@ -10,15 +10,33 @@ import java.awt.event.KeyListener;
 
 public class PlayerInputManager extends GameComponent implements KeyListener {
 
+    // region mapping:
+    int upPressed1Mapping = KeyEvent.VK_W;
+    int rightPressed1Mapping = KeyEvent.VK_D;
+    int leftPressed1Mapping = KeyEvent.VK_A;
+    int kickPressed1Mapping = KeyEvent.VK_Q;
+    int punchPressed1Mapping = KeyEvent.VK_E;
+    int blockPressed1Mapping = KeyEvent.VK_S;
+    int projectilePressed1Mapping = KeyEvent.VK_X;
+
+    int upPressed2Mapping = KeyEvent.VK_UP;
+    int rightPressed2Mapping = KeyEvent.VK_RIGHT;
+    int leftPressed2Mapping = KeyEvent.VK_LEFT;
+    int kickPressed2Mapping = KeyEvent.VK_M;
+    int punchPressed2Mapping = KeyEvent.VK_COMMA;
+    int blockPressed2Mapping = KeyEvent.VK_DOWN;
+    int projectilePressed2Mapping = KeyEvent.VK_ALT;
+    //
+
     // region Key Flags:
 
-    private boolean upPressed1 = false; // W
+    boolean upPressed1 = false; // W
     boolean rightPressed1 = false; // D
     boolean leftPressed1 = false; // A
     boolean kickPressed1 = false; // Q
     boolean punchPressed1 = false; // E
-    boolean blockPressed1 = false; // Left Shift
-    boolean projectilePressed1 = false; // SPACE
+    boolean blockPressed1 = false; // S
+    boolean projectilePressed1 = false; // Special1 = X
 
     boolean upPressed2 = false; // up arrow key
     boolean rightPressed2 = false; // right arrow key
@@ -26,6 +44,7 @@ public class PlayerInputManager extends GameComponent implements KeyListener {
     boolean kickPressed2 = false; // comma
     boolean punchPressed2 = false; //  period
     boolean blockPressed2 = false; // right shift
+    boolean projectilePressed2 = false; // Special1 = ;
 
     //endregion
 
@@ -55,38 +74,38 @@ public class PlayerInputManager extends GameComponent implements KeyListener {
 
         if (inputMapping1 != null) {
 
-            // D = right
-            if (e.getKeyCode() == KeyEvent.VK_D) {
+
+            if (e.getKeyCode() == rightPressed1Mapping) {
                 rightPressed1 = false;
             }
 
-            // A = left
-            if (e.getKeyCode() == KeyEvent.VK_A) {
+
+            if (e.getKeyCode() == leftPressed1Mapping) {
                 leftPressed1 = false;
             }
 
-            // W = Up
-            if (e.getKeyCode() == KeyEvent.VK_W) {
+
+            if (e.getKeyCode() == upPressed1Mapping) {
                 upPressed1 = false;
             }
 
-            // Shift = block
-            if (e.getKeyCode() == KeyEvent.VK_SHIFT && e.getKeyLocation() == KeyEvent.KEY_LOCATION_LEFT) {
+
+            if (e.getKeyCode() == blockPressed1Mapping) {
                 blockPressed1 = false;
             }
 
-            // E = punch
-            if (e.getKeyCode() == KeyEvent.VK_E) {
+
+            if (e.getKeyCode() == punchPressed1Mapping) {
                 punchPressed1 = false;
             }
 
-            // Q = kick
-            if (e.getKeyCode() == KeyEvent.VK_Q) {
+
+            if (e.getKeyCode() == kickPressed1Mapping) {
                 kickPressed1 = false;
             }
 
-            // SPACE = shoot
-            if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+
+            if (e.getKeyCode() == projectilePressed1Mapping) {
                 projectilePressed1 = false;
             }
 
@@ -95,34 +114,32 @@ public class PlayerInputManager extends GameComponent implements KeyListener {
 
         if (inputMapping2 != null) {
 
-            // D = right
-            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            if (e.getKeyCode() == rightPressed2Mapping) {
                 rightPressed2 = false;
             }
 
-            // A = left
-            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            if (e.getKeyCode() == leftPressed2Mapping) {
                 leftPressed2 = false;
             }
 
-            // W = Up
-            if (e.getKeyCode() == KeyEvent.VK_UP) {
+            if (e.getKeyCode() == upPressed2Mapping) {
                 upPressed2 = false;
             }
 
-            // Period = Punch
-            if (e.getKeyCode() == KeyEvent.VK_PERIOD) {
+            if (e.getKeyCode() == punchPressed2Mapping) {
                 punchPressed2 = false;
             }
 
-            // Comma = Kick
-            if (e.getKeyCode() == KeyEvent.VK_COMMA) {
+            if (e.getKeyCode() == kickPressed2Mapping) {
                 kickPressed2 = false;
             }
 
-            // right alt = Block
-            if (e.getKeyCode() == KeyEvent.VK_ALT && e.getKeyLocation() == KeyEvent.KEY_LOCATION_RIGHT) {
-                blockPressed1 = false;
+            if (e.getKeyCode() == blockPressed2Mapping) {
+                blockPressed2 = false;
+            }
+
+            if (e.getKeyCode() == projectilePressed2Mapping) {
+                projectilePressed2 = false;
             }
 
         }
@@ -138,38 +155,32 @@ public class PlayerInputManager extends GameComponent implements KeyListener {
         //region Mapping 1:
 
         if (inputMapping1 != null) {
-            // D = right
-            if (e.getKeyCode() == KeyEvent.VK_D) {
+
+            if (e.getKeyCode() == rightPressed1Mapping) {
                 rightPressed1 = true;
             }
 
-            // A = left
-            if (e.getKeyCode() == KeyEvent.VK_A) {
+            if (e.getKeyCode() == leftPressed1Mapping) {
                 leftPressed1 = true;
             }
 
-            // W = Up
-            if (e.getKeyCode() == KeyEvent.VK_W) {
+            if (e.getKeyCode() == upPressed1Mapping) {
                 upPressed1 = true;
             }
 
-            // Shift = block
-            if (e.getKeyCode() == KeyEvent.VK_SHIFT && e.getKeyLocation() == KeyEvent.KEY_LOCATION_LEFT) {
+            if (e.getKeyCode() == blockPressed1Mapping) {
                 blockPressed1 = true;
             }
 
-            // E = punch
-            if (e.getKeyCode() == KeyEvent.VK_E) {
+            if (e.getKeyCode() == punchPressed1Mapping) {
                 punchPressed1 = true;
             }
 
-            // Q = kick
-            if (e.getKeyCode() == KeyEvent.VK_Q) {
+            if (e.getKeyCode() == kickPressed1Mapping) {
                 kickPressed1 = true;
             }
 
-            // SPACE = shoot
-            if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            if (e.getKeyCode() == projectilePressed1Mapping) {
                 projectilePressed1 = true;
             }
 
@@ -179,38 +190,37 @@ public class PlayerInputManager extends GameComponent implements KeyListener {
         //region Mapping 2:
 
         if (inputMapping2 != null) {
-
-            // D = right
-            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            if (e.getKeyCode() == rightPressed2Mapping) {
                 rightPressed2 = true;
             }
 
-            // A = left
-            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            if (e.getKeyCode() == leftPressed2Mapping) {
                 leftPressed2 = true;
             }
 
-            // W = Up
-            if (e.getKeyCode() == KeyEvent.VK_UP) {
+            if (e.getKeyCode() == upPressed2Mapping) {
                 upPressed2 = true;
             }
 
-            // Period = Punch
-            if (e.getKeyCode() == KeyEvent.VK_PERIOD) {
+            if (e.getKeyCode() == punchPressed2Mapping) {
                 punchPressed2 = true;
             }
 
-            // Comma = Kick
-            if (e.getKeyCode() == KeyEvent.VK_COMMA) {
+            if (e.getKeyCode() == kickPressed2Mapping) {
                 kickPressed2 = true;
             }
 
-            // right alt = Block
-            if (e.getKeyCode() == KeyEvent.VK_ALT && e.getKeyLocation() == KeyEvent.KEY_LOCATION_RIGHT) {
-                blockPressed1 = true;
+            if (e.getKeyCode() == blockPressed2Mapping) {
+                blockPressed2 = true;
             }
 
+            if (e.getKeyCode() == projectilePressed2Mapping) {
+                projectilePressed2 = true;
+            }
+
+
         }
+
         //endregion
     }
 
