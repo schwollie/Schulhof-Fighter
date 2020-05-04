@@ -131,7 +131,7 @@ class SliderThread extends Thread {
 
     private double tolerance;
 
-    private double speed; // degrees per second
+    private double speed; // degrees per (10? [10*1000]) second
 
 
     private Slider slider;
