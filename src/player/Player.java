@@ -10,9 +10,9 @@ import physics.RectCollider;
 import player.controller.ControllerType;
 import player.controller.HumanController;
 import player.controller.PlayerController;
-import player.utils.AttackManager;
 import player.utils.HealthStaminaManager;
 import player.utils.VisualPlayer;
+import player.utils.attacks.AttackManager;
 import scenes.Scene;
 
 
@@ -119,14 +119,17 @@ public class Player extends GameObject implements CollissionListener {
     }
 
     public void kick() {
-        changePlayerState(PlayerState.Kick);
-        attackManager.doKick();
-        //System.out.println(this.healthManager.getHealth());
+        if (attackManager.canAttack()) {
+            changePlayerState(PlayerState.Kick);
+            attackManager.doKick();
+        }
     }
 
     public void punch() {
-        changePlayerState(PlayerState.Punch);
-        attackManager.doPunch();
+        if (attackManager.canAttack()) {
+            changePlayerState(PlayerState.Punch);
+            attackManager.doPunch();
+        }
     }
 
     public void block() {
@@ -134,10 +137,10 @@ public class Player extends GameObject implements CollissionListener {
     }
 
     public void shootProjectile() {
-        if (attackManager.hasReloaded()) {
-            changePlayerState(PlayerState.SpecialAttack);
-            attackManager.shoot();
-        }
+        //if (attackManager.hasReloaded()) {
+        //   changePlayerState(PlayerState.SpecialAttack);
+        //   attackManager.shoot();
+        //}
     }
 
     public void receiveHit(double damage, Vector2 force, GameObject sender) {
