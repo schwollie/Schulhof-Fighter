@@ -59,9 +59,9 @@ public class AttackManager extends GameComponent implements TimeEventListener {
     }
 
     public void shoot() {
-        if (canAttack()) {
-            shoot.attack();
-        }
+
+        shoot.attack();
+
     }
 
     public void doKick() {
@@ -124,7 +124,7 @@ public class AttackManager extends GameComponent implements TimeEventListener {
         return Collider.doesCollide(col, reference.getScene().getPhysicsComponentsTypePlayer());
     }
 
-    private double getDirection() {
+    public double getDirection() {
         return reference.getTransform().getXScale();
     }
 

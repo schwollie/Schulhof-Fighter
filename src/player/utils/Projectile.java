@@ -15,7 +15,7 @@ import scenes.Scene;
 public class Projectile extends GameObject implements CollissionListener {
 
     private final double damage = 2;
-    private final Vector2 force = new Vector2(3000, 300);
+    private final Vector2 force = new Vector2(3, 3);
 
     private SimpleAnimationManager animationManager;
     private PhysicsGameComponent physics;
@@ -40,11 +40,13 @@ public class Projectile extends GameObject implements CollissionListener {
 
         RectCollider rc = new RectCollider(this, new Vector2(.1, .1), Dimension2D.valueOf(this.getTransform().getScale()));
         rc.addListener(this);
+        rc.setTrigger(true);
         physics.setCollider(rc);
 
         //rc  =new RectCollider(this, new Vector2(1,1), Dimension2D.valueOf(this.getTransform().getScale()));
 
-        animationManager = new SimpleAnimationManager("images/Hausperger/projectileSheet.png", 2, 8, new Dimension2D(500, 250), this);
+        animationManager = new SimpleAnimationManager("images/Hausperger/projectileSheet.png", 2, 8,
+                new Dimension2D(500, 250), this);
         this.addComponent(animationManager);
     }
 

@@ -272,6 +272,9 @@ public class PlayerInputManager extends GameComponent implements KeyListener {
         if (blockPressed2) {
             inputMapping2.keyBlock();
         }
+        if (projectilePressed2) {
+            inputMapping2.keyProjectile();
+        }
     }
 
     public void setListenerMapping1(PlayerKeyListener p) {

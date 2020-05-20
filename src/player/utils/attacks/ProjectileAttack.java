@@ -15,11 +15,15 @@ public class ProjectileAttack extends Attack {
     }
 
 
-/*
+    @Override
+    protected void onAttack() {
+        shootProjectile();
+    }
+
     public void shootProjectile() {
+        double dir = attackManager.getDirection();
         Projectile p =
-                new Projectile(reference.getScene(), reference, reference.getTransform().getPosition(), getDirection() * 1.5, getDirection());
+                new Projectile(reference.getScene(), reference, reference.getTransform().getPosition(), dir * 1.5, dir);
         reference.getScene().addGameObject(p);
-        ((Player) reference).setCanMove(true);
-    }*/
+    }
 }

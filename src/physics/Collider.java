@@ -3,8 +3,8 @@ package physics;
 import gameobjects.ComponentType;
 import gameobjects.GameComponent;
 import gameobjects.GameObject;
-import graphics.Sprite;
 import graphics.RenderManager;
+import graphics.Sprite;
 import logic.Transform;
 import logic.Vector2;
 
@@ -16,6 +16,7 @@ public abstract class Collider extends GameComponent {
     protected Vector2 offset;
     //protected PhysicsObject physicsObject;
     protected boolean isStatic = false;
+    protected boolean isTrigger = false;
     protected double restitution = 0.2f;
     protected ArrayList<CollissionListener> collisionListeners = new ArrayList<>();
 
@@ -55,6 +56,10 @@ public abstract class Collider extends GameComponent {
 
     public void removeListener(CollissionListener c) {
         this.collisionListeners.remove(c);
+    }
+
+    public void setTrigger(boolean trigger) {
+        isTrigger = trigger;
     }
 
     protected boolean CircleVsCircle(CircleCollider a, CircleCollider b) {
@@ -272,12 +277,14 @@ public abstract class Collider extends GameComponent {
         double j = -(1 + e) * velAlongNormal;
         j /= pa.getMassInverse() + pb.getMassInverse();
 
-        //apply impulse
-        Vector2 impulse = normal.scalarMult(j);
-        pa.addVelocity(impulse.scalarMult(pa.getMassInverse() * -1));
-        pb.addVelocity(impulse.scalarMult(pb.getMassInverse()));
+        //apply impulse if non of them is a trigger
+        if (!a.isTrigger && !b.isTrigger) {
+            Vector2 impulse = normal.scalarMult(j);
+            pa.addVelocity(impulse.scalarMult(pa.getMassInverse() * -1));
+            pb.addVelocity(impulse.scalarMult(pb.getMassInverse()));
 
-        this.positionalCorrection(a, b, penetration, normal, pa, pb);
+            this.positionalCorrection(a, b, penetration, normal, pa, pb);
+        }
 
         for (CollissionListener c : collisionListeners) {
             c.onCollision(a, b);

@@ -53,24 +53,41 @@ public class Attack extends GameComponent implements TimeEventListener {
         hitDelayTimer.tick();
     }
 
+    // region attack preparation
     public void attack() {
-        cooledDown = false;
+        prepareAttack();
+    }
 
+    protected void prepareAttack() {
+        cooledDown = false;
         ((Player) reference).setCanMove(false);
         resetDelayTimer();
         resetCooldownTimer();
     }
+    // endregion
 
-    protected void doAttack() {
+    // region attack logic:
+    protected void handleAttack() {
+        onAttackStart();
+        onAttack();
+        onAttackEnd();
+    }
+
+    protected void onAttackStart() {
         if (doCameraShake) {
             ((Camera) reference.getScene().getCam()).shake(new Vector2(0.02, 0.02), new Vector2(2 * damage, 2), .4);
         }
+    }
 
+    protected void onAttack() {
         attackManager.doAttack(this.range, Vector2.zero, this.damage, this.force);
-        ((Player) reference).setCanMove(true);
+    }
 
+    protected void onAttackEnd() {
+        ((Player) reference).setCanMove(true);
         coolDownTimer.resume();
     }
+    // endregion
 
     public boolean cooledDown() {
         return cooledDown;
@@ -84,7 +101,7 @@ public class Attack extends GameComponent implements TimeEventListener {
             coolDownTimer.pause();
         } else if (timerName.equals(hitDelayTimerName)) {
             resetDelayTimer();
-            doAttack();
+            handleAttack();
             hitDelayTimer.pause();
         }
     }

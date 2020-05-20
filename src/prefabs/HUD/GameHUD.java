@@ -69,7 +69,7 @@ public class GameHUD extends GuiCanvas {
         p2Text.setAnchor(TextAlign.LEFT);
         p2Text.setAnchorVertical(TextAlignVertical.TOP);
 
-        addGuiComponent(new Switch(this, switchT));
+        //addGuiComponent(new Switch(this, switchT));
 
         p1Pointer = new ClockPointer(this, pointer, new Anchor(0.5, 0.15), "images/Gui/pointer.png");
         p1Pointer.setRotOffset(90);
