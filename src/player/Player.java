@@ -10,7 +10,7 @@ import physics.RectCollider;
 import player.controller.ControllerType;
 import player.controller.HumanController;
 import player.controller.PlayerController;
-import player.utils.HealthStaminaManager;
+import player.utils.StatsManager;
 import player.utils.VisualPlayer;
 import player.utils.attacks.AttackManager;
 import scenes.Scene;
@@ -29,7 +29,7 @@ public class Player extends GameObject implements CollissionListener {
     private boolean isOnGround = false;
     private boolean canMove = true;
 
-    private HealthStaminaManager healthManager;
+    private StatsManager healthManager;
     private AttackManager attackManager;
 
     //region Constructor and init methods:
@@ -60,7 +60,7 @@ public class Player extends GameObject implements CollissionListener {
         this.type = type;
         this.visualPlayer = new VisualPlayer(type, this);
         this.attackManager = new AttackManager(this);
-        this.healthManager = new HealthStaminaManager(this, maxHealth, maxStamina);
+        this.healthManager = new StatsManager(this, maxHealth, maxStamina);
     }
 
     //endregion
@@ -86,15 +86,22 @@ public class Player extends GameObject implements CollissionListener {
 
     // region damage Handling:
     public void takeDamage(double damage, Vector2 force, GameObject damager) {
-        this.healthManager.takeDamage(damage);
+        this.healthManager.takeDamage(damage, attackManager.isBlocking());
         this.physicsComponent.addForceImpulse(force);
 
+        if (attackManager.isBlocking()) {
+            return;
+        }  // --> no hit animation
         if (RandomClass.chance(0.5)) {
             this.playerState = PlayerState.GotHit1;
         } else {
             this.playerState = PlayerState.GotHit2;
         }
         this.visualPlayer.setState(playerState);
+    }
+
+    public void receiveHit(double damage, Vector2 force, GameObject sender) {
+        attackManager.receiveHit(damage, force, sender);
     }
     // endregion
 
@@ -134,6 +141,7 @@ public class Player extends GameObject implements CollissionListener {
 
     public void block() {
         changePlayerState(PlayerState.Block);
+        attackManager.block();
     }
 
     public void shootProjectile() {
@@ -143,9 +151,6 @@ public class Player extends GameObject implements CollissionListener {
         }
     }
 
-    public void receiveHit(double damage, Vector2 force, GameObject sender) {
-        attackManager.receiveHit(damage, force, sender);
-    }
     // endregion
 
     // region state Handling:
@@ -199,7 +204,7 @@ public class Player extends GameObject implements CollissionListener {
         return attackManager;
     }
 
-    public HealthStaminaManager getHealthManager() {
+    public StatsManager getStatsManager() {
         return healthManager;
     }
 

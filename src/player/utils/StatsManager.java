@@ -6,7 +6,7 @@ import gameobjects.GameComponent;
 import gameobjects.GameObject;
 import player.Player;
 
-public class HealthStaminaManager extends GameComponent {
+public class StatsManager extends GameComponent {
 
     private final double regBonus = 0.1; // health per second
     private final double damageStamina = 5, attackStamina = 10;
@@ -18,7 +18,7 @@ public class HealthStaminaManager extends GameComponent {
     private double maxStamina;
     private double currentStamina;
 
-    public HealthStaminaManager(GameObject ref, double maxHealth, double maxStamina) {
+    public StatsManager(GameObject ref, double maxHealth, double maxStamina) {
         super(ref, ComponentType.Logic);
 
         if (!(ref instanceof Player)) {
@@ -31,7 +31,11 @@ public class HealthStaminaManager extends GameComponent {
         this.currentStamina = 0;
     }
 
-    public void takeDamage(double damage) {
+    public void takeDamage(double damage, boolean isBlocking) {
+        if (isBlocking) {
+            damage *= 0.2;
+            currentStamina -= 1;
+        }
         currentHealth -= damage;
 
         if (currentHealth <= 0) {

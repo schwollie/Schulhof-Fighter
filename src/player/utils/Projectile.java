@@ -48,6 +48,9 @@ public class Projectile extends GameObject implements CollissionListener {
         animationManager = new SimpleAnimationManager("images/Hausperger/projectileSheet.png", 2, 8,
                 new Dimension2D(500, 250), this);
         this.addComponent(animationManager);
+
+        // destroy this projectile after 10 seconds
+        this.destroy(10);
     }
 
     @Override

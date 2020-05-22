@@ -1,5 +1,6 @@
 package player.utils.attacks;
 
+import game.Game;
 import gameobjects.ComponentType;
 import gameobjects.GameComponent;
 import gameobjects.GameObject;
@@ -8,6 +9,7 @@ import logic.Vector2;
 import physics.Collider;
 import physics.RectCollider;
 import player.Player;
+import player.utils.StatsManager;
 import time.TimeEventListener;
 import time.Timer;
 
@@ -15,13 +17,18 @@ import java.util.ArrayList;
 
 public class AttackManager extends GameComponent implements TimeEventListener {
 
+    private Player player;
+    private StatsManager statsManager;
+
     // flags:
-    private final boolean isBlocking = false;
+    private boolean isBlocking = false;
+    private boolean endBlock = false;
+    private double staminaDrain = 10; // per second
 
     // timers
     private final Timer hitComboTimer = new Timer(this.reference, "hitCombo", 1.5);
 
-    // Basic attacks
+    // region Basic attacks
     private ArrayList<Attack> attacks = new ArrayList<>();
 
     private Attack kick = new Attack(reference, this, new Vector2(2, 1), new Vector2(0.5, 2), 1,
@@ -34,10 +41,15 @@ public class AttackManager extends GameComponent implements TimeEventListener {
             .5, 0.3, true);
 
     private int hitCombo = 0;
+    // endregion
 
+    // region constructor + init
     public AttackManager(GameObject ref) {
         super(ref, ComponentType.Logic);
         assert (ref instanceof Player) : "Reference has to be of type Player!";
+
+        player = (Player) ref;
+        statsManager = player.getStatsManager();
 
         initTimers();
         init();
@@ -53,15 +65,17 @@ public class AttackManager extends GameComponent implements TimeEventListener {
         hitComboTimer.addListener(this);
         hitComboTimer.pause();
     }
+    // endregion
 
+    // region attack methods
     public void block() {
-
+        endBlock = false;
+        isBlocking = true;
+        player.setCanMove(false);
     }
 
     public void shoot() {
-
         shoot.attack();
-
     }
 
     public void doKick() {
@@ -77,25 +91,18 @@ public class AttackManager extends GameComponent implements TimeEventListener {
         force = testForComboHits(force);
         Player player = ((Player) reference);
         dealDamageToColliders(cs, damage, force, player);
-
-        /*ParticleSystem p = new ParticleSystem(reference, new XRange(0.5, 2), 1, new XRange(100, 100));
-        p.setRelativeTransform(new Transform(new Vector2(.5*getDirection(),0)));
-        p.setRelativeTransform(p.getRelativeTransform().setGetScale(new Vector2(0.5, 0.5)));
-        p.setLiveTime(new XRange(0.1, 1));
-        p.setStartForce(new XRange(1, 5));
-        p.setGravityFactor(new XRange(0.1, 0.2));
-        p.setLocalSpace(false);
-        p.start();
-        reference.addComponent(p);*/
     }
 
+    // endregion
+
+    // region combo + damage model + colliders
     private void dealDamageToColliders(Collider[] cs, double damage, Vector2 force, Player attacker) {
         for (Collider c : cs) {
             if (c.getGameObject() instanceof Player && !c.getGameObject().equals(reference)) {
                 Player other = (Player) c.getGameObject();
                 other.takeDamage(damage, new Vector2(getDirection() * force.getX(), force.getY()), reference);
                 hitCombo++;
-                attacker.getHealthManager().increaseStamina(attacker.getHealthManager().getAttackStamina());
+                attacker.getStatsManager().increaseStamina(attacker.getStatsManager().getAttackStamina());
             }
         }
     }
@@ -123,21 +130,43 @@ public class AttackManager extends GameComponent implements TimeEventListener {
 
         return Collider.doesCollide(col, reference.getScene().getPhysicsComponentsTypePlayer());
     }
+    // endregion
 
-    public double getDirection() {
-        return reference.getTransform().getXScale();
-    }
-
+    //region tick & timer logic:
     @Override
     public void tick() {
         updateTimers();
         attacks.forEach(attack -> attack.tick());
+        manageBlock();
     }
 
-    public void updateTimers() {
+    private void manageBlock() {
+        if (isBlocking) {
+            player.getStatsManager().increaseStamina(-staminaDrain * Game.timeManager.getDeltaTime());
+        }
+
+        if (endBlock) {
+            player.setCanMove(true);
+            isBlocking = false;
+            endBlock = false;
+        }
+
+        endBlock = true;
+    }
+
+    private void updateTimers() {
         hitComboTimer.tick();
     }
 
+    @Override
+    public void onTimerStops(String timerName) {
+        if (timerName.equals("hitCombo")) {
+            hitCombo = 0;
+        }
+    }
+    //endregion
+
+    // region getters + setters
     public boolean canAttack() {
         for (Attack t : attacks) {
             if (!t.cooledDown()) {
@@ -148,10 +177,12 @@ public class AttackManager extends GameComponent implements TimeEventListener {
         return true;
     }
 
-    @Override
-    public void onTimerStops(String timerName) {
-        if (timerName.equals("hitCombo")) {
-            hitCombo = 0;
-        }
+    public boolean isBlocking() {
+        return isBlocking;
     }
+
+    public double getDirection() {
+        return reference.getTransform().getXScale();
+    }
+    //endregion
 }

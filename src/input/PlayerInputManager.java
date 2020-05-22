@@ -44,7 +44,7 @@ public class PlayerInputManager extends GameComponent implements KeyListener {
     boolean kickPressed2 = false; // comma
     boolean punchPressed2 = false; //  period
     boolean blockPressed2 = false; // right shift
-    boolean projectilePressed2 = false; // Special1 = ;
+    boolean projectilePressed2 = false; // Special1 = alt;
 
     //endregion
 
@@ -217,8 +217,6 @@ public class PlayerInputManager extends GameComponent implements KeyListener {
             if (e.getKeyCode() == projectilePressed2Mapping) {
                 projectilePressed2 = true;
             }
-
-
         }
 
         //endregion

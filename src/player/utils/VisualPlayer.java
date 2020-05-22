@@ -7,6 +7,10 @@ import gameobjects.GameComponent;
 import gameobjects.GameObject;
 import graphics.RenderManager;
 import logic.PlayerType;
+import logic.Transform;
+import logic.Vector2;
+import logic.XRange;
+import particle.ParticleSystem;
 import player.Player;
 import player.PlayerState;
 import prefabs.HUD.GameHUD;
@@ -71,8 +75,21 @@ public class VisualPlayer extends GameComponent {
     }
 
     private void updateGui() {
-        healthBar.setProgress(player.getHealthManager().getHealthPercentage());
-        clockPointer.setProgress(player.getHealthManager().getStaminaPercentage());
+        healthBar.setProgress(player.getStatsManager().getHealthPercentage());
+        staminaBar.setProgress(player.getStatsManager().getStaminaPercentage());
+        clockPointer.setProgress(player.getStatsManager().getStaminaPercentage());
+    }
+
+    private void shootBloodParticles() {
+        ParticleSystem p = new ParticleSystem(reference, new XRange(0.5, 2), 1, new XRange(100, 100));
+        p.setRelativeTransform(new Transform(new Vector2(0, 0)));
+        p.setRelativeTransform(p.getRelativeTransform().setGetScale(new Vector2(0.5, 0.5)));
+        p.setLiveTime(new XRange(0.1, 1));
+        p.setStartForce(new XRange(1, 5));
+        p.setGravityFactor(new XRange(0.1, 0.2));
+        p.setLocalSpace(false);
+        p.start();
+        reference.addComponent(p);
     }
 
     @Override
