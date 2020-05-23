@@ -46,7 +46,7 @@ public class StatsManager extends GameComponent {
 
     public void increaseStamina(double amount) {
         currentStamina += amount;
-        currentStamina = currentStamina <= maxStamina ? currentStamina : maxStamina;
+        currentStamina = Math.min(currentStamina, maxStamina);
     }
 
     public void tick() {

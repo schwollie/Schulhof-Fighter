@@ -25,6 +25,8 @@ public class GameObject implements Serializable, TimeEventListener {
     private final ArrayList<GameComponent> components2Add = new ArrayList<>();
     private final ArrayList<GameComponent> components2Remove = new ArrayList<>();
 
+    private final ArrayList<OnDestroyListener> onDestroyListeners = new ArrayList<>();
+
     public GameObject(String tag, Scene world) {
         this.tag = tag;
         this.scene = world;
@@ -146,13 +148,22 @@ public class GameObject implements Serializable, TimeEventListener {
     }
 
     public void destroy(double time) {
-        this.addComponent(new Timer(this,"_DestroyObject_", time, this));
+        this.addComponent(new Timer(this, "_DestroyObject_", time, this));
+    }
+
+    public void listenOnDestroy(OnDestroyListener t) {
+        onDestroyListeners.add(t);
+    }
+
+    public void dismissOnDestroy(OnDestroyListener t) {
+        onDestroyListeners.remove(t);
     }
 
     @Override
     public void onTimerStops(String timerName) {
         if (timerName.equals("_DestroyObject_")) {
             scene.removeGameObject(this);
+            onDestroyListeners.forEach(OnDestroyListener::onDestroy);
         }
     }
 

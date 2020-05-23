@@ -15,7 +15,7 @@ import time.Timer;
 
 import java.util.ArrayList;
 
-public class AttackManager extends GameComponent implements TimeEventListener {
+public class AttackManager extends GameComponent implements TimeEventListener, AttackEventListener {
 
     private Player player;
     private StatsManager statsManager;
@@ -25,10 +25,13 @@ public class AttackManager extends GameComponent implements TimeEventListener {
     private boolean endBlock = false;
     private double staminaDrain = 10; // per second
 
-    // timers
     private final Timer hitComboTimer = new Timer(this.reference, "hitCombo", 1.5);
+    private int hitCombo = 0;
 
     // region Basic attacks
+    private AttackProfile attackProfile;
+
+    // Todo: use AttackProfile instead of writing down all attacks here
     private ArrayList<Attack> attacks = new ArrayList<>();
 
     private Attack kick = new Attack(reference, this, new Vector2(2, 1), new Vector2(0.5, 2), 1,
@@ -40,7 +43,7 @@ public class AttackManager extends GameComponent implements TimeEventListener {
     private ProjectileAttack shoot = new ProjectileAttack(reference, this, new Vector2(2, 1), new Vector2(0.5, 2), 1,
             .5, 0.3, true);
 
-    private int hitCombo = 0;
+
     // endregion
 
     // region constructor + init
@@ -107,10 +110,6 @@ public class AttackManager extends GameComponent implements TimeEventListener {
         }
     }
 
-    public void receiveHit(double damage, Vector2 force, GameObject sender) {
-        ((Player) reference).takeDamage(damage, new Vector2(sender.getTransform().getXScale() * force.getX(), force.getY()), sender);
-    }
-
     private Vector2 testForComboHits(Vector2 force) {
         if (hitCombo >= 2) { //3 hits
             hitCombo = 0;
@@ -164,6 +163,16 @@ public class AttackManager extends GameComponent implements TimeEventListener {
             hitCombo = 0;
         }
     }
+
+    @Override
+    public void onDamage(double damage) {
+        if (isBlocking) {
+            hitCombo += 1;
+        } else {
+            hitCombo = 0;
+        }
+    }
+
     //endregion
 
     // region getters + setters

@@ -1,13 +1,14 @@
 package prefabs.gameobjects;
 
 import gameobjects.GameObject;
+import gameobjects.OnDestroyListener;
 import graphics.ImageSprite;
 import logic.Vector2;
 import physics.Collider;
 import physics.CollissionListener;
 import scenes.Scene;
 
-public class Shadow extends GameObject implements CollissionListener {
+public class Shadow extends GameObject implements CollissionListener, OnDestroyListener {
 
     private GameObject gameObject2Follow;
     private ImageSprite shadowImg;
@@ -24,6 +25,7 @@ public class Shadow extends GameObject implements CollissionListener {
         super(tag, world, 1);
         this.gameObject2Follow = gameObject;
         this.gameObject2Follow.getPhysicsComponent().getCollider().addListener(this);
+        this.gameObject2Follow.listenOnDestroy(this);
 
         shadowImg = new ImageSprite(this, 1, "images/Others/shadow2.png");
         shadowImg.setAlpha(0.5);
@@ -64,6 +66,10 @@ public class Shadow extends GameObject implements CollissionListener {
         if (c1.getGameObject().getTag().equals("ground") || c2.getGameObject().getTag().equals("ground")) {
             currentY = gameObject2Follow.getTransform().getY();
         }
+    }
 
+    @Override
+    public void onDestroy() {
+        this.destroy(0);
     }
 }

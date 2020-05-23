@@ -85,8 +85,9 @@ public class Player extends GameObject implements CollissionListener {
     //endregion
 
     // region damage Handling:
-    public void takeDamage(double damage, Vector2 force, GameObject damager) {
+    public void takeDamage(double damage, Vector2 force, GameObject sender) {
         this.healthManager.takeDamage(damage, attackManager.isBlocking());
+        this.attackManager.onDamage(damage);
         this.physicsComponent.addForceImpulse(force);
 
         if (attackManager.isBlocking()) {
@@ -100,9 +101,6 @@ public class Player extends GameObject implements CollissionListener {
         this.visualPlayer.setState(playerState);
     }
 
-    public void receiveHit(double damage, Vector2 force, GameObject sender) {
-        attackManager.receiveHit(damage, force, sender);
-    }
     // endregion
 
     // region  action Handling
@@ -188,7 +186,9 @@ public class Player extends GameObject implements CollissionListener {
     }
 
     public void onDeath() {
-        this.destroy(1);
+        this.playerState = PlayerState.Death;
+        visualPlayer.setState(this.playerState);
+        this.destroy(.5);
     }
 
     // region getters + setters

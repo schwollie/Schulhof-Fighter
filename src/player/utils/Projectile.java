@@ -65,7 +65,7 @@ public class Projectile extends GameObject implements CollissionListener {
     public void onCollision(Collider c1, Collider c2) {
         if (c1.getReference().equals(this) && c2.getReference() instanceof Player && !c2.getReference().equals(sender)) {
             Player target = (Player) c2.getReference();
-            target.receiveHit(damage, force, sender);
+            target.takeDamage(damage, force, sender);
             scene.removeGameObject(this);
         }
     }
