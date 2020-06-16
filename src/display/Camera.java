@@ -5,6 +5,7 @@ import components.ScreenTransform;
 import game.Consts;
 import game.Game;
 import gameobjects.GameObject;
+import loading.SpriteLoader;
 import logic.Dimension2D;
 import logic.Shaker;
 import logic.Transform;
@@ -13,6 +14,7 @@ import scenes.Scene;
 import settings.Settings;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
 public class Camera extends GameObject implements Serializable {
@@ -22,6 +24,9 @@ public class Camera extends GameObject implements Serializable {
     private final double ratio = Consts.ratio;
     private Dimension2D resolution;
     private double scale;
+
+    private BufferedImage vignetteEffect;
+    private int vignetteStrength = 0;
 
     public Camera(Scene scene, Vector2 pos, double scale) {
         super("Camera", scene);
@@ -58,6 +63,13 @@ public class Camera extends GameObject implements Serializable {
         g.setRenderingHints(s);
 
         scene.Render(g, this);
+        postProcessing(g);
+    }
+
+    private void postProcessing(Graphics2D g) {
+        if (vignetteEffect != null) {
+            g.drawImage(vignetteEffect, 0, 0, Game.window.getWidth(), Game.window.getHeight(), null);
+        }
     }
 
     @Override
@@ -129,4 +141,14 @@ public class Camera extends GameObject implements Serializable {
         return screen;
     }
 
+    public void setVignetteStrength(int vignetteStrength) {
+        this.vignetteStrength = vignetteStrength;
+
+        if (vignetteStrength == 1) {
+            vignetteEffect = SpriteLoader.getFromFilePath("images/Background/vignette.png");
+        } else if (vignetteStrength >= 2) {
+            vignetteEffect = SpriteLoader.getFromFilePath("images/Background/vignette-strong.png");
+        }
+
+    }
 }

@@ -3,9 +3,8 @@ package game;
 import display.Camera;
 import display.Window;
 import input.InputManager;
-import loading.SpriteLoader;
-import logic.PlayerType;
-import prefabs.scenes.StandardSceneLoader;
+import loading.LoadingManager;
+import prefabs.scenes.LoadingSceneLoader;
 import scenes.Scene;
 import scenes.SceneManager;
 import time.TimeManager;
@@ -31,25 +30,24 @@ public final class Game {
     // Time Manager
     public static final TimeManager timeManager = new TimeManager(Consts.targetFPS);
 
-    public static void loadSprites() {
-        SpriteLoader.loadAll();
+    public static void loadAll() {
+        LoadingManager.loadAll(currentScene);
     }
 
     public static void initScene() {
-        currentScene = StandardSceneLoader.getStandardScene(PlayerType.Sippl, PlayerType.Hausperger);
+        currentScene = LoadingSceneLoader.getLoadingScene();//StandardSceneLoader.getStandardScene(PlayerType.Sippl, PlayerType.Hausperger);
     }
 
     public static void initDisplay() {
         window = new Window(Consts.windowWidth, Consts.windowHeight);
+
+        window.addMouseMotionListener(inputManager);
+        window.addMouseListener(inputManager);
+        window.addKeyListener(inputManager);
     }
 
     // has to be called on every scene change
     public static void initSceneGraphics() {
-        window.addMouseMotionListener(inputManager);
-        window.addMouseListener(inputManager);
-        window.addKeyListener(inputManager);
-
-
         window.add(((Camera) currentScene.getCam()).getCanvas());
         window.setVisible(true);
     }
@@ -79,5 +77,11 @@ public final class Game {
     public static void loadMusic() {
         //audioManager = new AudioManager("test.wav");
         //audioManager.play();
+    }
+
+    public static void changeScene(Scene newScene) {
+        window.remove(((Camera) currentScene.getCam()).getCanvas());
+        currentScene = newScene;
+        initSceneGraphics();
     }
 }

@@ -2,13 +2,11 @@ package scenes;
 
 import components.GuiCanvas;
 import display.Camera;
-import game.Consts;
 import gameobjects.GameObject;
 import graphics.RenderManager;
-import logic.Dimension2D;
+import loading.OnLoadFinishedListener;
 import physics.PhysicsGameComponent;
 import player.Player;
-import prefabs.HUD.GameHUD;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -16,14 +14,14 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
 
-public class Scene implements Serializable {
+public class Scene implements Serializable, OnLoadFinishedListener {
 
     private final RenderManager renderManager;
     private GuiCanvas guiCanvas;
 
     public Scene() {
         renderManager = new RenderManager();
-        guiCanvas = new GameHUD(new Dimension2D(Consts.windowWidth, Consts.windowHeight));
+        //guiCanvas = new GameHUD(new Dimension2D(Consts.windowWidth, Consts.windowHeight));
     }
 
 
@@ -145,5 +143,9 @@ public class Scene implements Serializable {
 
     public void setGuiCanvas(GuiCanvas guiCanvas) {
         this.guiCanvas = guiCanvas;
+    }
+
+    @Override
+    public void onLoadFinish() {
     }
 }

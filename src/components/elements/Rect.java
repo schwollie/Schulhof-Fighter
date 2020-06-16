@@ -7,7 +7,6 @@ import display.Camera;
 import logic.Transform;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 
 public class Rect extends GuiComponent {
 
@@ -40,17 +39,21 @@ public class Rect extends GuiComponent {
             this.lastRenderWidth.setValues(width, height);
 
             g.setColor(c);
-            g.fillRect(x, y , width, height);
+            g.fillRect(x, y, width, height);
         }
+    }
+
+    public void setColor(Color c) {
+        this.c = c;
     }
 
     @Override
     public void onHoverEnter() {
-        this.alpha = .2f;
+        //this.alpha = .2f;
     }
 
     @Override
     public void onHoverExit() {
-        this.alpha = 1f;
+        //this.alpha = 1f;
     }
 }

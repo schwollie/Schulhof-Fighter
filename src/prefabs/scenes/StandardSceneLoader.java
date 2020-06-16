@@ -1,9 +1,9 @@
 package prefabs.scenes;
 
 import display.Camera;
+import game.Consts;
 import gameobjects.ComponentType;
 import gameobjects.GameObject;
-import graphics.ImageSprite;
 import input.PlayerInputManager;
 import logic.Dimension2D;
 import logic.PlayerType;
@@ -11,6 +11,7 @@ import logic.Vector2;
 import player.Player;
 import player.PlayerSide;
 import player.controller.ControllerType;
+import prefabs.HUD.GameHUD;
 import prefabs.gameobjects.Background;
 import prefabs.gameobjects.Ground;
 import prefabs.gameobjects.Wall;
@@ -20,6 +21,9 @@ public abstract class StandardSceneLoader {
 
     public static Scene getStandardScene(PlayerType p1, PlayerType p2) {
         Scene scene = new Scene();
+
+        // Gui
+        scene.setGuiCanvas(new GameHUD(new Dimension2D(Consts.windowWidth, Consts.windowHeight)));
 
         GameObject gameHandler = new GameObject("GameHandler", scene);
         gameHandler.addInstantComponent(new PlayerInputManager(gameHandler, ComponentType.Input));
@@ -48,6 +52,7 @@ public abstract class StandardSceneLoader {
 
         //Camera
         Camera cam = new Camera(scene, new Vector2(.15, 2.1), 3.8);
+        cam.setVignetteStrength(1);
         scene.addGameObjectNow(cam);
 
         return scene;

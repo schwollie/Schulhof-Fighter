@@ -1,12 +1,8 @@
 package display;
 
-import game.Game;
-import loading.SpriteLoader;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.Raster;
 
 public class Canvas extends JPanel {
 
@@ -14,7 +10,7 @@ public class Canvas extends JPanel {
     private BufferedImage vignetteEffect;
 
     public Canvas (){
-        vignetteEffect = SpriteLoader.getFromFilePath("images/Background/vignette.png");
+
     }
 
     public Camera getCam() {
@@ -30,6 +26,5 @@ public class Canvas extends JPanel {
         super.paintComponent(g);
         Graphics2D graphics2D = (Graphics2D) g;
         cam.RenderScene(graphics2D);
-        graphics2D.drawImage(vignetteEffect, 0,0, Game.window.getWidth(), Game.window.getHeight(), null);
     }
 }

@@ -60,9 +60,21 @@ public abstract class SpriteLoader {
     public static BufferedImage getFromFilePath(String filepath) {
         filepath = filepath.replaceAll("/", "\\\\");
 
-        if (!images.containsKey(filepath)) { System.err.println("Could not load File: " + filepath); }
+        if (!images.containsKey(filepath)) {
+            System.err.println("Could not load File: " + filepath);
+        }
 
         return SpriteLoader.images.get(filepath);
+    }
+
+    public static BufferedImage loadSingleUpfront(String filepath) {
+        try {
+            return ImageIO.read(new File(filepath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
 
