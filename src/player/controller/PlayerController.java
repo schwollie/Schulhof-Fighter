@@ -37,4 +37,8 @@ public abstract class PlayerController {
     public void shootProjectile() {
         player.shootProjectile();
     }
+
+    public void specialAttack1() {
+        player.special1();
+    }
 }

@@ -18,7 +18,7 @@ import scenes.Scene;
 
 public class Player extends GameObject implements CollissionListener {
 
-    public static final double maxHealth = 20, maxStamina = 100;
+    public static final double maxHealth = 20, maxStamina = 100, maxPower = 100;
 
     private PlayerSide side;
     private PlayerController controller;
@@ -59,8 +59,8 @@ public class Player extends GameObject implements CollissionListener {
     private void setupStats(PlayerType type) {
         this.type = type;
         this.visualPlayer = new VisualPlayer(type, this);
+        this.healthManager = new StatsManager(this, maxHealth, maxStamina, maxPower);
         this.attackManager = new AttackManager(this);
-        this.healthManager = new StatsManager(this, maxHealth, maxStamina);
     }
 
     //endregion
@@ -138,8 +138,17 @@ public class Player extends GameObject implements CollissionListener {
     }
 
     public void block() {
-        changePlayerState(PlayerState.Block);
-        attackManager.block();
+        if (attackManager.canBlock()) {
+            changePlayerState(PlayerState.Block);
+            attackManager.block();
+        }
+    }
+
+    public void special1() {
+        if (attackManager.canDoSpecialAttack()) {
+            changePlayerState(PlayerState.SpecialAttack2);
+            attackManager.doSpecial1();
+        }
     }
 
     public void shootProjectile() {

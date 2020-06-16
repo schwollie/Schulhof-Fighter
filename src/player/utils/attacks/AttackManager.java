@@ -13,8 +13,6 @@ import player.utils.StatsManager;
 import time.TimeEventListener;
 import time.Timer;
 
-import java.util.ArrayList;
-
 public class AttackManager extends GameComponent implements TimeEventListener, AttackEventListener {
 
     private Player player;
@@ -29,20 +27,7 @@ public class AttackManager extends GameComponent implements TimeEventListener, A
     private int hitCombo = 0;
 
     // region Basic attacks
-    private AttackProfile attackProfile;
-
-    // Todo: use AttackProfile instead of writing down all attacks here
-    private ArrayList<Attack> attacks = new ArrayList<>();
-
-    private Attack kick = new Attack(reference, this, new Vector2(2, 1), new Vector2(0.5, 2), 1,
-            .5, 0.25, true);
-
-    private Attack punch = new Attack(reference, this, new Vector2(2, 1), new Vector2(0.5, 2), 1,
-            .5, 0.25, true);
-
-    private ProjectileAttack shoot = new ProjectileAttack(reference, this, new Vector2(2, 1), new Vector2(0.5, 2), 1,
-            .5, 0.3, true);
-
+    private AttackProfile attackProfile = AttackProfile.getDefault(reference, this);
 
     // endregion
 
@@ -55,13 +40,6 @@ public class AttackManager extends GameComponent implements TimeEventListener, A
         statsManager = player.getStatsManager();
 
         initTimers();
-        init();
-    }
-
-    private void init() {
-        attacks.add(kick);
-        attacks.add(punch);
-        attacks.add(shoot);
     }
 
     private void initTimers() {
@@ -78,15 +56,23 @@ public class AttackManager extends GameComponent implements TimeEventListener, A
     }
 
     public void shoot() {
-        shoot.attack();
+        attackProfile.getProjectileAttack().attack();
+        statsManager.increasePower(5);
     }
 
     public void doKick() {
-        kick.attack();
+        attackProfile.getKick().attack();
+        statsManager.increasePower(4);
     }
 
     public void doPunch() {
-        punch.attack();
+        attackProfile.getPunch().attack();
+        statsManager.increasePower(4);
+    }
+
+    public void doSpecial1() {
+        attackProfile.getSpecialAttack1().attack();
+        statsManager.increasePower(-30);
     }
 
     public void doAttack(Vector2 range, Vector2 offset, double damage, Vector2 force) {
@@ -135,7 +121,7 @@ public class AttackManager extends GameComponent implements TimeEventListener, A
     @Override
     public void tick() {
         updateTimers();
-        attacks.forEach(attack -> attack.tick());
+        attackProfile.attackTick();
         manageBlock();
     }
 
@@ -177,13 +163,21 @@ public class AttackManager extends GameComponent implements TimeEventListener, A
 
     // region getters + setters
     public boolean canAttack() {
-        for (Attack t : attacks) {
+        for (Attack t : attackProfile.getAttacks()) {
             if (!t.cooledDown()) {
                 return false;
             }
         }
 
         return true;
+    }
+
+    public boolean canBlock() {
+        return statsManager.getStamina() > attackProfile.getBlockStaminaDrain();
+    }
+
+    public boolean canDoSpecialAttack() {
+        return statsManager.getPower() > 30;
     }
 
     public boolean isBlocking() {

@@ -18,6 +18,8 @@ public class PlayerInputManager extends GameComponent implements KeyListener {
     int punchPressed1Mapping = KeyEvent.VK_E;
     int blockPressed1Mapping = KeyEvent.VK_S;
     int projectilePressed1Mapping = KeyEvent.VK_X;
+    int specialOnePressed1Mapping = KeyEvent.VK_C;
+    //int specialTwoPressed1Mapping = KeyEvent.VK_C;
 
     int upPressed2Mapping = KeyEvent.VK_UP;
     int rightPressed2Mapping = KeyEvent.VK_RIGHT;
@@ -26,7 +28,8 @@ public class PlayerInputManager extends GameComponent implements KeyListener {
     int punchPressed2Mapping = KeyEvent.VK_COMMA;
     int blockPressed2Mapping = KeyEvent.VK_DOWN;
     int projectilePressed2Mapping = KeyEvent.VK_ALT;
-    //
+    int specialOnePressed2Mapping = KeyEvent.VK_L;
+    // int specialTwoPressed2Mapping = KeyEvent.VK_C;
 
     // region Key Flags:
 
@@ -37,6 +40,7 @@ public class PlayerInputManager extends GameComponent implements KeyListener {
     boolean punchPressed1 = false; // E
     boolean blockPressed1 = false; // S
     boolean projectilePressed1 = false; // Special1 = X
+    boolean specialOnePressed1 = false;
 
     boolean upPressed2 = false; // up arrow key
     boolean rightPressed2 = false; // right arrow key
@@ -45,6 +49,7 @@ public class PlayerInputManager extends GameComponent implements KeyListener {
     boolean punchPressed2 = false; //  period
     boolean blockPressed2 = false; // right shift
     boolean projectilePressed2 = false; // Special1 = alt;
+    boolean specialOnePressed2 = false;
 
     //endregion
 
@@ -109,6 +114,10 @@ public class PlayerInputManager extends GameComponent implements KeyListener {
                 projectilePressed1 = false;
             }
 
+            if (e.getKeyCode() == specialOnePressed1Mapping) {
+                specialOnePressed1 = false;
+            }
+
         }
         //endregion
 
@@ -140,6 +149,10 @@ public class PlayerInputManager extends GameComponent implements KeyListener {
 
             if (e.getKeyCode() == projectilePressed2Mapping) {
                 projectilePressed2 = false;
+            }
+
+            if (e.getKeyCode() == specialOnePressed2Mapping) {
+                specialOnePressed2 = false;
             }
 
         }
@@ -184,6 +197,10 @@ public class PlayerInputManager extends GameComponent implements KeyListener {
                 projectilePressed1 = true;
             }
 
+            if (e.getKeyCode() == specialOnePressed1Mapping) {
+                specialOnePressed1 = true;
+            }
+
         }
         //endregion
 
@@ -217,6 +234,10 @@ public class PlayerInputManager extends GameComponent implements KeyListener {
             if (e.getKeyCode() == projectilePressed2Mapping) {
                 projectilePressed2 = true;
             }
+
+            if (e.getKeyCode() == specialOnePressed2Mapping) {
+                specialOnePressed2 = true;
+            }
         }
 
         //endregion
@@ -249,6 +270,9 @@ public class PlayerInputManager extends GameComponent implements KeyListener {
         if (projectilePressed1) {
             inputMapping1.keyProjectile();
         }
+        if (specialOnePressed1) {
+            inputMapping1.keySpecial1();
+        }
     }
 
     private void sendMapping2() {
@@ -272,6 +296,9 @@ public class PlayerInputManager extends GameComponent implements KeyListener {
         }
         if (projectilePressed2) {
             inputMapping2.keyProjectile();
+        }
+        if (specialOnePressed2) {
+            inputMapping2.keySpecial1();
         }
     }
 

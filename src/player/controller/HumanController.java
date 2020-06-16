@@ -1,6 +1,5 @@
 package player.controller;
 
-import gameobjects.GameComponent;
 import gameobjects.GameObject;
 import input.PlayerInputManager;
 import input.PlayerKeyListener;
@@ -52,5 +51,15 @@ public class HumanController extends PlayerController implements PlayerKeyListen
     @Override
     public void keyProjectile() {
         this.shootProjectile();
+    }
+
+    @Override
+    public void keySpecial1() {
+        this.specialAttack1();
+    }
+
+    @Override
+    public void keySpecial2() {
+        //this.specialAttack2();
     }
 }

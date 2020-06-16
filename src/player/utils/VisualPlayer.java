@@ -77,7 +77,7 @@ public class VisualPlayer extends GameComponent {
     private void updateGui() {
         healthBar.setProgress(player.getStatsManager().getHealthPercentage());
         staminaBar.setProgress(player.getStatsManager().getStaminaPercentage());
-        clockPointer.setProgress(player.getStatsManager().getStaminaPercentage());
+        clockPointer.setProgress(player.getStatsManager().getPowerPercentage());
     }
 
     private void shootBloodParticles() {

@@ -24,6 +24,7 @@ public class Attack extends GameComponent implements TimeEventListener {
     protected boolean cooledDown = false;
 
     protected double damage;
+    protected double staminaDrain;
 
     protected AttackManager attackManager;
 
@@ -75,7 +76,14 @@ public class Attack extends GameComponent implements TimeEventListener {
 
     protected void onAttackStart() {
         if (doCameraShake) {
-            ((Camera) reference.getScene().getCam()).shake(new Vector2(0.02, 0.02), new Vector2(2 * damage, 2), .4);
+
+            double factor = .7;
+            double speed = ((-10 / (damage + 2.5)) + 4) * 1.5 * factor;
+            double deviaton = ((-10 / (damage + 2.5)) + 4) * .1 * factor;
+            double time = ((-10 / (damage + 2.5)) + 4) * .3;
+
+            ((Camera) reference.getScene().getCam()).shake(new Vector2(deviaton, deviaton), new Vector2(speed, speed),
+                    time);
         }
     }
 

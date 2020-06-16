@@ -16,4 +16,8 @@ public interface PlayerKeyListener {
 
     void keyProjectile();
 
+    void keySpecial1();
+
+    void keySpecial2();
+
 }
